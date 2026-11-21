@@ -1,0 +1,1843 @@
+{
+  "experiment": {
+    "name": "constraint_first_ablation_v1",
+    "dataset": "scenario_bank_v2",
+    "scenario_count": 60,
+    "product_count": 18,
+    "interpretation": "基线用于隔离规则层的贡献；不是对任何商业模型的性能宣称。"
+  },
+  "summary": {
+    "gift_right_constraint_first": {
+      "scenario_count": 60,
+      "candidate_count": 180,
+      "hard_constraint_violations": 0,
+      "hard_constraint_violation_rate": 0.0,
+      "evidence_grounding_rate": 1.0,
+      "seed_scenario_hit_rate": 0.9167,
+      "unknown_acknowledgement_rate": 1.0,
+      "average_eligible_candidates": 10.47
+    },
+    "ablation_without_rules": {
+      "scenario_count": 60,
+      "candidate_count": 180,
+      "hard_constraint_violations": 63,
+      "hard_constraint_violation_rate": 0.35,
+      "evidence_grounding_rate": 0.0,
+      "seed_scenario_hit_rate": 0.8333,
+      "unknown_acknowledgement_rate": 1.0,
+      "average_eligible_candidates": 18.0
+    },
+    "price_delivery_heuristic": {
+      "scenario_count": 60,
+      "candidate_count": 180,
+      "hard_constraint_violations": 51,
+      "hard_constraint_violation_rate": 0.2833,
+      "evidence_grounding_rate": 0.0,
+      "seed_scenario_hit_rate": 0.5833,
+      "unknown_acknowledgement_rate": 1.0,
+      "average_eligible_candidates": 18.0
+    }
+  },
+  "rows": [
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s01-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s01-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s01-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s01-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s01-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 16
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s02-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 14
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s02-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s02-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s02-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 14
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s02-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 14
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s03-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 14
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s03-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s03-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s03-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 14
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s03-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 14
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s04-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 2
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s04-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 2
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s04-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 2
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s04-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 2
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s04-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 2
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s05-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s05-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s05-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s05-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s05-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s06-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 17
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s06-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s06-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s06-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 17
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s06-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 17
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s07-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s07-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s07-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s07-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s07-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 16
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s08-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s08-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s08-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 3
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s08-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s08-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s09-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 17
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s09-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s09-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s09-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 17
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s09-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s10-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s10-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s10-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s10-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s10-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 15
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s11-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 12
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s11-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 3
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s11-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s11-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 12
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s11-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 12
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s12-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": true,
+      "has_unknown_ack": true,
+      "eligible_count": 17
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s12-v2",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 4
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s12-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 9
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s12-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 17
+    },
+    {
+      "mode": "gift_right_constraint_first",
+      "scenario_id": "s12-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 3,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 17
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s01-v1",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s01-v2",
+      "candidate_count": 3,
+      "violations": 3,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s01-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s01-v4",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s01-v5",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s02-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s02-v2",
+      "candidate_count": 3,
+      "violations": 3,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s02-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s02-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s02-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s03-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s03-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s03-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s03-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s03-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s04-v1",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s04-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s04-v3",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s04-v4",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s04-v5",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s05-v1",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s05-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s05-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s05-v4",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s05-v5",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s06-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s06-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s06-v3",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s06-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s06-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s07-v1",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s07-v2",
+      "candidate_count": 3,
+      "violations": 3,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s07-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s07-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s07-v5",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s08-v1",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s08-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s08-v3",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s08-v4",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s08-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s09-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s09-v2",
+      "candidate_count": 3,
+      "violations": 3,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s09-v3",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s09-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s09-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s10-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s10-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s10-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s10-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s10-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s11-v1",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s11-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s11-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s11-v4",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s11-v5",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s12-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s12-v2",
+      "candidate_count": 3,
+      "violations": 3,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s12-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s12-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "ablation_without_rules",
+      "scenario_id": "s12-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s01-v1",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s01-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s01-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s01-v4",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s01-v5",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s02-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s02-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s02-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s02-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s02-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s03-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s03-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s03-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s03-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s03-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s04-v1",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s04-v2",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s04-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s04-v4",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s04-v5",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s05-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s05-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s05-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s05-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s05-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s06-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s06-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s06-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s06-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s06-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s07-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s07-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s07-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s07-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s07-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s08-v1",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s08-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s08-v3",
+      "candidate_count": 3,
+      "violations": 3,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s08-v4",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s08-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s09-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": false,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s09-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s09-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s09-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s09-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s10-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s10-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s10-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s10-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s10-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s11-v1",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s11-v2",
+      "candidate_count": 3,
+      "violations": 3,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s11-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s11-v4",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s11-v5",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s12-v1",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": true,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s12-v2",
+      "candidate_count": 3,
+      "violations": 2,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": null,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s12-v3",
+      "candidate_count": 3,
+      "violations": 1,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s12-v4",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    },
+    {
+      "mode": "price_delivery_heuristic",
+      "scenario_id": "s12-v5",
+      "candidate_count": 3,
+      "violations": 0,
+      "evidence_ok": 0,
+      "expected_hit": null,
+      "has_unknown_ack": true,
+      "eligible_count": 18
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "version": "v1.1",
+  "reference_price_bands": {
+    "mentor": {"label": "导师/老师", "min": 50, "max": 300},
+    "manager": {"label": "上级", "min": 100, "max": 500},
+    "colleague": {"label": "同事", "min": 50, "max": 300},
+    "friend": {"label": "朋友", "min": 50, "max": 500},
+    "partner": {"label": "情侣/配偶", "min": 100, "max": 1000},
+    "family": {"label": "长辈/亲戚", "min": 80, "max": 800},
+    "classmate": {"label": "同学", "min": 30, "max": 300}
+  },
+  "cultural_soft_warnings": {
+    "clock": "部分送礼场景会避讳钟表，请确认收礼人的习惯",
+    "umbrella": "部分送礼场景会联想到“散”，请确认收礼人的习惯",
+    "pear": "部分庆祝场景会避讳梨，请确认收礼人的习惯",
+    "shoes": "部分关系中鞋类礼物可能被理解为“走人”，请确认收礼人的习惯"
+  },
+  "free_text_tags": {
+    "健身": "fitness",
+    "咖啡": "coffee",
+    "茶": "tea",
+    "低调": "low_key",
+    "高调": "distinctive",
+    "带出国": "portable",
+    "便携": "portable",
+    "香味": "fragrance"
+  }
+}

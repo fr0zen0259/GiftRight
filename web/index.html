@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GiftRight · 送礼决策助手</title>
+  <!-- 内联图标：避免浏览器自动请求 /favicon.ico 拿到 404，
+       在控制台留一条红色报错。用页面主色 --sun 底、--ink 字。 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F4CF51'/%3E%3Ctext x='16' y='23' font-size='19' font-family='serif' text-anchor='middle' fill='%23222924'%3E%E7%A4%BC%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css?v=20261120_v10_pixel_particle_full">
+</head>
+<body>
+  <!-- 像素粒子背景：极轻的 2~4px 方块缓慢上浮，铺在最底层。
+       动画在 app.js 的 initPixelField，prefers-reduced-motion 时不渲染。 -->
+  <canvas id="pixelField" aria-hidden="true"></canvas>
+
+  <!-- 点击粒子：点哪儿炸开一小簇方块，约 0.5 秒散尽。
+       单独一个 canvas，因为它必须盖在内容之上（z-index 3），
+       而背景粒子是铺在内容之下的（z-index 0）。
+       动画在 app.js 的 initClickBurst，reduced-motion 时不渲染。 -->
+  <canvas id="clickBurst" aria-hidden="true"></canvas>
+
+  <!-- 开场封面（100% 像素与粒子风格自洽工坊界面）：同会话只播一次，可跳过或一键拆礼进入 -->
+  <div class="intro" id="introOverlay" aria-hidden="true">
+    <canvas id="introCanvas" class="intro-canvas" aria-hidden="true"></canvas>
+    <div class="intro-backdrop"></div>
+    <div class="intro-content">
+      <div class="intro-cover-card pixel-dialogue-box">
+        <div class="intro-card-header">
+          <span class="pixel-stamp-seal">礼</span>
+          <div class="intro-header-text">
+            <strong>GIFTRIGHT · 像素心意工坊</strong>
+            <small>8-BIT GIFT CRAFT · 像素心意工坊</small>
+          </div>
+        </div>
+
+        <div class="intro-pixel-showcase">
+          <svg class="intro-pixel-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 140" width="100%" height="100%" style="image-rendering: pixelated; shape-rendering: crispEdges;">
+            <defs>
+              <pattern id="pixelGrid" width="4" height="4" patternUnits="userSpaceOnUse">
+                <rect width="4" height="4" fill="#FAF6EE"/>
+                <rect x="0" y="0" width="1" height="1" fill="#EFE8DA" opacity="0.4"/>
+              </pattern>
+            </defs>
+            <rect width="240" height="140" fill="url(#pixelGrid)" />
+            <rect x="0" y="0" width="240" height="8" fill="#EFE8DA" />
+            <rect x="0" y="8" width="240" height="2" fill="#D5CBB9" />
+            <rect x="0" y="104" width="240" height="36" fill="#D8CFBE" />
+            <rect x="0" y="104" width="240" height="3" fill="#E9E2D5" />
+            <rect x="0" y="107" width="240" height="2" fill="#BFAF9B" />
+            <rect x="0" y="118" width="240" height="2" fill="#CBBFAA" opacity="0.6"/>
+            <rect x="0" y="130" width="240" height="2" fill="#CBBFAA" opacity="0.6"/>
+            <rect x="24" y="98" width="18" height="2" fill="#047857" transform="rotate(-25 24 98)" />
+            <rect x="36" y="86" width="16" height="2" fill="#047857" transform="rotate(-40 36 86)" />
+            <rect x="22" y="90" width="6" height="4" fill="#10B981" />
+            <rect x="23" y="91" width="4" height="2" fill="#34D399" />
+            <rect x="30" y="82" width="7" height="5" fill="#059669" />
+            <rect x="31" y="83" width="5" height="3" fill="#34D399" />
+            <rect x="38" y="74" width="6" height="4" fill="#10B981" />
+            <rect x="42" y="68" width="5" height="4" fill="#047857" />
+            <rect x="20" y="86" width="3" height="3" fill="#E2E8F0" />
+            <rect x="36" y="78" width="3" height="3" fill="#CBD5E1" />
+            <rect x="46" y="66" width="3" height="3" fill="#E2E8F0" />
+            <rect x="48" y="67" width="1" height="1" fill="#FFFFFF" />
+            <rect x="42" y="108" width="22" height="14" fill="#F4EFE6" stroke="#D5CBB9" stroke-width="1"/>
+            <rect x="44" y="112" width="8" height="2" fill="#92400E" />
+            <rect x="44" y="116" width="14" height="2" fill="#B45309" opacity="0.7"/>
+            <rect x="60" y="110" width="2" height="2" fill="#78350F" />
+            <rect x="62" y="106" width="16" height="2" fill="#B45309" transform="rotate(15 62 106)" />
+            <rect x="84" y="106" width="72" height="8" fill="#BFAF9B" opacity="0.6"/>
+            <rect x="88" y="108" width="64" height="4" fill="#A89884" opacity="0.5"/>
+            <rect x="88" y="60" width="64" height="46" fill="#1E293B" />
+            <rect x="90" y="62" width="60" height="42" fill="#DC2626" />
+            <rect x="90" y="62" width="60" height="4" fill="#EF4444" />
+            <rect x="90" y="62" width="4" height="42" fill="#F87171" opacity="0.6"/>
+            <rect x="146" y="62" width="4" height="42" fill="#991B1B" />
+            <rect x="90" y="100" width="60" height="4" fill="#991B1B" />
+            <rect x="114" y="60" width="12" height="46" fill="#B45309" />
+            <rect x="116" y="60" width="8" height="46" fill="#F59E0B" />
+            <rect x="117" y="60" width="3" height="46" fill="#FDE68A" />
+            <rect x="88" y="78" width="64" height="10" fill="#B45309" />
+            <rect x="88" y="80" width="64" height="6" fill="#F59E0B" />
+            <rect x="88" y="81" width="64" height="2" fill="#FDE68A" />
+            <rect x="114" y="78" width="12" height="10" fill="#D97706" />
+            <rect x="116" y="80" width="8" height="6" fill="#FCD34D" />
+            <rect x="86" y="56" width="68" height="8" fill="#1E293B" />
+            <rect x="88" y="58" width="64" height="4" fill="#EF4444" />
+            <rect x="114" y="56" width="12" height="8" fill="#F59E0B" />
+            <rect x="117" y="56" width="3" height="8" fill="#FEF08A" />
+            <rect x="100" y="44" width="16" height="14" fill="#1E293B" />
+            <rect x="102" y="46" width="12" height="10" fill="#F59E0B" />
+            <rect x="104" y="48" width="6" height="6" fill="#FEF08A" />
+            <rect x="106" y="50" width="4" height="4" fill="#B45309" />
+            <rect x="124" y="44" width="16" height="14" fill="#1E293B" />
+            <rect x="126" y="46" width="12" height="10" fill="#F59E0B" />
+            <rect x="130" y="48" width="6" height="6" fill="#FEF08A" />
+            <rect x="130" y="50" width="4" height="4" fill="#B45309" />
+            <rect x="115" y="48" width="10" height="10" fill="#1E293B" />
+            <rect x="117" y="50" width="6" height="6" fill="#FCD34D" />
+            <rect x="119" y="52" width="2" height="2" fill="#FFFFFF" />
+            <rect x="130" y="70" width="16" height="16" fill="#7F1D1D" rx="2"/>
+            <rect x="132" y="72" width="12" height="12" fill="#DC2626" />
+            <rect x="134" y="74" width="8" height="8" fill="#B91C1C" />
+            <rect x="136" y="75" width="4" height="1" fill="#FEF08A" />
+            <rect x="137" y="76" width="2" height="4" fill="#FEF08A" />
+            <rect x="135" y="78" width="6" height="1" fill="#FEF08A" />
+            <rect x="136" y="80" width="1" height="2" fill="#FEF08A" />
+            <rect x="139" y="80" width="2" height="2" fill="#FEF08A" />
+            <rect x="168" y="92" width="34" height="24" fill="#1E293B" />
+            <rect x="170" y="94" width="30" height="20" fill="#FFFFFF" />
+            <polygon points="170,94 185,106 200,94" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+            <rect x="174" y="82" width="22" height="14" fill="#FEF9C3" stroke="#D5CBB9" stroke-width="1"/>
+            <rect x="178" y="86" width="14" height="2" fill="#D97706" />
+            <rect x="178" y="90" width="10" height="2" fill="#D97706" opacity="0.6"/>
+            <rect x="183" y="103" width="5" height="5" fill="#DC2626" />
+            <rect x="206" y="112" width="24" height="12" fill="transparent"/>
+            <rect x="208" y="116" width="12" height="2" fill="#94A3B8" transform="rotate(-15 208 116)" />
+            <rect x="208" y="118" width="12" height="2" fill="#64748B" transform="rotate(15 208 118)" />
+            <rect x="220" y="110" width="8" height="6" fill="#F59E0B" rx="1"/>
+            <rect x="222" y="112" width="4" height="2" fill="#D8CFBE" />
+            <rect x="220" y="120" width="8" height="6" fill="#F59E0B" rx="1"/>
+            <rect x="222" y="122" width="4" height="2" fill="#D8CFBE" />
+            <g class="pixel-star-1">
+              <rect x="72" y="32" width="3" height="9" fill="#F59E0B" />
+              <rect x="69" y="35" width="9" height="3" fill="#F59E0B" />
+              <rect x="72" y="35" width="3" height="3" fill="#FFFFFF" />
+            </g>
+            <g class="pixel-star-2">
+              <rect x="162" y="26" width="2" height="6" fill="#10B981" />
+              <rect x="160" y="28" width="6" height="2" fill="#10B981" />
+              <rect x="162" y="28" width="2" height="2" fill="#FFFFFF" />
+            </g>
+            <g class="pixel-star-3">
+              <rect x="120" y="18" width="3" height="7" fill="#FCD34D" />
+              <rect x="118" y="20" width="7" height="3" fill="#FCD34D" />
+              <rect x="120" y="20" width="3" height="3" fill="#FFFFFF" />
+            </g>
+            <rect x="52" y="48" width="3" height="3" fill="#F59E0B" opacity="0.85"/>
+            <rect x="64" y="68" width="2" height="2" fill="#DC2626" opacity="0.7"/>
+            <rect x="80" y="20" width="3" height="3" fill="#10B981" opacity="0.8"/>
+            <rect x="150" y="16" width="2" height="2" fill="#3B82F6" opacity="0.75"/>
+            <rect x="176" y="44" width="3" height="3" fill="#F59E0B" opacity="0.85"/>
+            <rect x="194" y="32" width="2" height="2" fill="#EC4899" opacity="0.7"/>
+            <rect x="188" y="70" width="3" height="3" fill="#10B981" opacity="0.8"/>
+          </svg>
+        </div>
+
+        <div class="intro-card-body">
+          <h2>「把心意送到点子上」</h2>
+          <p>贵的不一定合适，便宜的不一定失礼。在像素与粒子的世界里，挑一件刚刚好的心意。</p>
+        </div>
+
+        <div class="intro-card-footer">
+          <button type="button" class="intro-enter-btn pixel-action-btn" id="introEnterBtn">
+            <span>✦ 拆开礼物 · 开启工坊 ✦</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="intro-skip pixel-skip-btn" id="introSkip">[ ✕ 跳过开场 ]</button>
+  </div>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand"><span class="seal">礼</span><strong>GiftRight</strong></div>
+      <nav class="topbar-nav" aria-label="主导航">
+        <button type="button" class="top-link active" data-view="basicView">挑礼物</button>
+        <button type="button" class="top-link" data-view="chatView">礼物顾问</button>
+      </nav>
+      <div class="topbar-actions">
+        <!-- 状态指示胶囊：由 app.js 按真实状态填（整理中才显示），空时 CSS 不占位 -->
+        <div class="mode-pill" id="modePill" title=""></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ============ 首页：场景先行 ============ -->
+    <section class="workspace-view active" id="basicView">
+
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-grid-layout">
+            <div class="hero-copy-col">
+              <span class="hero-eyebrow">✦ GiftRight 礼物店 · 挑对不挑贵 ✦</span>
+              <h1>送礼这件事，<br><span class="em">先说说送给谁。</span></h1>
+              <p class="hero-lead">贵的不一定合适，便宜的不一定失礼。<br>把场合和对方告诉我，我来挑。</p>
+              <div class="hero-badges">
+                <span class="hero-micro-tag">▪ 实体手作</span>
+                <span class="hero-micro-tag">▪ 成品精选</span>
+                <span class="hero-micro-tag">▪ 禁忌排查</span>
+                <span class="hero-micro-tag">▪ 手写随礼贺卡</span>
+              </div>
+            </div>
+
+            <!-- 右侧封面海报卡片：纯正像素与粒子手作工坊海报 -->
+            <div class="hero-cover-col">
+              <div class="hero-cover-frame pixel-art-card">
+                <div class="cover-photo-box pixel-box-frame">
+                  <svg class="cover-photo-img pixel-art-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" width="100%" height="100%" style="image-rendering: pixelated; shape-rendering: crispEdges;">
+                    <defs>
+                      <pattern id="heroGrid" width="4" height="4" patternUnits="userSpaceOnUse">
+                        <rect width="4" height="4" fill="#FAF7F0"/>
+                        <rect x="0" y="0" width="1" height="1" fill="#E8DFD0" opacity="0.5"/>
+                      </pattern>
+                    </defs>
+                    <rect width="220" height="120" fill="url(#heroGrid)" />
+                    <rect x="0" y="0" width="220" height="6" fill="#EAE2D4" />
+                    <rect x="0" y="6" width="220" height="2" fill="#D5CBB9" />
+                    <rect x="0" y="84" width="220" height="36" fill="#D8CFBE" />
+                    <rect x="0" y="84" width="220" height="2" fill="#EFE8DD" />
+                    <rect x="0" y="86" width="220" height="2" fill="#BFB09D" />
+                    <rect x="0" y="98" width="220" height="2" fill="#CBBFAA" opacity="0.5"/>
+                    <rect x="16" y="76" width="14" height="18" fill="#1E293B" />
+                    <rect x="17" y="77" width="12" height="16" fill="#78350F" />
+                    <rect x="19" y="80" width="8" height="10" fill="#D97706" />
+                    <rect x="21" y="82" width="4" height="6" fill="#FEF08A" />
+                    <path d="M 30 88 Q 42 94 54 86" stroke="#D97706" stroke-width="1.5" fill="none" />
+                    <rect x="44" y="62" width="6" height="4" fill="#059669" />
+                    <rect x="48" y="56" width="6" height="4" fill="#10B981" />
+                    <rect x="52" y="50" width="5" height="4" fill="#34D399" />
+                    <rect x="42" y="68" width="16" height="2" fill="#047857" transform="rotate(-30 42 68)" />
+                    <rect x="76" y="86" width="64" height="6" fill="#BFAF9B" opacity="0.6"/>
+                    <rect x="80" y="48" width="56" height="40" fill="#1E293B" />
+                    <rect x="82" y="50" width="52" height="36" fill="#DC2626" />
+                    <rect x="82" y="50" width="52" height="3" fill="#EF4444" />
+                    <rect x="82" y="50" width="3" height="36" fill="#F87171" opacity="0.6"/>
+                    <rect x="131" y="50" width="3" height="36" fill="#991B1B" />
+                    <rect x="82" y="83" width="52" height="3" fill="#991B1B" />
+                    <rect x="103" y="48" width="10" height="40" fill="#B45309" />
+                    <rect x="105" y="48" width="6" height="40" fill="#F59E0B" />
+                    <rect x="106" y="48" width="2" height="40" fill="#FEF08A" />
+                    <rect x="80" y="64" width="56" height="8" fill="#B45309" />
+                    <rect x="80" y="66" width="56" height="4" fill="#F59E0B" />
+                    <rect x="80" y="67" width="56" height="2" fill="#FEF08A" />
+                    <rect x="94" y="34" width="12" height="12" fill="#1E293B" />
+                    <rect x="96" y="36" width="8" height="8" fill="#F59E0B" />
+                    <rect x="98" y="38" width="4" height="4" fill="#FEF08A" />
+                    <rect x="110" y="34" width="12" height="12" fill="#1E293B" />
+                    <rect x="112" y="36" width="8" height="8" fill="#F59E0B" />
+                    <rect x="114" y="38" width="4" height="4" fill="#FEF08A" />
+                    <rect x="104" y="38" width="8" height="8" fill="#1E293B" />
+                    <rect x="106" y="40" width="4" height="4" fill="#FCD34D" />
+                    <rect x="118" y="56" width="14" height="14" fill="#7F1D1D" rx="2"/>
+                    <rect x="120" y="58" width="10" height="10" fill="#DC2626" />
+                    <rect x="122" y="60" width="6" height="6" fill="#B91C1C" />
+                    <rect x="123" y="61" width="4" height="1" fill="#FEF08A" />
+                    <rect x="124" y="62" width="2" height="3" fill="#FEF08A" />
+                    <rect x="123" y="64" width="4" height="1" fill="#FEF08A" />
+                    <rect x="148" y="74" width="30" height="22" fill="#1E293B" />
+                    <rect x="150" y="76" width="26" height="18" fill="#FFFFFF" />
+                    <rect x="154" y="80" width="18" height="2" fill="#CBD5E1" />
+                    <rect x="154" y="84" width="14" height="2" fill="#CBD5E1" />
+                    <rect x="154" y="88" width="10" height="2" fill="#CBD5E1" />
+                    <rect x="168" y="78" width="6" height="6" fill="#DC2626" />
+                    <rect x="170" y="80" width="2" height="2" fill="#FEF08A" />
+                    <rect x="188" y="94" width="24" height="10" fill="transparent"/>
+                    <rect x="188" y="96" width="12" height="2" fill="#94A3B8" transform="rotate(-15 188 96)" />
+                    <rect x="188" y="98" width="12" height="2" fill="#64748B" transform="rotate(15 208 118)" />
+                    <rect x="198" y="92" width="6" height="5" fill="#F59E0B" rx="1"/>
+                    <rect x="198" y="100" width="6" height="5" fill="#F59E0B" rx="1"/>
+                    <g>
+                      <rect x="66" y="24" width="2" height="6" fill="#F59E0B" />
+                      <rect x="64" y="26" width="6" height="2" fill="#F59E0B" />
+                      <rect x="66" y="26" width="2" height="2" fill="#FFFFFF" />
+                    </g>
+                    <g>
+                      <rect x="146" y="20" width="2" height="6" fill="#10B981" />
+                      <rect x="144" y="22" width="6" height="2" fill="#10B981" />
+                      <rect x="146" y="22" width="2" height="2" fill="#FFFFFF" />
+                    </g>
+                    <rect x="36" y="38" width="2" height="2" fill="#F59E0B" opacity="0.8"/>
+                    <rect x="160" y="36" width="3" height="3" fill="#F59E0B" opacity="0.85"/>
+                    <rect x="178" y="26" width="2" height="2" fill="#EC4899" opacity="0.8"/>
+                    <rect x="94" y="14" width="2" height="2" fill="#3B82F6" opacity="0.8"/>
+                  </svg>
+                  <span class="cover-stamp pixel-stamp">礼</span>
+                  <div class="cover-tag-bar pixel-tag">
+                    <span>[ ✦ 认真准备 · 挑对不挑贵 ✦ ]</span>
+                  </div>
+                </div>
+                <div class="cover-info">
+                  <div class="cover-quote">“认真准备，是礼物的一部分。”</div>
+                  <div class="cover-sub">好礼物有迹可循 · 像素封缄与心意随行</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scene-head">
+            <strong>这次是什么场合？</strong>
+            <span>选一个最贴近的高频情境，一键带入预设（后面随时可调）</span>
+          </div>
+
+          <div class="scenes" id="sceneEntries">
+            <button type="button" class="scene" data-scene="student" data-preset="student" data-occasion="birthday" data-occasion-label="生日" data-relation="classmate" data-relation-label="同学">
+              <i>↗</i><strong>🎒 同学室友 · ¥50–150</strong><small>日常实用小确幸，预算友好不尴尬</small>
+            </button>
+            <button type="button" class="scene" data-scene="bestie" data-preset="bestie" data-occasion="celebration" data-occasion-label="庆祝" data-relation="friend" data-relation-label="朋友">
+              <i>↗</i><strong>👭 闺蜜好友 · ¥100–300</strong><small>高颜值审美走心，适合拍照打卡</small>
+            </button>
+            <button type="button" class="scene" data-scene="elder" data-preset="elder" data-occasion="holiday" data-occasion-label="节日" data-relation="family" data-relation-label="长辈/亲戚">
+              <i>↗</i><strong>🍵 拜访长辈 · ¥300–800</strong><small>体面大方，自动避开生冷禁忌与谐音雷区</small>
+            </button>
+            <button type="button" class="scene" data-scene="colleague" data-preset="colleague" data-occasion="thank_you" data-occasion-label="答谢" data-relation="colleague" data-relation-label="同事">
+              <i>↗</i><strong>💼 职场同事 · ¥80–200</strong><small>适度得体，有礼貌有边界感，不显过度私密</small>
+            </button>
+          </div>
+
+          <button type="button" class="scene-other" data-scroll="#wizardAnchor">
+            <span>都不符合？我慢慢自定义填写</span><span>↗</span>
+          </button>
+
+          <div class="intro-line">
+            <div class="bar"></div>
+            <span>说清场合</span><b>→</b><span>告诉我预算和忌讳</span><b>→</b><span>我给你挑</span>
+            <div class="bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 结果样例带：明确标注「示例展示」，不放任何未经当前查询支持的数字 -->
+      <section class="example-band">
+        <div class="wrap example-inner">
+          <div class="example-label">挑出来大概是这样<br><small>这是示例，不是你的结果</small></div>
+          <div class="example-cell">
+            <span>你说的</span>
+            <strong id="sceneEcho">朋友 · 生日</strong>
+            <small>喜欢喝茶，不想太高调</small>
+          </div>
+          <div class="example-cell">
+            <span>我会挑</span>
+            <strong>一份好茶与手写卡片</strong>
+            <small>天天用得上，也记得住是谁送的</small>
+          </div>
+          <div class="example-cell">
+            <span>但得提醒你</span>
+            <strong>参考价 ¥80–180</strong>
+            <small class="caution">先确认对方是否喝茶</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 四步填写工作台 ============ -->
+      <section class="wizard-section" id="wizardAnchor">
+        <div class="wizard-shell">
+
+          <aside class="wizard-aside">
+            <span class="aside-step" id="wizardProgressLabel">第 1 / 4 步 · 场合</span>
+            <h2 class="aside-question" id="asideQuestion">这份礼物，<br>准备在什么时候送？</h2>
+            <p class="aside-help" id="asideHelp">拿不准就随便选一个，回头能改。</p>
+            <div class="aside-trail">
+              <span class="trail-label">记下了</span>
+              <ol class="trail-list" id="trailList">
+                <li class="trail-item" data-trail="1">
+                  <span class="trail-step">1</span>
+                  <span class="trail-body">
+                    <span class="trail-name">场合</span>
+                    <span class="trail-value" data-trail-value="1">生日</span>
+                  </span>
+                </li>
+                <li class="trail-item" data-trail="2">
+                  <span class="trail-step">2</span>
+                  <span class="trail-body">
+                    <span class="trail-name">对象</span>
+                    <span class="trail-value" data-trail-value="2">朋友 · 不指定</span>
+                  </span>
+                </li>
+                <li class="trail-item" data-trail="3">
+                  <span class="trail-step">3</span>
+                  <span class="trail-body">
+                    <span class="trail-name">方式与预算</span>
+                    <span class="trail-value" data-trail-value="3">成品 · 30–300 元</span>
+                  </span>
+                </li>
+                <li class="trail-item" data-trail="4">
+                  <span class="trail-step">4</span>
+                  <span class="trail-body">
+                    <span class="trail-name">心意与避开</span>
+                    <span class="trail-value" data-trail-value="4">还没填</span>
+                  </span>
+                </li>
+              </ol>
+              <p class="trail-text" id="trailText" hidden>还没开始填</p>
+            </div>
+          </aside>
+
+          <div class="wizard-main">
+            <div class="wizard-progress" aria-hidden="true">
+              <span class="wizard-dot" data-dot="1"></span>
+              <span class="wizard-dot" data-dot="2"></span>
+              <span class="wizard-dot" data-dot="3"></span>
+              <span class="wizard-dot" data-dot="4"></span>
+            </div>
+
+            <form id="giftForm" class="wizard">
+
+              <!-- 问 1：什么时候送 -->
+              <div class="wizard-step active" data-step="1">
+                <p class="wizard-question">这份礼物，准备在什么时候送？</p>
+                <div class="choice-grid" id="occasionChoices">
+                  <button type="button" class="choice selected" data-value="birthday" data-label="生日">生日</button><button type="button" class="choice" data-value="thank_you" data-label="答谢">答谢</button><button type="button" class="choice" data-value="graduation" data-label="毕业">毕业</button><button type="button" class="choice" data-value="onboarding" data-label="入职">入职</button><button type="button" class="choice" data-value="celebration" data-label="庆祝">庆祝</button><button type="button" class="choice" data-value="holiday" data-label="节日">节日</button><button type="button" class="choice" data-value="other" data-label="其他">其他</button>
+                </div>
+                <label class="field wizard-field"><span>有具体说法就写上，我听你的</span><input id="occasionCustom" type="text" placeholder="例如：春节去拜访长辈、同事即将离职"></label>
+              </div>
+
+              <!-- 问 2：送给谁 -->
+              <div class="wizard-step" data-step="2">
+                <p class="wizard-question">这份心意，送给谁？</p>
+                <div class="choice-grid" id="relationChoices">
+                  <button type="button" class="choice selected" data-value="friend" data-label="朋友">朋友</button><button type="button" class="choice" data-value="partner" data-label="情侣/配偶">情侣 / 配偶</button><button type="button" class="choice" data-value="mentor" data-label="导师/老师">导师 / 老师</button><button type="button" class="choice" data-value="colleague" data-label="同事">同事</button><button type="button" class="choice" data-value="manager" data-label="上级">上级</button><button type="button" class="choice" data-value="family" data-label="长辈/亲戚">长辈 / 亲戚</button><button type="button" class="choice" data-value="classmate" data-label="同学">同学</button><button type="button" class="choice" data-value="other" data-label="其他">其他</button>
+                </div>
+                <label class="field wizard-field"><span>关系再具体点？（可选）</span><input id="relationCustom" type="text" placeholder="例如：刚认识的合作方、不太熟的长辈"></label>
+                <p class="wizard-question wizard-question-sub">对方是男是女？</p>
+                <div class="choice-grid recipient-gender-grid" id="recipientGenderChoices">
+                  <button type="button" class="choice selected" data-value="" data-label="不指定">不指定</button><button type="button" class="choice" data-value="male" data-label="偏男性">偏男性</button><button type="button" class="choice" data-value="female" data-label="偏女性">偏女性</button>
+                </div>
+                <p class="mode-help">不确定就选不指定，我按关系来挑。</p>
+                <p class="wizard-question wizard-question-sub">有什么要避开的？</p>
+                <div class="tag-grid wizard-field" id="preferenceChoices"><label class="tag-option"><input type="checkbox" value="non_alcoholic"><span>不饮酒</span></label><label class="tag-option"><input type="checkbox" value="halal"><span>清真</span></label><label class="tag-option"><input type="checkbox" value="vegetarian"><span>素食</span></label><label class="tag-option"><input type="checkbox" value="no_animal_products"><span>避免动物制品</span></label><label class="tag-option"><input type="checkbox" value="avoid_fragrance"><span>避免香味</span></label><label class="tag-option"><input type="checkbox" value="allergy_free"><span>需要注意过敏原</span></label></div>
+              </div>
+
+              <!-- 问 3：买还是做、花多少 -->
+              <div class="wizard-step" data-step="3">
+                <p class="wizard-question">买现成的，还是自己做？</p>
+                <div class="choice-grid gift-mode-grid" id="giftModeChoices">
+                  <button type="button" class="choice selected" data-value="purchased" data-label="购买礼物"><strong>买现成的</strong><small>我告诉你参考价和坑，买哪件你定</small></button>
+                  <button type="button" class="choice" data-value="diy" data-label="自制礼物"><strong>自己做</strong><small>材料、步骤、怎么存，我都写清楚</small></button>
+                </div>
+                <p class="mode-help">选一种就看一种，两种都选就各挑一组。</p>
+                <p class="wizard-question wizard-question-sub">打算花多少？</p>
+                <div class="budget-row"><label class="field"><span>最低</span><input id="budgetMin" type="number" min="0" step="0.01" value="30"></label><span class="dash">—</span><label class="field"><span>最高</span><input id="budgetMax" type="number" min="1" step="0.01" value="300"></label><span class="currency">元</span></div>
+                <p class="mode-help mode-help-budget">自己做只算材料费，不算你的功夫；最低预算只管买现成的。</p>
+                <div class="two-column"><label class="field"><span>对方在哪个省？（可选）</span><input id="recipientRegion" type="text" placeholder="例如广东、福州、四川"></label><label class="field"><span>你在哪儿？（可选）</span><input id="userRegion" type="text" placeholder="例如北京、杭州"></label></div>
+                <div class="toggle-grid"><label class="toggle-option"><input id="acceptFoodDiy" type="checkbox" checked><span>接受自制食品</span></label><label class="toggle-option"><input id="acceptFragranceDiy" type="checkbox" checked><span>接受香味类手作</span></label></div>
+              </div>
+
+              <!-- 问 4：心意与避开 -->
+              <div class="wizard-step" data-step="4">
+                <p class="wizard-question">想送个什么意思？</p>
+                <textarea id="freeText" rows="4" placeholder="例如：他最近在健身，平时喜欢喝茶；我们关系不错但不想太高调"></textarea>
+                <div class="examples"><span>不知道怎么说？点一个：</span><button type="button" data-text="他最近在健身，平时喜欢喝茶">健身 + 喝茶</button><button type="button" data-text="不要太高调，但希望能看出我花了时间">低调但有心意</button><button type="button" data-text="我愿意花一个晚上亲手做">我想亲手做</button></div>
+                <label class="field wizard-field"><span>有什么千万别送的？（可选）</span><textarea id="avoidCustom" rows="2" placeholder="例如：不要太高调、不要甜食、不要带花粉"></textarea></label>
+              </div>
+
+              <div class="form-status hidden" id="formStatus" role="status" aria-live="polite"></div>
+
+              <div class="wizard-actions">
+                <button type="button" class="button secondary hidden" id="wizardPrev">上一步</button>
+                <button type="button" class="button secondary hidden" id="wizardHome">返回首页</button>
+                <span class="wizard-actions-spacer"></span>
+                <button type="button" class="button primary" id="wizardNext">下一步</button>
+                <button type="submit" class="button primary hidden" id="nextButton">看看挑了哪些</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ 结果：购买 ============ -->
+    <section class="workspace-view" id="purchasedView">
+      <div class="results-intro">
+        <div class="ri-main">
+          <h1 class="results-title" id="purchasedTitle">先看这几件</h1>
+          <p class="results-sub">每件我都写了为什么挑它、大概多少钱、要注意什么。</p>
+          <div class="results-conditions" id="purchasedConditions"></div>
+          <div class="results-tabs" id="purchasedTabs">
+            <button type="button" class="tab active" data-view="purchasedView" data-mode-nav="purchased">成品礼物</button>
+            <button type="button" class="tab" data-view="diyView" data-mode-nav="diy">亲手做</button>
+          </div>
+        </div>
+        <div class="ri-aside">
+          <button class="results-edit" data-go="basicView">修改条件 ↗</button>
+          <small id="purchasedChoiceNote">这次选择：成品礼物</small>
+        </div>
+      </div>
+      <div class="results-statusbar">
+        <span class="ai-state" id="purchasedAiState"></span>
+        <span class="page-range" id="purchasedPageRange"></span>
+      </div>
+      <div class="selection-summary" id="purchasedSelection"><span class="selection-dot"></span><span>挑好了告诉我</span></div>
+      
+      <!-- 融入像素方案优点 2：避坑拦截透明看板 (Filter Transparency Guard) -->
+      <div class="transparency-guard-card" id="transparencyGuard">
+        <div class="guard-header">
+          <div class="guard-header-left">
+            <span class="guard-icon">🛡️</span>
+            <div class="guard-titles">
+              <strong>心意避坑护栏已开启</strong>
+              <small>已结合 100+ 条地域民俗礼忌、过敏原与预算限制进行全流程排查</small>
+            </div>
+          </div>
+          <button type="button" class="guard-toggle-btn" id="guardToggleBtn">查看拦截明细 ▾</button>
+        </div>
+        <div class="guard-body hidden" id="guardBody">
+          <div class="guard-grid">
+            <div class="guard-col">
+              <span class="guard-col-icon">💰</span>
+              <strong>严格预算锁</strong>
+              <p>精确锁定预算上下限，杜绝劣质低端品与天价溢价品。</p>
+            </div>
+            <div class="guard-col">
+              <span class="guard-col-icon">⚠️</span>
+              <strong>民俗禁忌排查</strong>
+              <p>排查谐音、白花、钟表、利刃等 100+ 条传统送礼避讳。</p>
+            </div>
+            <div class="guard-col">
+              <span class="guard-col-icon">🌿</span>
+              <strong>成分与偏好排查</strong>
+              <p>按需过滤酒精、动物皮革、香味、坚果过敏原，杜绝健康隐患。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dify-waiting hidden" id="difyWaiting"><span class="wait-dot"></span><span id="difyWaitTip">我再过一遍，一两分钟。<br>下面这些先看着，不用干等。</span></div>
+      <div class="scene-taboo" id="sceneTaboo"></div>
+      <div class="result-status hidden" id="purchasedStatus" role="status" aria-live="polite"></div>
+      <div class="cards" id="purchasedCards"></div><nav class="pagination hidden" id="purchasedPagination" aria-label="购买礼物分页"></nav>
+      <div class="page-notices hidden" id="pageNotices"></div>
+    </section>
+
+    <!-- ============ 结果：手作 ============ -->
+    <section class="workspace-view" id="diyView">
+      <div class="results-intro">
+        <div class="ri-main">
+          <h1 class="results-title" id="diyTitle">先看这几份手作方案</h1>
+          <p class="results-sub">从材料、制作步骤到保存方式，提前看看哪一份手作适合你。</p>
+          <div class="results-conditions" id="diyConditions"></div>
+          <div class="results-tabs" id="diyTabs">
+            <button type="button" class="tab" data-view="purchasedView" data-mode-nav="purchased">成品礼物</button>
+            <button type="button" class="tab active" data-view="diyView" data-mode-nav="diy">亲手做</button>
+          </div>
+        </div>
+        <div class="ri-aside">
+          <button class="results-edit" data-go="basicView">修改条件 ↗</button>
+          <small id="diyChoiceNote">这次选择：亲手做</small>
+        </div>
+      </div>
+      <div class="results-statusbar">
+        <span class="ai-state" id="diyAiState"></span>
+        <span class="page-range" id="diyPageRange"></span>
+      </div>
+      <div class="selection-summary" id="diySelection"><span class="selection-dot"></span><span>挑好了告诉我</span></div>
+      <div class="dify-waiting hidden" id="diyDifyWaiting"><span class="wait-dot"></span><span>AI 正在整理手作方案，大概一两分钟。<br>你可以先想想，愿意为它花几个晚上。</span></div>
+      <div class="scene-taboo" id="diySceneTaboo"></div>
+      <div class="result-status hidden" id="diyStatus" role="status" aria-live="polite"></div>
+      <div class="cards" id="diyCards"></div><nav class="pagination hidden" id="diyPagination" aria-label="自制礼物分页"></nav>
+      <div class="page-notices hidden" id="diyPageNotices"></div>
+    </section>
+
+    <!-- ============ 礼物顾问 ============ -->
+    <section class="workspace-view" id="chatView">
+      <div class="advisor-head">
+        <div>
+          <span class="overline">还有拿不准的</span>
+          <h2>拿不准的，<br>直接问我。</h2>
+          <p>哪件更合适、怎么做、怎么存、有什么讲究，问就是了。</p>
+        </div>
+        <button class="text-button" data-go="basicView">回去看礼物 ↗</button>
+      </div>
+
+      <!-- 像素化上下文同步指示条 -->
+      <div class="chat-context-pill" id="chatContextPill">
+        <span class="context-tag">✦ 咨询上下文已联结</span>
+        <span class="context-info" id="chatContextSummary">正在同步场合、预算与已选礼物状态...</span>
+      </div>
+
+      <section class="chat-panel standalone-chat">
+        <div class="chat-messages" id="chatMessages"><div class="chat-message assistant"><div class="chat-avatar">礼</div><div class="chat-bubble">随便问，比如：<br>· 这次的收礼人喜欢什么，我该从哪里想？<br>· 手工黄油曲奇礼袋怎么保存？<br>· 送长辈钟表合适吗？</div></div></div>
+
+        <!-- 快速推荐问答 Chips -->
+        <div class="chat-prompt-chips" id="chatPromptChips">
+          <span class="chips-label">✦ 快速问答：</span>
+          <button type="button" class="prompt-chip" data-prompt="送长辈有什么绝对不能踩的传统忌讳？">▪ 送长辈有什么忌讳？</button>
+          <button type="button" class="prompt-chip" data-prompt="当前选中的礼物，怎么包装或搭配随手礼更有心意？">▪ 包装与心意搭配</button>
+          <button type="button" class="prompt-chip" data-prompt="随礼贺卡上的附言怎么写才显得有分寸又真诚？">▪ 贺卡措辞指点</button>
+          <button type="button" class="prompt-chip" data-prompt="如果预算想控制在更低一点，有什么高性价比替代？">▪ 更低预算替代方案</button>
+        </div>
+
+        <form class="chat-form" id="chatForm"><input id="chatInput" aria-label="想问的问题" placeholder="问我什么都行，回车或点发送..."><button type="submit" class="button primary chat-send-btn">发送 ✦</button></form>
+      </section>
+      <div class="scope-note">我会记得你这次说的场合、预算和选中的礼物。价格和库存以商品页为准，我这边只能给个大概。</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">GiftRight · 送对了，比送贵了重要</footer>
+
+  <!-- 结果页交互闭环：已选礼物底部悬浮操作条 (Action Dock) -->
+  <aside class="selection-dock hidden" id="selectionDock" aria-label="已选礼物操作条">
+    <div class="dock-container">
+      <div class="dock-info">
+        <span class="dock-tag">✦ 已敲定心意</span>
+        <div class="dock-meta">
+          <strong class="dock-title" id="dockTitle">未选择礼物</strong>
+          <span class="dock-price" id="dockPrice">¥0</span>
+        </div>
+      </div>
+      <div class="dock-actions">
+        <button type="button" class="dock-btn dock-btn-copy" id="dockCopyMemoBtn" title="复制包含理由与避坑提示的完整选购备忘">
+          <span>📋 复制选购备忘</span>
+        </button>
+        <button type="button" class="dock-btn dock-btn-letter" id="dockLetterBtn" title="打开随礼手写贺卡">
+          <span>💌 随礼贺卡</span>
+        </button>
+        <button type="button" class="dock-btn dock-btn-advisor" id="dockAdvisorBtn" title="带入此礼物向顾问咨询搭配与包装">
+          <span>💬 问顾问搭配 ↗</span>
+        </button>
+        <button type="button" class="dock-btn dock-btn-clear" id="dockClearBtn" title="取消选中此礼物">
+          <span>✕ 取消</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 融入像素方案优点 3：复古羊皮纸手写贺卡展开弹窗 (Envelope Letter Modal) -->
+  <dialog class="letter-dialog" id="letterDialog">
+    <div class="letter-modal-wrap">
+      <div class="letter-envelope-top">
+        <div class="stamp-and-title">
+          <span class="stamp-seal">礼</span>
+          <span class="letter-modal-tag" id="letterItemBadge">✦ 专属定制好礼</span>
+        </div>
+        <button class="letter-close-btn" type="button" id="closeLetterBtn" aria-label="关闭贺卡">✕</button>
+      </div>
+      <div class="letter-paper">
+        <div class="letter-paper-header">
+          <div class="paper-header-row">
+            <span class="paper-kicker">✦ 心意手记 · 随礼贺卡 ✦</span>
+            <div class="letter-style-tabs" id="letterStyleTabs">
+              <button type="button" class="letter-style-tab active" data-style="custom">✦ 心意定制</button>
+              <button type="button" class="letter-style-tab" data-style="warm">温情真挚</button>
+              <button type="button" class="letter-style-tab" data-style="casual">轻松日常</button>
+            </div>
+          </div>
+          <h4 id="letterRecipientTitle" contenteditable="true" title="点击可编辑称呼">致亲爱的朋友：</h4>
+        </div>
+        <div class="letter-paper-body">
+          <div id="letterMessageText" contenteditable="true" spellcheck="false" title="点击可直接手写修改贺卡正文"></div>
+          <div class="letter-edit-tip">✎ 提示：点击文字可直接修改称呼与祝福；支持多风格一键切换</div>
+        </div>
+        <div class="letter-paper-footer">
+          <span class="paper-date" id="letterCurrentDate">GiftRight 送礼助手</span>
+          <span class="paper-sig" id="letterSenderSign" contenteditable="true" title="点击可修改署名">心意随行</span>
+        </div>
+      </div>
+      <div class="letter-actions">
+        <button class="letter-action-sub" type="button" id="shuffleLetterBtn" title="切换同风格不同表达">
+          <span>🎲 换一句</span>
+        </button>
+        <button class="letter-action-sub" type="button" id="askAdvisorLetterBtn" title="唤起礼物顾问针对此礼物撰写更多贺词">
+          <span>💬 顾问润色</span>
+        </button>
+        <button class="copy-letter-btn" type="button" id="copyLetterBtn">
+          <span>📋 复制贺卡全篇</span>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 全局轻提示 -->
+  <div class="app-toast" id="appToast" role="status" aria-live="polite"></div>
+
+  <script src="./app.js?v=20261120_v13_preserve_nav_state"></script>
+</body>
+</html>

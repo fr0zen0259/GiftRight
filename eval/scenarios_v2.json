@@ -1,0 +1,1327 @@
+[
+  {
+    "id": "s01-v1",
+    "label": "答谢导师，不饮酒 / 变体 1",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "mentor",
+      "relation_label": "导师/老师",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 3,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": "不要太高调"
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [
+      "g-001",
+      "g-002",
+      "g-003",
+      "g-004",
+      "g-006",
+      "g-012"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s01-v2",
+    "label": "答谢导师，不饮酒 / 变体 2",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "mentor",
+      "relation_label": "导师/老师",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 1,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": "不要太高调"
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s01-v3",
+    "label": "答谢导师，不饮酒 / 变体 3",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "mentor",
+      "relation_label": "导师/老师",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": 3,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": "不要太高调"
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s01-v4",
+    "label": "答谢导师，不饮酒 / 变体 4",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "mentor",
+      "relation_label": "导师/老师",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 3,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": "不要太高调 最好方便带出国"
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s01-v5",
+    "label": "答谢导师，不饮酒 / 变体 5",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "mentor",
+      "relation_label": "导师/老师",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": null,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": "不要太高调",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s02-v1",
+    "label": "朋友生日，喜欢健身 / 变体 1",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 200,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "他最近在健身"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [
+      "g-006",
+      "g-007",
+      "g-018"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s02-v2",
+    "label": "朋友生日，喜欢健身 / 变体 2",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 200,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "他最近在健身"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s02-v3",
+    "label": "朋友生日，喜欢健身 / 变体 3",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "他最近在健身"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s02-v4",
+    "label": "朋友生日，喜欢健身 / 变体 4",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 200,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "他最近在健身 最好方便带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s02-v5",
+    "label": "朋友生日，喜欢健身 / 变体 5",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 200,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "他最近在健身",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s03-v1",
+    "label": "同事离职，避免香味 / 变体 1",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "送别/答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 50,
+      "budget_max": 200,
+      "days_left": 2,
+      "hard_preferences": [
+        "avoid_fragrance"
+      ],
+      "free_text": "最好实用、低调"
+    },
+    "must_not_recommend_tags": [
+      "fragrance"
+    ],
+    "must_include_any": [
+      "g-003",
+      "g-004",
+      "g-006",
+      "g-012",
+      "g-018"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s03-v2",
+    "label": "同事离职，避免香味 / 变体 2",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "送别/答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 50,
+      "budget_max": 200,
+      "days_left": 1,
+      "hard_preferences": [
+        "avoid_fragrance"
+      ],
+      "free_text": "最好实用、低调"
+    },
+    "must_not_recommend_tags": [
+      "fragrance"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s03-v3",
+    "label": "同事离职，避免香味 / 变体 3",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "送别/答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 50,
+      "budget_max": 150,
+      "days_left": 2,
+      "hard_preferences": [
+        "avoid_fragrance"
+      ],
+      "free_text": "最好实用、低调"
+    },
+    "must_not_recommend_tags": [
+      "fragrance"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s03-v4",
+    "label": "同事离职，避免香味 / 变体 4",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "送别/答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 50,
+      "budget_max": 200,
+      "days_left": 2,
+      "hard_preferences": [
+        "avoid_fragrance"
+      ],
+      "free_text": "最好实用、低调 最好方便带出国"
+    },
+    "must_not_recommend_tags": [
+      "fragrance"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s03-v5",
+    "label": "同事离职，避免香味 / 变体 5",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "送别/答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 50,
+      "budget_max": 200,
+      "days_left": null,
+      "hard_preferences": [
+        "avoid_fragrance"
+      ],
+      "free_text": "最好实用、低调",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [
+      "fragrance"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s04-v1",
+    "label": "朋友预算很低 / 变体 1",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 0,
+      "budget_max": 100,
+      "days_left": 2,
+      "hard_preferences": [],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [
+      "g-003",
+      "g-005",
+      "g-012"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s04-v2",
+    "label": "朋友预算很低 / 变体 2",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 0,
+      "budget_max": 100,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s04-v3",
+    "label": "朋友预算很低 / 变体 3",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 0,
+      "budget_max": 100,
+      "days_left": 2,
+      "hard_preferences": [],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s04-v4",
+    "label": "朋友预算很低 / 变体 4",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 0,
+      "budget_max": 100,
+      "days_left": 2,
+      "hard_preferences": [],
+      "free_text": "最好方便带出国"
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s04-v5",
+    "label": "朋友预算很低 / 变体 5",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 0,
+      "budget_max": 100,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s05-v1",
+    "label": "清真饮食 / 变体 1",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 80,
+      "budget_max": 250,
+      "days_left": 3,
+      "hard_preferences": [
+        "halal"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol",
+      "non_halal"
+    ],
+    "must_include_any": [
+      "g-001",
+      "g-002",
+      "g-003",
+      "g-004",
+      "g-006",
+      "g-008",
+      "g-012"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s05-v2",
+    "label": "清真饮食 / 变体 2",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 80,
+      "budget_max": 250,
+      "days_left": 1,
+      "hard_preferences": [
+        "halal"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol",
+      "non_halal"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s05-v3",
+    "label": "清真饮食 / 变体 3",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 80,
+      "budget_max": 150,
+      "days_left": 3,
+      "hard_preferences": [
+        "halal"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol",
+      "non_halal"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s05-v4",
+    "label": "清真饮食 / 变体 4",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 80,
+      "budget_max": 250,
+      "days_left": 3,
+      "hard_preferences": [
+        "halal"
+      ],
+      "free_text": "最好方便带出国"
+    },
+    "must_not_recommend_tags": [
+      "alcohol",
+      "non_halal"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s05-v5",
+    "label": "清真饮食 / 变体 5",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 80,
+      "budget_max": 250,
+      "days_left": null,
+      "hard_preferences": [
+        "halal"
+      ],
+      "free_text": "",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [
+      "alcohol",
+      "non_halal"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s06-v1",
+    "label": "素食长辈 / 变体 1",
+    "intent": {
+      "occasion": "holiday",
+      "occasion_label": "节日",
+      "recipient_relation": "family",
+      "relation_label": "长辈/亲戚",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 5,
+      "hard_preferences": [
+        "vegetarian"
+      ],
+      "free_text": "希望包装不要太高调"
+    },
+    "must_not_recommend_tags": [
+      "meat"
+    ],
+    "must_include_any": [
+      "g-002",
+      "g-004",
+      "g-006",
+      "g-012"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s06-v2",
+    "label": "素食长辈 / 变体 2",
+    "intent": {
+      "occasion": "holiday",
+      "occasion_label": "节日",
+      "recipient_relation": "family",
+      "relation_label": "长辈/亲戚",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 1,
+      "hard_preferences": [
+        "vegetarian"
+      ],
+      "free_text": "希望包装不要太高调"
+    },
+    "must_not_recommend_tags": [
+      "meat"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s06-v3",
+    "label": "素食长辈 / 变体 3",
+    "intent": {
+      "occasion": "holiday",
+      "occasion_label": "节日",
+      "recipient_relation": "family",
+      "relation_label": "长辈/亲戚",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": 5,
+      "hard_preferences": [
+        "vegetarian"
+      ],
+      "free_text": "希望包装不要太高调"
+    },
+    "must_not_recommend_tags": [
+      "meat"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s06-v4",
+    "label": "素食长辈 / 变体 4",
+    "intent": {
+      "occasion": "holiday",
+      "occasion_label": "节日",
+      "recipient_relation": "family",
+      "relation_label": "长辈/亲戚",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 5,
+      "hard_preferences": [
+        "vegetarian"
+      ],
+      "free_text": "希望包装不要太高调 最好方便带出国"
+    },
+    "must_not_recommend_tags": [
+      "meat"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s06-v5",
+    "label": "素食长辈 / 变体 5",
+    "intent": {
+      "occasion": "holiday",
+      "occasion_label": "节日",
+      "recipient_relation": "family",
+      "relation_label": "长辈/亲戚",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": null,
+      "hard_preferences": [
+        "vegetarian"
+      ],
+      "free_text": "希望包装不要太高调",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [
+      "meat"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s07-v1",
+    "label": "避免动物制品 / 变体 1",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 4,
+      "hard_preferences": [
+        "no_animal_products"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "animal_product"
+    ],
+    "must_include_any": [
+      "g-001",
+      "g-002",
+      "g-003",
+      "g-004",
+      "g-006",
+      "g-008",
+      "g-012"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s07-v2",
+    "label": "避免动物制品 / 变体 2",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 1,
+      "hard_preferences": [
+        "no_animal_products"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "animal_product"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s07-v3",
+    "label": "避免动物制品 / 变体 3",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": 4,
+      "hard_preferences": [
+        "no_animal_products"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "animal_product"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s07-v4",
+    "label": "避免动物制品 / 变体 4",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 4,
+      "hard_preferences": [
+        "no_animal_products"
+      ],
+      "free_text": "最好方便带出国"
+    },
+    "must_not_recommend_tags": [
+      "animal_product"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s07-v5",
+    "label": "避免动物制品 / 变体 5",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": null,
+      "hard_preferences": [
+        "no_animal_products"
+      ],
+      "free_text": "",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [
+      "animal_product"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s08-v1",
+    "label": "送礼日期过近 / 变体 1",
+    "intent": {
+      "occasion": "graduation",
+      "occasion_label": "毕业",
+      "recipient_relation": "classmate",
+      "relation_label": "同学",
+      "budget_min": 100,
+      "budget_max": 350,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "需要尽快收到"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [
+      "g-003",
+      "g-005",
+      "g-014",
+      "g-015"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s08-v2",
+    "label": "送礼日期过近 / 变体 2",
+    "intent": {
+      "occasion": "graduation",
+      "occasion_label": "毕业",
+      "recipient_relation": "classmate",
+      "relation_label": "同学",
+      "budget_min": 100,
+      "budget_max": 350,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "需要尽快收到"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s08-v3",
+    "label": "送礼日期过近 / 变体 3",
+    "intent": {
+      "occasion": "graduation",
+      "occasion_label": "毕业",
+      "recipient_relation": "classmate",
+      "relation_label": "同学",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "需要尽快收到"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s08-v4",
+    "label": "送礼日期过近 / 变体 4",
+    "intent": {
+      "occasion": "graduation",
+      "occasion_label": "毕业",
+      "recipient_relation": "classmate",
+      "relation_label": "同学",
+      "budget_min": 100,
+      "budget_max": 350,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "需要尽快收到 最好方便带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s08-v5",
+    "label": "送礼日期过近 / 变体 5",
+    "intent": {
+      "occasion": "graduation",
+      "occasion_label": "毕业",
+      "recipient_relation": "classmate",
+      "relation_label": "同学",
+      "budget_min": 100,
+      "budget_max": 350,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "需要尽快收到",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s09-v1",
+    "label": "不确定的香味偏好 / 变体 1",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 150,
+      "budget_max": 350,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "她可能不喜欢香味"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [
+      "g-001",
+      "g-003",
+      "g-006",
+      "g-012"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s09-v2",
+    "label": "不确定的香味偏好 / 变体 2",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 150,
+      "budget_max": 350,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "她可能不喜欢香味"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s09-v3",
+    "label": "不确定的香味偏好 / 变体 3",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 150,
+      "budget_max": 150,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "她可能不喜欢香味"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s09-v4",
+    "label": "不确定的香味偏好 / 变体 4",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 150,
+      "budget_max": 350,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "她可能不喜欢香味 最好方便带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s09-v5",
+    "label": "不确定的香味偏好 / 变体 5",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 150,
+      "budget_max": 350,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "她可能不喜欢香味",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s10-v1",
+    "label": "便携礼物 / 变体 1",
+    "intent": {
+      "occasion": "onboarding",
+      "occasion_label": "入职",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 100,
+      "budget_max": 250,
+      "days_left": 3,
+      "hard_preferences": [],
+      "free_text": "最好能带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [
+      "g-001",
+      "g-002",
+      "g-006",
+      "g-018"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s10-v2",
+    "label": "便携礼物 / 变体 2",
+    "intent": {
+      "occasion": "onboarding",
+      "occasion_label": "入职",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 100,
+      "budget_max": 250,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "最好能带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s10-v3",
+    "label": "便携礼物 / 变体 3",
+    "intent": {
+      "occasion": "onboarding",
+      "occasion_label": "入职",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": 3,
+      "hard_preferences": [],
+      "free_text": "最好能带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s10-v4",
+    "label": "便携礼物 / 变体 4",
+    "intent": {
+      "occasion": "onboarding",
+      "occasion_label": "入职",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 100,
+      "budget_max": 250,
+      "days_left": 3,
+      "hard_preferences": [],
+      "free_text": "最好能带出国 最好方便带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s10-v5",
+    "label": "便携礼物 / 变体 5",
+    "intent": {
+      "occasion": "onboarding",
+      "occasion_label": "入职",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 100,
+      "budget_max": 250,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "最好能带出国",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s11-v1",
+    "label": "预算不足以覆盖部分候选 / 变体 1",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "manager",
+      "relation_label": "上级",
+      "budget_min": 100,
+      "budget_max": 180,
+      "days_left": 3,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [
+      "g-001",
+      "g-002",
+      "g-004",
+      "g-006",
+      "g-012",
+      "g-018"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s11-v2",
+    "label": "预算不足以覆盖部分候选 / 变体 2",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "manager",
+      "relation_label": "上级",
+      "budget_min": 100,
+      "budget_max": 180,
+      "days_left": 1,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s11-v3",
+    "label": "预算不足以覆盖部分候选 / 变体 3",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "manager",
+      "relation_label": "上级",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": 3,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s11-v4",
+    "label": "预算不足以覆盖部分候选 / 变体 4",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "manager",
+      "relation_label": "上级",
+      "budget_min": 100,
+      "budget_max": 180,
+      "days_left": 3,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": "最好方便带出国"
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s11-v5",
+    "label": "预算不足以覆盖部分候选 / 变体 5",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "manager",
+      "relation_label": "上级",
+      "budget_min": 100,
+      "budget_max": 180,
+      "days_left": null,
+      "hard_preferences": [
+        "non_alcoholic"
+      ],
+      "free_text": "",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [
+      "alcohol"
+    ],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s12-v1",
+    "label": "没有日期的信息不完整场景 / 变体 1",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "不要太贵"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [
+      "g-001",
+      "g-002",
+      "g-003",
+      "g-004",
+      "g-006",
+      "g-010",
+      "g-011",
+      "g-012",
+      "g-018"
+    ],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s12-v2",
+    "label": "没有日期的信息不完整场景 / 变体 2",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "不要太贵"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s12-v3",
+    "label": "没有日期的信息不完整场景 / 变体 3",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 150,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "不要太贵"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s12-v4",
+    "label": "没有日期的信息不完整场景 / 变体 4",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "不要太贵 最好方便带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  },
+  {
+    "id": "s12-v5",
+    "label": "没有日期的信息不完整场景 / 变体 5",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "不要太贵",
+      "unknown_notes": [
+        "日期不确定"
+      ]
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": [],
+    "split": "generated_boundary"
+  }
+]

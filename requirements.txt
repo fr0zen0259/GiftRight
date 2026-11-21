@@ -1,0 +1,5 @@
+# GiftRight
+# Core runtime requires Python 3.10+ standard library (zero external dependencies)
+# Optional dependencies for testing & evaluation:
+pytest>=7.4.0
+requests>=2.31.0

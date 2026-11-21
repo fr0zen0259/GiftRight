@@ -1,0 +1,1410 @@
+{
+  "nodes": [
+    {
+      "data": {
+        "selected": false,
+        "title": "用户输入",
+        "type": "start",
+        "variables": [
+          {
+            "default": "",
+            "hint": "",
+            "label": "礼物需求 JSON",
+            "options": [],
+            "placeholder": "",
+            "required": true,
+            "type": "text-input",
+            "variable": "gift_request"
+          },
+          {
+            "default": "",
+            "hint": "",
+            "label": "候选商品 JSON",
+            "options": [],
+            "placeholder": "",
+            "required": true,
+            "type": "text-input",
+            "variable": "candidate_products"
+          }
+        ]
+      },
+      "height": 134,
+      "id": "1792291899555",
+      "position": {
+        "x": -422.7244756855787,
+        "y": 295.25
+      },
+      "positionAbsolute": {
+        "x": -422.7244756855787,
+        "y": 295.25
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 242,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "context": {
+          "enabled": false,
+          "variable_selector": []
+        },
+        "desc": "你是 GiftRight 的需求解析器。请将用户输入的结构化字段和自由文本转换成严格 JSON。\n\n规则：没有明确说出的字段返回 null 或空数组；不要根据性别、年龄、关系自动推断兴趣；模糊表达放入 unknown_notes 或 soft_preferences，不要擅自转换成具体数字或绝对禁忌；明确的过敏、宗教饮食、素食、不饮酒、最高预算和到货日期才可进入 hard_preferences 或硬约束字段；只输出 JSON，不要输出 Markdown、解释或额外文字。\n\n请解析用户消息中的 gift_request 和 candidate_products。输出结构：\n{\n  \"occasion\": \"birthday | thank_you | graduation | onboarding | celebration | holiday | other\",\n  \"occasion_custom\": null,\n  \"recipient_relation\": \"mentor | manager | colleague | friend | partner | family | classmate | other\",\n  \"relation_custom\": null,\n  \"budget_min\": null,\n  \"budget_max\": null,\n  \"deadline\": null,\n  \"days_left\": null,\n  \"gift_mode\": \"purchased | diy | all\",\n  \"user_region\": null,\n  \"recipient_region\": null,\n  \"hard_preferences\": [],\n  \"soft_preferences\": [],\n  \"avoid_custom\": null,\n  \"free_text\": null,\n  \"unknown_notes\": [],\n  \"input_confidence\": \"high | medium | low\"\n}\n\n只返回符合上述结构的 JSON。",
+        "model": {
+          "completion_params": {},
+          "mode": "chat",
+          "name": "deepseek-flash",
+          "provider": "langgenius/deepseek/deepseek"
+        },
+        "prompt_template": [
+          {
+            "id": "0a07d0c7-e367-49f1-a4c6-56fcce1d6fc5",
+            "role": "system",
+            "text": "你是 GiftRight 的需求解析器。请将用户输入的结构化字段和自由文本转换成严格 JSON。\n\n规则：没有明确说出的字段返回 null 或空数组；不要根据年龄、关系自动推断兴趣；收礼人偏向只采用用户明确选择的值，未选择时不要推断性别；模糊表达放入 unknown_notes 或 soft_preferences，不要擅自转换成具体数字或绝对禁忌；明确的过敏、宗教饮食、素食、不饮酒、最高预算和到货日期才可进入 hard_preferences 或硬约束字段；只输出 JSON，不要输出 Markdown、解释或额外文字。\n\n请解析用户消息中的 gift_request 和 candidate_products。输出结构：\n{\n  \"occasion\": \"birthday | thank_you | graduation | onboarding | celebration | holiday | other\",\n  \"recipient_relation\": \"mentor | manager | colleague | friend | partner | family | classmate | other\",\n  \"budget_min\": 0,\n  \"budget_max\": 0,\n  \"deadline\": null,\n  \"hard_preferences\": [],\n  \"soft_preferences\": [],\n  \"unknown_notes\": [],\n  \"input_confidence\": \"high | medium | low\"\n}\n\n只返回符合上述结构的 JSON。\n另外输出 search_query 字段：product = 把送礼需求翻译成电商商品搜索关键词串（品类词+风格词+受众词，用空格分隔，禁止包含预算数字和年龄数字）；occasion_festival = 场合/节日/关系类检索关键词串（同样不含数字）。这两个字段用于知识库检索，不是给用户的。\n受众词的硬要求：gift_request 末尾若写着「收礼人偏向=偏男性」或「偏女性」，product 里必须带上对应的受众词（如 男士/男款/商务/数码/户外，或 女士/女款/精致/香氛）；若写着「未指定」，不要自行添加任何性别受众词。\n去噪要求：product 里不要堆「礼盒」「伴手礼」「礼物」「送礼」这类在商品标题里几乎人人都有的无区分度词，它们会把检索结果整体拉向礼盒装商品；品类词优先给具体物件（如 保温杯、机械键盘、咖啡、茶、坚果、香薰），最多 8 个词。\n价格口径说明：来源平台为 1688货源 的商品，其价格是 1688 批发单价（非零售价），向用户展示时必须标注批发参考价且提醒零售价需另行核价；淘宝/天猫等平台价格为采集日快照价，也需提醒以页面实时价为准。"
+          },
+          {
+            "id": "b9d96d9a-f5bd-4ebc-b1e4-5b0ce97fed5d",
+            "role": "user",
+            "text": "请基于以下用户输入进行解析：\n礼物需求 JSON：{{#1792291899555.gift_request#}}\n候选商品 JSON：{{#1792291899555.candidate_products#}}"
+          }
+        ],
+        "selected": false,
+        "structured_output": {
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "properties": {
+                "additionalProperties": false,
+                "properties": {
+                  "budget_max": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "budget_min": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "deadline": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "hard_preferences": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ],
+                        "type": "object"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "items"
+                    ],
+                    "type": "object"
+                  },
+                  "input_confidence": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "enum": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "enum"
+                    ],
+                    "type": "object"
+                  },
+                  "occasion": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "recipient_relation": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "soft_preferences": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ],
+                        "type": "object"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "items"
+                    ],
+                    "type": "object"
+                  },
+                  "unknown_notes": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ],
+                        "type": "object"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "items"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "occasion",
+                  "recipient_relation",
+                  "budget_min",
+                  "budget_max",
+                  "deadline",
+                  "hard_preferences",
+                  "soft_preferences",
+                  "unknown_notes",
+                  "input_confidence"
+                ],
+                "type": "object",
+                "search_query": {
+                  "type": "object",
+                  "properties": {
+                    "product": {
+                      "type": "string",
+                      "description": "商品检索关键词串：把送礼需求翻译成电商搜索词（品类词+风格词+受众词），不含预算数字、不含年龄数字。例：生日礼物 可爱 少女心 小东西 送女生"
+                    },
+                    "occasion_festival": {
+                      "type": "string",
+                      "description": "节日场合检索关键词串：场合/节日/关系词，例：朋友 生日 女生 礼物推荐"
+                    }
+                  },
+                  "required": [
+                    "product",
+                    "occasion_festival"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "type",
+              "properties",
+              "required",
+              "additionalProperties"
+            ],
+            "type": "object"
+          }
+        },
+        "structured_output_enabled": false,
+        "title": "LLM",
+        "type": "llm",
+        "vision": {
+          "enabled": false
+        }
+      },
+      "height": 787,
+      "id": "1792292308073",
+      "position": {
+        "x": 50.78980563882362,
+        "y": 316.25
+      },
+      "positionAbsolute": {
+        "x": 50.78980563882362,
+        "y": 316.25
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "code": "import json\nimport re\n\nRANKING_VERSION = \"ranker-v5\"\nTIMING_REMINDER = \"无法计算具体路线时效，建议到对应快递公司小程序或官网查询\"\n\n\ndef parse_value(value):\n    if isinstance(value, (dict, list)):\n        return value\n    if not isinstance(value, str):\n        return {}\n    text = re.sub(r\"<think>[\\s\\S]*?</think>\", \"\", value, flags=re.I)\n    text = re.sub(r\"```(?:json)?\", \"\", text, flags=re.I).replace(\"```\", \"\").strip()\n    if not text:\n        return {}\n    for _ in range(6):\n        try:\n            parsed = json.loads(text)\n        except Exception:\n            starts = [i for i in (text.find(\"{\"), text.find(\"[\")) if i >= 0]\n            if not starts:\n                return {}\n            start = min(starts)\n            end = max(text.rfind(\"}\"), text.rfind(\"]\"))\n            if end <= start:\n                return {}\n            try:\n                parsed = json.loads(text[start : end + 1])\n            except Exception:\n                return {}\n        if isinstance(parsed, (dict, list)):\n            return parsed\n        if isinstance(parsed, str):\n            text = parsed.strip()\n            continue\n        return {}\n    return {}\n\n\ndef text(value):\n    return str(value or \"\").strip()\n\n\ndef number(value):\n    if value in (None, \"\", False):\n        return None\n    match = re.search(r\"-?\\d+(?:\\.\\d+)?\", str(value))\n    if not match:\n        return None\n    result = float(match.group(0))\n    return int(result) if result.is_integer() else result\n\n\ndef as_list(value):\n    parsed = parse_value(value)\n    if isinstance(parsed, list):\n        return parsed\n    if isinstance(parsed, dict):\n        for key in (\"candidate_products\", \"products\", \"items\", \"records\", \"estimates\"):\n            nested = parse_value(parsed.get(key))\n            if isinstance(nested, list):\n                return nested\n        result = parsed.get(\"result\")\n        if result not in (None, \"\"):\n            nested = parse_value(result)\n            if isinstance(nested, list):\n                return nested\n            if isinstance(nested, dict) and nested:\n                return as_list(nested)\n    return []\n\n\ndef find_intent(value, depth=0):\n    if depth > 12:\n        return {}\n    parsed = parse_value(value)\n    if isinstance(parsed, dict):\n        keys = {\n            \"occasion\",\n            \"recipient_relation\",\n            \"gift_mode\",\n            \"budget_min\",\n            \"budget_max\",\n            \"hard_preferences\",\n            \"soft_preferences\",\n            \"user_region\",\n            \"recipient_region\",\n            \"days_left\",\n        }\n        if keys.intersection(parsed):\n            return dict(parsed)\n        for nested in parsed.values():\n            found = find_intent(nested, depth + 1)\n            if found:\n                return found\n    elif isinstance(parsed, list):\n        for nested in parsed:\n            found = find_intent(nested, depth + 1)\n            if found:\n                return found\n    return {}\n\n\ndef find_named_value(value, name, depth=0):\n    if depth > 12:\n        return None\n    parsed = parse_value(value)\n    if isinstance(parsed, dict):\n        candidate = parsed.get(name)\n        if candidate not in (None, \"\"):\n            return candidate\n        for nested in parsed.values():\n            found = find_named_value(nested, name, depth + 1)\n            if found not in (None, \"\"):\n                return found\n    elif isinstance(parsed, list):\n        for nested in parsed:\n            found = find_named_value(nested, name, depth + 1)\n            if found not in (None, \"\"):\n                return found\n    return None\n\n\ndef product_id(item):\n    if not isinstance(item, dict):\n        return \"\"\n    for key in (\"product_id\", \"商品ID\", \"id\", \"gift_id\", \"diy_id\"):\n        if item.get(key) not in (None, \"\"):\n            return text(item[key])\n    return \"\"\n\n\ndef product_name(item):\n    if not isinstance(item, dict):\n        return product_id(item)\n    for key in (\"name\", \"title\", \"商品名称\", \"标题\", \"名称\", \"description\", \"描述\"):\n        if item.get(key):\n            return text(item[key])\n    return product_id(item)\n\n\ndef normalize_product(item):\n    if not isinstance(item, dict):\n        return None\n    result = dict(item)\n    pid = product_id(result)\n    if not pid:\n        return None\n    result[\"product_id\"] = pid\n    result.setdefault(\"name\", product_name(result))\n    result.setdefault(\"title\", product_name(result))\n    result.setdefault(\"status\", \"active\")\n    result[\"gift_type\"] = text(\n        result.get(\"gift_type\") or result.get(\"type\") or \"purchased\"\n    ).lower()\n    if result[\"gift_type\"] not in {\"purchased\", \"diy\"}:\n        result[\"gift_type\"] = \"purchased\"\n    return result\n\n\ndef products(value):\n    output = []\n    seen = set()\n    for item in as_list(value):\n        normalized = normalize_product(item)\n        if normalized and normalized[\"product_id\"] not in seen:\n            seen.add(normalized[\"product_id\"])\n            output.append(normalized)\n    return output\n\n\ndef product_text(item):\n    values = []\n    for key in (\n        \"product_id\",\n        \"name\",\n        \"title\",\n        \"category\",\n        \"类别\",\n        \"description\",\n        \"描述\",\n        \"tags\",\n        \"risk_notes\",\n        \"safety_notes\",\n        \"allergens\",\n    ):\n        value = item.get(key)\n        if isinstance(value, list):\n            values.extend(text(x) for x in value)\n        elif isinstance(value, dict):\n            values.extend(text(x) for x in value.values())\n        elif value not in (None, \"\"):\n            values.append(text(value))\n    return \" \".join(values).lower()\n\n\ndef product_tags(item):\n    value = item.get(\"tags\", item.get(\"标签\", []))\n    parsed = parse_value(value)\n    if isinstance(parsed, list):\n        return {text(x).lower() for x in parsed}\n    return {part.strip().lower() for part in re.split(r\"[,;，；]\", text(value)) if part.strip()}\n\n\ndef price_value(item):\n    for key in (\"price\", \"价格\", \"cost\", \"成本\", \"estimated_cost\", \"cost_estimate_cny\"):\n        value = number(item.get(key))\n        if value is not None:\n            return value\n    return None\n\n\ndef price_estimate(item):\n    price = price_value(item)\n    if price is None:\n        return {\n            \"average_price\": None,\n            \"range_min\": None,\n            \"range_max\": None,\n            \"currency\": text(item.get(\"currency\") or \"CNY\"),\n            \"confidence\": \"low\",\n            \"basis\": \"输入未提供可用的价格或成本参考值\",\n            \"reminder\": \"价格或成本未知，请向商家核实\",\n        }\n    label = \"成本参考值\" if item.get(\"gift_type\") == \"diy\" else \"价格快照\"\n    return {\n        \"average_price\": round(float(price), 2),\n        \"range_min\": round(float(price) * 0.9, 2),\n        \"range_max\": round(float(price) * 1.1, 2),\n        \"currency\": text(item.get(\"currency\") or \"CNY\"),\n        \"confidence\": \"low\",\n        \"basis\": f\"基于输入中的{label}按上下约10%估算，非已确认成交价或实际成本\",\n        \"reminder\": \"价格或成本为估算，购买或制作前请核实\",\n    }\n\n\ndef route_records(value):\n    parsed = parse_value(value)\n    if isinstance(parsed, dict):\n        if isinstance(parsed.get(\"estimates\"), list):\n            parsed = parsed[\"estimates\"]\n        elif isinstance(parsed.get(\"result\"), (dict, list, str)):\n            return route_records(parsed[\"result\"])\n        elif any(key in parsed for key in (\"product_id\", \"average_days\", \"avg_days\")):\n            parsed = [parsed]\n    return parsed if isinstance(parsed, list) else []\n\n\ndef route_estimate(raw, item, request):\n    pid = product_id(item)\n    for record in route_records(raw):\n        if not isinstance(record, dict):\n            continue\n        rid = text(record.get(\"product_id\") or record.get(\"商品ID\") or record.get(\"id\"))\n        if rid and rid != pid:\n            continue\n        average = number(\n            record.get(\"average_days\")\n            or record.get(\"avg_days\")\n            or record.get(\"delivery_days\")\n        )\n        if average is not None:\n            return {\n                \"average_days\": average,\n                \"range_min_days\": max(1, int(average - 1)),\n                \"range_max_days\": int(average + 2),\n                \"confidence\": text(record.get(\"confidence\") or \"low\"),\n                \"basis\": text(record.get(\"basis\") or \"根据路线时效资料估算，非商家承诺\"),\n                \"reminder\": text(record.get(\"reminder\") or TIMING_REMINDER),\n            }\n    embedded = item.get(\"delivery_estimate\")\n    if isinstance(embedded, dict):\n        average = number(\n            embedded.get(\"average_days\")\n            or embedded.get(\"avg_days\")\n            or embedded.get(\"delivery_days\")\n        )\n        if average is not None:\n            return {\n                \"average_days\": average,\n                \"range_min_days\": max(1, int(average - 1)),\n                \"range_max_days\": int(average + 2),\n                \"confidence\": text(embedded.get(\"confidence\") or \"low\"),\n                \"basis\": text(embedded.get(\"basis\") or \"商品记录中的路线时效参考\"),\n                \"reminder\": text(embedded.get(\"reminder\") or TIMING_REMINDER),\n            }\n    if item.get(\"gift_type\") == \"diy\":\n        prep = number(item.get(\"prep_days\") or item.get(\"制作天数\"))\n        if prep is not None:\n            return {\n                \"average_days\": prep,\n                \"range_min_days\": max(1, int(prep - 1)),\n                \"range_max_days\": int(prep + 2),\n                \"confidence\": \"low\",\n                \"basis\": \"商品记录中的制作天数参考，未包含具体快递路线时效\",\n                \"reminder\": \"制作时间为参考值，非商家承诺；如需准确配送时间，请向商家或快递公司确认\",\n            }\n    return {\n        \"average_days\": None,\n        \"range_min_days\": None,\n        \"range_max_days\": None,\n        \"confidence\": \"low\",\n        \"basis\": \"输入未提供可用的路线时效参考，无法计算具体路线时效\",\n        \"reminder\": TIMING_REMINDER,\n    }\n\n\ndef has_alcohol(item):\n    value = product_text(item)\n    safe = (\"无酒精\", \"不含酒精\", \"非酒精\", \"零酒精\", \"无醇\", \"non_alcoholic\", \"non-alcoholic\")\n    if any(word in value for word in safe):\n        return False\n    return bool(\n        product_tags(item).intersection({\"wine\", \"beer\", \"alcohol\", \"alcoholic\", \"liquor\"})\n        or any(word in value for word in (\"酒类\", \"红酒\", \"葡萄酒\", \"白酒\", \"啤酒\", \"酒精\", \"wine\", \"beer\"))\n    )\n\n\ndef has_nuts(item):\n    value = product_text(item)\n    safe = (\n        \"无坚果\", \"不含坚果\", \"未添加坚果\", \"无花生\", \"不含花生\", \"未添加花生\",\n        \"nut_free\", \"nut-free\", \"peanut_free\", \"peanut-free\",\n    )\n    if any(word in value for word in safe):\n        return False\n    return bool(\n        product_tags(item).intersection({\"nut\", \"nuts\", \"peanut\", \"tree_nut\", \"allergen\"})\n        or any(\n            word in value\n            for word in (\n                \"坚果\", \"花生\", \"核桃\", \"腰果\", \"杏仁\", \"开心果\", \"榛子\",\n                \"夏威夷果\", \"巴旦木\", \"松子\", \"peanut\", \"nut\",\n            )\n        )\n    )\n\n\ndef has_fragrance(item):\n    \"\"\"香味类商品判定：标题/类别/描述/材料等文本命中，且 safe 词优先放行。\n    覆盖淘宝采集卡（tags 常为空）与手作卡（tags 带 fragrance）两条路。\"\"\"\n    value = product_text(item)\n    safe = (\n        \"无香\", \"不含香\", \"未添加香\", \"无味\", \"无火\", \"不添加香精\",\n        \"fragrance_free\", \"fragrance-free\", \"unscented\",\n    )\n    if any(word in value for word in safe):\n        return False\n    tags = product_tags(item)\n    if tags.intersection({\"fragrance\", \"scented\", \"aroma\", \"perfume\", \"candle\"}):\n        return True\n    return any(\n        word in value\n        for word in (\n            \"香薰\", \"香氛\", \"香水\", \"香囊\", \"香包\", \"香薰蜡烛\", \"香薰蜡片\",\n            \"扩香\", \"精油\", \"线香\", \"檀香\", \"香味蜡烛\", \"香膏\",\n            \"perfume\", \"scented\", \"aroma\",\n        )\n    )\n\n\ndef main(candidate_products=None, gift_request=None, purchased_knowledge=None,\n         diy_knowledge=None, delivery_estimates=None, structured_output=None, **kwargs):\n    all_inputs = {\n        \"structured_output\": structured_output,\n        \"gift_request\": gift_request,\n        \"candidate_products\": candidate_products,\n        \"purchased_knowledge\": purchased_knowledge,\n        \"diy_knowledge\": diy_knowledge,\n        \"delivery_estimates\": delivery_estimates,\n        **kwargs,\n    }\n    # Batch tests and older Dify nodes may wrap all inputs inside result/data.\n    wrapped_sources = {\n        \"structured_output\": structured_output,\n        \"gift_request\": gift_request,\n        \"candidate_products\": candidate_products,\n        \"purchased_knowledge\": purchased_knowledge,\n        \"diy_knowledge\": diy_knowledge,\n        \"delivery_estimates\": delivery_estimates,\n    }\n    for name, current in list(wrapped_sources.items()):\n        current_is_valid = (\n            bool(find_intent(current))\n            if name in {\"structured_output\", \"gift_request\"}\n            else bool(products(current))\n            if name in {\"candidate_products\", \"purchased_knowledge\", \"diy_knowledge\"}\n            else bool(route_records(current))\n        )\n        if not current_is_valid:\n            nested = find_named_value(all_inputs, name)\n            if nested is not None and nested is not current:\n                wrapped_sources[name] = nested\n    structured_output = wrapped_sources[\"structured_output\"]\n    gift_request = wrapped_sources[\"gift_request\"]\n    candidate_products = wrapped_sources[\"candidate_products\"]\n    purchased_knowledge = wrapped_sources[\"purchased_knowledge\"]\n    diy_knowledge = wrapped_sources[\"diy_knowledge\"]\n    delivery_estimates = wrapped_sources[\"delivery_estimates\"]\n    all_inputs.update(wrapped_sources)\n\n    parsed_intent = find_intent(structured_output)\n    raw_intent = find_intent(gift_request)\n    intent = dict(parsed_intent)\n    # The user's explicit structured fields are authoritative; the LLM only\n    # fills fields absent from the start-node request.\n    for key, value in raw_intent.items():\n        if value is not None and value != \"\" and value != []:\n            intent[key] = value\n    if not intent:\n        intent = find_intent(all_inputs)\n    input_error = not bool(intent)\n    if input_error:\n        intent = {\n            \"occasion\": None,\n            \"recipient_relation\": None,\n            \"gift_mode\": \"all\",\n            \"budget_min\": None,\n            \"budget_max\": None,\n            \"hard_preferences\": [],\n            \"soft_preferences\": [],\n            \"avoid_custom\": \"\",\n            \"free_text\": \"\",\n            \"unknown_notes\": [\"未收到可解析的 gift_request 或 structured_output\"],\n        }\n    mode = text(intent.get(\"gift_mode\") or \"all\").lower()\n    if mode not in {\"purchased\", \"diy\", \"all\"}:\n        mode = \"all\"\n    budget_min = number(intent.get(\"budget_min\"))\n    budget_max = number(intent.get(\"budget_max\"))\n    hard = {text(x).lower() for x in (intent.get(\"hard_preferences\") or [])}\n    avoid = \" \".join(\n        (\n            text(intent.get(\"avoid_custom\")),\n            text(intent.get(\"free_text\")),\n            \" \".join(hard),\n        )\n    ).lower()\n    avoid_alcohol = bool(\n        hard.intersection({\"non_alcoholic\", \"no_alcohol\", \"avoid_alcohol\"})\n        or any(x in avoid for x in (\"不要酒\", \"不要酒精\", \"不喝酒\", \"不饮酒\", \"收礼人不饮酒\", \"饮酒\"))\n    )\n    avoid_nuts = bool(\n        hard.intersection({\"allergy_free\", \"nut_free\", \"no_nuts\", \"avoid_nuts\", \"no_allergen\"})\n        or any(x in avoid for x in (\"坚果\", \"花生\", \"过敏原\", \"过敏\"))\n    )\n    # 香味约束：英文 token（勾选框）、中文 hard_preferences 原文（需求解析输出）、\n    # 自定义避开文本、以及「不接受香味类手作」开关，四条路任一命中即启用。\n    accepts_fragrance_diy = intent.get(\"accepts_fragrance_diy\")\n    avoid_fragrance = bool(\n        hard.intersection({\"avoid_fragrance\", \"no_fragrance\", \"fragrance_free\"})\n        or any(x in avoid for x in (\"香薰\", \"香氛\", \"香水\", \"香味\", \"香囊\", \"香包\", \"气味\"))\n        or accepts_fragrance_diy is False\n    )\n\n    candidates = []\n    seen = set()\n    for source in (candidate_products, purchased_knowledge, diy_knowledge):\n        for item in products(source):\n            if item[\"product_id\"] not in seen:\n                seen.add(item[\"product_id\"])\n                candidates.append(item)\n\n    if input_error:\n        candidates = []\n\n    eligible = []\n    blocks = []\n    route_warnings = []\n    for item in candidates:\n        pid = item[\"product_id\"]\n        name = product_name(item)\n        kind = item[\"gift_type\"]\n        value = product_text(item)\n        tags = product_tags(item)\n        reasons = []\n        if mode in {\"purchased\", \"diy\"} and kind != mode:\n            reasons.append(\"礼物类型与用户选择不一致\")\n        price = price_value(item)\n        # DIY 卡的 price 是物料成本估算：比预算下限便宜是特性不是违规，只拦上限。\n        # purchased 才保留下限检查（防异常低价入场品）。\n        if kind != \"diy\" and price is not None and budget_min is not None and price < budget_min:\n            reasons.append(\"低于预算下限\")\n        if price is not None and budget_max is not None and price > budget_max:\n            reasons.append(\"超过预算上限\")\n        if avoid_alcohol and has_alcohol(item):\n            reasons.append(\"命中明确禁忌：酒类或含酒精商品\")\n        if avoid_nuts and has_nuts(item):\n            reasons.append(\"命中明确禁忌：坚果或花生类商品（用户声明避开坚果类过敏原）\")\n        if avoid_fragrance and has_fragrance(item):\n            reasons.append(\"命中明确禁忌：香味/香氛类商品（用户声明避开香味）\")\n        if \"vegan\" in hard and (\n            tags.intersection({\"dairy\", \"milk\", \"egg\", \"meat\"})\n            or any(word in value for word in (\"奶油\", \"乳制品\", \"牛奶\", \"奶酪\", \"鸡蛋\", \"蛋类\", \"肉类\", \"肉制品\"))\n        ):\n            reasons.append(\"命中明确饮食约束：含动物性成分，不符合纯素要求\")\n        if \"vegetarian\" in hard and (\n            tags.intersection({\"meat\", \"fish\"})\n            or any(word in value for word in (\"肉类\", \"肉制品\", \"鱼\", \"海鲜\", \"猪肉\", \"牛肉\", \"鸡肉\"))\n        ):\n            reasons.append(\"命中明确饮食约束：不符合素食要求\")\n        # 清真约束（前端勾选框，engine 用 non_halal 标签；此处只查肉/鱼/猪，\n        # 不拦酒精——酒精有独立的 non_alcoholic 选项，engine 的 halal 也不拦酒）\n        if \"halal\" in hard and (\n            tags.intersection({\"meat\", \"fish\", \"pork\", \"non_halal\"})\n            or any(word in value for word in (\"猪肉\", \"猪油\", \"腊肠\", \"火腿\", \"培根\"))\n        ):\n            reasons.append(\"命中明确饮食约束：不符合清真饮食要求\")\n        # 避免动物制品约束（前端勾选框，与 engine 的 animal_product 标签一致）\n        if \"no_animal_products\" in hard and (\n            tags.intersection({\"animal_product\", \"leather\", \"wool\", \"silk\", \"fur\", \"feather\", \"bone\", \"horn\"})\n            or any(word in value for word in (\"皮革\", \"真皮\", \"皮草\", \"羊毛\", \"丝绸\", \"蚕丝\", \"羽绒\", \"动物制品\"))\n        ):\n            reasons.append(\"命中明确禁忌：包含动物制品（用户希望避免动物制品）\")\n        if \"allergy_free\" in hard and (\n            item.get(\"allergens\") or \"allergen\" in tags\n        ):\n            reasons.append(\"候选存在需要确认的过敏原\")\n        if text(item.get(\"status\") or \"active\").lower() not in {\"active\", \"unknown\"}:\n            reasons.append(\"商品状态不是 active\")\n        if reasons:\n            blocks.append({\"product_id\": pid, \"name\": name, \"reasons\": reasons})\n            continue\n\n        estimate = route_estimate(delivery_estimates, item, intent)\n        enriched = dict(item)\n        enriched[\"price_estimate\"] = price_estimate(item)\n        enriched[\"delivery_estimate\"] = estimate\n        if estimate[\"average_days\"] is None and kind == \"purchased\":\n            if TIMING_REMINDER not in route_warnings:\n                route_warnings.append(TIMING_REMINDER)\n        days_left = number(intent.get(\"days_left\"))\n        if days_left is not None and estimate[\"average_days\"] is not None:\n            if estimate[\"range_max_days\"] > days_left:\n                warning = (\n                    f\"预计约{estimate['average_days']}天，范围\"\n                    f\"{estimate['range_min_days']}-{estimate['range_max_days']}天，\"\n                    f\"当前剩余{days_left}天，存在超时风险\"\n                )\n                if warning not in route_warnings:\n                    route_warnings.append(warning)\n        eligible.append(enriched)\n\n    route = {\n        \"average_days\": None,\n        \"range_min_days\": None,\n        \"range_max_days\": None,\n        \"confidence\": \"low\",\n        \"basis\": \"输入未提供可用的路线时效参考，无法计算具体路线时效\",\n        \"reminder\": TIMING_REMINDER,\n    }\n    for item in eligible:\n        candidate_route = item.get(\"delivery_estimate\", {})\n        if candidate_route.get(\"average_days\") is not None:\n            route = dict(candidate_route)\n            break\n\n    output = {\n        \"intent\": intent,\n        \"rule_result\": {\n            \"eligible_products\": [x[\"product_id\"] for x in eligible],\n            \"hard_blocks\": blocks,\n            \"soft_warnings\": route_warnings,\n            \"excluded_summary\": [],\n            \"rules_version\": \"rules-v5\",\n        },\n        \"status\": \"input_error\" if input_error else (\"ok\" if eligible else \"no_eligible_candidates\"),\n        \"input_diagnostics\": (\n            [\"未从开始节点 gift_request 或需求解析 structured_output 中解析到需求字段；已停止推荐，检查规则节点映射。\"]\n            if input_error\n            else []\n        ),\n        \"eligible_products\": eligible,\n        \"route_estimate\": route,\n        \"ranking_version\": RANKING_VERSION,\n    }\n    return {\"result\": json.dumps(output, ensure_ascii=False)}\n",
+        "code_language": "python3",
+        "outputs": {
+          "result": {
+            "children": null,
+            "type": "string"
+          }
+        },
+        "selected": false,
+        "title": "规则合并检查",
+        "type": "code",
+        "variables": [
+          {
+            "value_selector": [
+              "1792291899555",
+              "candidate_products"
+            ],
+            "value_type": "string",
+            "variable": "candidate_products"
+          },
+          {
+            "value_selector": [
+              "1792291899555",
+              "gift_request"
+            ],
+            "value_type": "string",
+            "variable": "gift_request"
+          },
+          {
+            "value_selector": [
+              "1792830184658",
+              "result"
+            ],
+            "value_type": "array[object]",
+            "variable": "purchased_knowledge"
+          },
+          {
+            "value_selector": [
+              "1792316098509",
+              "result"
+            ],
+            "value_type": "array[object]",
+            "variable": "diy_knowledge"
+          },
+          {
+            "value_selector": [
+              "1792292308073",
+              "text"
+            ],
+            "value_type": "string",
+            "variable": "structured_output"
+          }
+        ]
+      },
+      "height": 51,
+      "id": "1792293113071",
+      "position": {
+        "x": 1502.4994872090228,
+        "y": 349
+      },
+      "positionAbsolute": {
+        "x": 1502.4994872090228,
+        "y": 349
+      },
+      "selected": true,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "context": {
+          "enabled": false,
+          "variable_selector": []
+        },
+        "desc": "Gift Ranker（排序器）需求解析后的候选排序节点。规则与知识上下文见 SYSTEM 提示词。",
+        "model": {
+          "completion_params": {
+            "max_tokens": 16384,
+            "temperature": 0.3
+          },
+          "mode": "chat",
+          "name": "deepseek-flash",
+          "provider": "langgenius/deepseek/deepseek"
+        },
+        "prompt_template": [
+          {
+            "id": "7e9fbe2b-4250-4cf6-982e-312ed3a281aa",
+            "role": "system",
+            "text": "你是 GiftRight 的候选排序器，只负责在规则节点给出的合规候选中排序。预算、禁忌、商品状态和时效规则均由确定性规则节点处理。\n\n## 候选范围与排序\n\n1. 只能选择输入 `rule_result.eligible_products` 中存在的 `product_id`，优先选出 8 个（eligible_products 不足 8 个时有多少选多少）；不得新增商品或恢复已排除商品。\n2. 按场合与关系、用户明确兴趣/偏好、预算匹配、事实完整度和明确风险排序。\n3. `strategy` 只能是 `safe`、`heart`、`special`。候选不足 8 个时不要补造。\n4. `rank` 从 1 连续编号。\n\n## 事实与文案\n\n0. 为每个选出的候选额外生成两个字段（给用户看的卡片文案，要求像人话，不要术语堆砌）：\n- `meaning`（50–75 个中文字符）：结合场合、关系和商品本身，写这句礼物想表达什么。必须紧扣该商品的具体内容（标题/类别/标签），不得套用与商品无关的通用句。不要出现价格、预算字样。写法：前半句说这件东西本身是什么、用起来是什么感觉；后半句说它替送礼人把哪句话递过去。两句连成一气，不要分条、不要写成「愿…，愿…」的排比。低于 45 字通常只是把商品名换个说法，读者看不出你懂这件东西。\n- `why_recommended`（45–65 个中文字符）：一句话说清这件礼物为什么贴合这次的具体场景和收礼人（结合用户描述的场合/关系/偏好与商品的实际内容）。禁止复述式理由——「标题为…」「类别为…」「含X与Y」这类照抄字段的话不算理由；也不要\"候选通过检查\"这类系统话术。不要输出精确价格/成本。写法：至少点到 2 个具体条件（场合/关系/预算/偏好中的任意两项），再说清它为什么正好合适。只写「符合预算」「适合送礼」「朋友生日合适」这种一句到底的，不算合格。\n- 两个字段都只能依据输入中实际出现的商品字段和用户描述，不得编造用途、材质或收礼人喜好。\n1. `reason_evidence` 最多 2 条，每条不超过 30 个中文字符。引用标题、类别、标签、制作天数或明确描述；不得写\"符合低调偏好\"\"适合生日\"等模型推断，除非商品输入中明确存在对应字段。\n2. 不得把 `source`、采集词或检索词改写成商品标签、适用场景或风险；只能引用输入中实际出现的商品字段和值。\n3. `risk_note` 只可引用商品明确的风险字段、标签或描述；没有证据时为 `\"\"`。\n4. `soft_warnings` 只保留输入中已有且有依据的软提醒；不要重复 `delivery_estimate.reminder`。\n5. 如果地域禁忌检索状态为 `none_found`，不得补充地方禁忌。\n6. 不得因为时效未知或估算可能超过剩余天数而排除候选。时间紧迫只作为输入中已有的软提醒。\n\n## 输出\n\n只返回合法 JSON，不要 Markdown、解释或思考过程。**不要输出 price_estimate 和 delivery_estimate**——这两个结构由后续代码节点从规则节点数据中自动合并，模型重复输出它们只会浪费时长。每个候选只包含下列字段：\n\n```json\n{\n  \"candidates\": [\n    {\n      \"product_id\": \"string\",\n      \"strategy\": \"safe\",\n      \"rank\": 1,\n      \"reason_evidence\": [\"string\"],\n      \"meaning\": \"string\",\n      \"why_recommended\": \"string\",\n      \"risk_note\": \"\",\n      \"soft_warnings\": []\n    }\n  ],\n  \"ranking_version\": \"ranker-v6\"\n}\n```\n\n没有合规候选时，返回 `\"candidates\": []`。\n\n`ranking_version` 必须固定为 `\"ranker-v6\"`。\n\n1. 只能从 rule_result.eligible_products 中选择商品。\n2. 不得恢复 hard_blocks 中的商品。\n3. 如果 eligible_products 为空，必须返回：`{\"candidates\": [], \"ranking_version\": \"ranker-v6\"}`\n\n价格口径说明（供 reason_evidence 和文案措辞参考，不需要输出）：来源平台为 1688货源 的商品价格是批发单价；淘宝/天猫等平台价格为采集日快照价。\n"
+          },
+          {
+            "id": "e420ae9e-85c2-4feb-9cf4-248606f81bcd",
+            "role": "user",
+            "text": "请基于以下输入完成候选排序。只能从 eligible_products 中选择，不能新增或修改商品字段。\n\n规则检查结果：{{#1792293113071.result#}}\n\n购买礼物知识库检索：{{#1792830184658.result#}}\n\n自制礼物知识库检索：{{#1792316098509.result#}}\n\n节日与场合知识库检索：{{#1792831342745.result#}}\n\n地域与禁忌知识库检索：{{#1792833782604.result#}}"
+          }
+        ],
+        "selected": false,
+        "structured_output": {
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "properties": {
+                "additionalProperties": false,
+                "properties": {
+                  "candidates": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "properties": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "product_id": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object"
+                              },
+                              "rank": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object"
+                              },
+                              "reason_evidence": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "type": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "items"
+                                ],
+                                "type": "object"
+                              },
+                              "risk_note": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object"
+                              },
+                              "strategy": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "enum": {
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "enum"
+                                ],
+                                "type": "object"
+                              },
+                              "meaning": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object"
+                              },
+                              "why_recommended": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "type": "object"
+                              },
+                              "soft_warnings": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "type": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "items"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "product_id",
+                              "strategy",
+                              "rank",
+                              "reason_evidence",
+                              "risk_note",
+                              "meaning",
+                              "why_recommended",
+                              "soft_warnings"
+                            ],
+                            "type": "object"
+                          },
+                          "required": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "additionalProperties",
+                          "properties",
+                          "required"
+                        ],
+                        "type": "object"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "items"
+                    ],
+                    "type": "object"
+                  },
+                  "ranking_version": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "candidates",
+                  "ranking_version"
+                ],
+                "type": "object"
+              },
+              "required": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "type",
+              "additionalProperties",
+              "properties",
+              "required"
+            ],
+            "type": "object"
+          }
+        },
+        "structured_output_enabled": false,
+        "title": "LLM 2",
+        "type": "llm",
+        "vision": {
+          "enabled": false
+        }
+      },
+      "height": 147,
+      "id": "1792294044029",
+      "position": {
+        "x": 1995.0137685334248,
+        "y": 349
+      },
+      "positionAbsolute": {
+        "x": 1995.0137685334248,
+        "y": 349
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "code": "import json\nimport re\n\n\ndef parse_json(value, default):\n    if isinstance(value, (dict, list)):\n        return value\n    if not isinstance(value, str):\n        return default\n\n    text = re.sub(\n        r\"<think>[\\s\\S]*?</think>\",\n        \"\",\n        value,\n    ).replace(\"```json\", \"\").replace(\"```\", \"\").strip()\n\n    try:\n        return json.loads(text)\n    except (TypeError, ValueError):\n        start = min(\n            (i for i in (text.find(\"{\"), text.find(\"[\")) if i >= 0),\n            default=-1,\n        )\n        end = max(text.rfind(\"}\"), text.rfind(\"]\"))\n\n        if start < 0 or end <= start:\n            return default\n\n        try:\n            return json.loads(text[start : end + 1])\n        except (TypeError, ValueError):\n            return default\n\n\ndef unwrap(value):\n    parsed = parse_json(value, {})\n    if isinstance(parsed, dict) and \"result\" in parsed:\n        return parse_json(parsed[\"result\"], {})\n    return parsed\n\n\ndef strings(value, limit=None, max_length=None):\n    values = [value] if isinstance(value, str) else value\n    if not isinstance(values, list):\n        return []\n\n    output = []\n    for item in values:\n        if not isinstance(item, str):\n            continue\n\n        item = item.strip()\n        if max_length is not None:\n            item = item[:max_length]\n\n        if item and item not in output:\n            output.append(item)\n\n        if limit is not None and len(output) >= limit:\n            break\n\n    return output\n\n\ndef first_string(value, max_length):\n    cleaned = strings(value, limit=1, max_length=max_length)\n    return cleaned[0] if cleaned else \"\"\n\n\ndef empty_price():\n    return {\n        \"average_price\": None,\n        \"range_min\": None,\n        \"range_max\": None,\n        \"currency\": \"CNY\",\n        \"confidence\": \"low\",\n        \"basis\": \"输入未提供可用的价格或成本参考值\",\n        \"reminder\": \"价格或成本未知，请向商家核实\",\n    }\n\n\ndef empty_delivery():\n    return {\n        \"average_days\": None,\n        \"range_min_days\": None,\n        \"range_max_days\": None,\n        \"confidence\": \"low\",\n        \"basis\": \"输入未提供可用路线时效参考\",\n        \"reminder\": \"无法计算具体路线时效，建议到对应快递公司小程序或官网查询\",\n    }\n\n\ndef normalize_price(value):\n    if not isinstance(value, dict):\n        return empty_price()\n\n    average = value.get(\"average_price\")\n    minimum = value.get(\"range_min\")\n    maximum = value.get(\"range_max\")\n\n    if average is None or minimum is None or maximum is None:\n        return {\n            \"average_price\": None,\n            \"range_min\": None,\n            \"range_max\": None,\n            \"currency\": str(value.get(\"currency\") or \"CNY\"),\n            \"confidence\": str(value.get(\"confidence\") or \"low\"),\n            \"basis\": str(\n                value.get(\"basis\")\n                or \"输入未提供完整的价格或成本估算\"\n            ),\n            \"reminder\": str(\n                value.get(\"reminder\")\n                or \"价格或成本未知，请向商家核实\"\n            ),\n        }\n\n    return {\n        \"average_price\": average,\n        \"range_min\": minimum,\n        \"range_max\": maximum,\n        \"currency\": str(value.get(\"currency\") or \"CNY\"),\n        \"confidence\": str(value.get(\"confidence\") or \"low\"),\n        \"basis\": str(\n            value.get(\"basis\")\n            or \"价格或成本为估算值，非已确认成交价或实际成本\"\n        ),\n        \"reminder\": str(\n            value.get(\"reminder\")\n            or \"价格或成本为估算，购买或制作前请核实\"\n        ),\n    }\n\n\ndef normalize_delivery(value):\n    if not isinstance(value, dict):\n        return empty_delivery()\n\n    average = value.get(\"average_days\")\n    minimum = value.get(\"range_min_days\")\n    maximum = value.get(\"range_max_days\")\n\n    if average is None or minimum is None or maximum is None:\n        average = None\n        minimum = None\n        maximum = None\n\n    return {\n        \"average_days\": average,\n        \"range_min_days\": minimum,\n        \"range_max_days\": maximum,\n        \"confidence\": str(value.get(\"confidence\") or \"low\"),\n        \"basis\": str(\n            value.get(\"basis\") or \"输入未提供可用路线时效参考\"\n        ),\n        \"reminder\": str(\n            value.get(\"reminder\")\n            or \"无法计算具体路线时效，建议到对应快递公司小程序或官网查询\"\n        ),\n    }\n\n\ndef main(**kwargs):\n    ranked = unwrap(\n        kwargs.get(\"ranker_output\")\n        or kwargs.get(\"llm_output\")\n        or kwargs.get(\"arg1\")\n    )\n    rules = unwrap(\n        kwargs.get(\"rule_result\")\n        or kwargs.get(\"rules_output\")\n        or kwargs.get(\"arg2\")\n    )\n\n    if not isinstance(ranked, dict):\n        ranked = {}\n    if not isinstance(rules, dict):\n        rules = {}\n\n    eligible = rules.get(\"eligible_products\")\n    if not isinstance(eligible, list):\n        eligible = []\n\n    eligible_by_id = {}\n    for product in eligible:\n        if not isinstance(product, dict):\n            continue\n\n        product_id = str(\n            product.get(\"product_id\") or product.get(\"id\") or \"\"\n        ).strip()\n\n        if product_id:\n            eligible_by_id[product_id] = product\n\n    candidates = []\n    seen = set()\n    ranked_candidates = ranked.get(\"candidates\")\n\n    if not isinstance(ranked_candidates, list):\n        ranked_candidates = []\n\n    for item in ranked_candidates:\n        if not isinstance(item, dict) or len(candidates) >= 8:\n            continue\n\n        product_id = str(item.get(\"product_id\") or \"\").strip()\n        product = eligible_by_id.get(product_id)\n\n        # 只允许排序模型引用规则节点确认合格的商品。\n        if not product or product_id in seen:\n            continue\n\n        seen.add(product_id)\n\n        strategy = item.get(\"strategy\")\n        if strategy not in {\"safe\", \"heart\", \"special\"}:\n            strategy = \"safe\"\n\n        delivery_estimate = normalize_delivery(\n            product.get(\"delivery_estimate\")\n        )\n        delivery_reminder = str(\n            delivery_estimate.get(\"reminder\") or \"\"\n        )\n\n        warnings = [\n            warning\n            for warning in strings(item.get(\"soft_warnings\"))\n            if warning != delivery_reminder\n            and \"无法计算具体路线时效\" not in warning\n            and \"配送/制作时效暂未确认\" not in warning\n            and \"建议到对应快递公司小程序或官网查询\" not in warning\n        ]\n\n        risk_note = str(item.get(\"risk_note\") or \"\").strip()\n        explicit_risk = \" \".join(\n            str(product.get(field) or \"\")\n            for field in (\"risk_notes\", \"safety_notes\", \"taboo_flags\")\n        )\n\n        if not risk_note or risk_note not in explicit_risk:\n            risk_note = \"\"\n\n        candidate = {\n            \"product_id\": product_id,\n            \"strategy\": strategy,\n            \"rank\": len(candidates) + 1,\n            \"reason_evidence\": strings(\n                item.get(\"reason_evidence\"),\n                limit=2,\n                max_length=30,\n            ),\n            \"meaning\": first_string(item.get(\"meaning\"), 80),\n            \"why_recommended\": first_string(item.get(\"why_recommended\"), 70),\n            \"risk_note\": risk_note[:30],\n            \"price_estimate\": normalize_price(\n                product.get(\"price_estimate\")\n            ),\n            \"delivery_estimate\": delivery_estimate,\n            \"soft_warnings\": warnings,\n        }\n\n        # 保留规则节点提供的 DIY 商品事实字段，不让校验器将它们丢掉。\n        diy_fields = (\n            \"making_days\",\n            \"materials\",\n            \"steps\",\n            \"storage\",\n            \"storage_method\",\n            \"allergens\",\n            \"evidence_status\",\n        )\n        for field in diy_fields:\n            if field in product:\n                candidate[field] = product[field]\n\n        candidates.append(candidate)\n\n    rule_intent = rules.get(\"intent\")\n    rule_result = rules.get(\"rule_result\")\n    route_estimate = rules.get(\"route_estimate\")\n\n    if not isinstance(rule_intent, dict):\n        rule_intent = {}\n\n    if not isinstance(rule_result, dict):\n        rule_result = {\n            \"eligible_products\": [\n                str(product.get(\"product_id\"))\n                for product in eligible\n                if isinstance(product, dict)\n                and product.get(\"product_id\")\n            ],\n            \"hard_blocks\": [],\n            \"soft_warnings\": [],\n            \"excluded_summary\": [],\n            \"rules_version\": \"rules-v5\",\n        }\n\n    if not isinstance(route_estimate, dict):\n        route_estimate = empty_delivery()\n\n    output = {\n        \"intent\": rule_intent,\n        \"rule_result\": rule_result,\n        \"eligible_products\": [\n            product\n            for product in eligible\n            if isinstance(product, dict)\n            and str(\n                product.get(\"product_id\") or product.get(\"id\") or \"\"\n            ).strip() in eligible_by_id\n        ],\n        \"route_estimate\": route_estimate,\n        \"candidates\": candidates,\n        \"ranking_version\": \"ranker-v6\",\n    }\n\n    return {\n        \"result\": json.dumps(output, ensure_ascii=False)\n    }",
+        "code_language": "python3",
+        "outputs": {
+          "result": {
+            "children": null,
+            "type": "string"
+          }
+        },
+        "selected": false,
+        "title": "代码执行 2",
+        "type": "code",
+        "variables": [
+          {
+            "value_selector": [
+              "1792294044029",
+              "text"
+            ],
+            "value_type": "string",
+            "variable": "arg1"
+          },
+          {
+            "value_selector": [
+              "1792293113071",
+              "result"
+            ],
+            "value_type": "string",
+            "variable": "arg2"
+          }
+        ]
+      },
+      "height": 51,
+      "id": "1792295487009",
+      "position": {
+        "x": 2404.1193785049904,
+        "y": 349
+      },
+      "positionAbsolute": {
+        "x": 2404.1193785049904,
+        "y": 349
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "context": {
+          "enabled": false,
+          "variable_selector": []
+        },
+        "desc": "你是 GiftRight 的最终结果整理器。\n\n你的任务是完整保留输入 JSON，只生成或修改根对象中的 card_message。\n\n要求：\n1. 只根据输入中的场合、关系和具体细节写作。\n2. card_message 不超过80个中文字符。\n3. 不虚构姓名、经历、职业、性格或承诺。\n4. 不修改商品、预算、价格、成本、日期、配送时效、材料、步骤、保存、过敏原、风险和规则字段。\n5. candidates 为空时，不得使用“挑了”“选了”“已经准备好”等表达。\n6. DIY 模式只能表达“适合做成”“可以制作”“这份手作方案”，除非输入明确说明已经完成。\n7. card_message 只能存在于最终 JSON 根对象中，禁止放入 candidates 或商品对象内部。\n8. 必须完整保留输入 JSON 的所有字段和值，只允许修改根对象的 card_message。\n9. 只输出合法 JSON，不要 Markdown、代码块、解释、前后缀文字或思考过程。\n\n下面是 Output Validator 的完整 JSON。请原样保留全部字段，只修改根对象的 card_message：\n{{#代码执行 2.result#}}\n\n输出前确认：\n- 顶层存在 card_message；\n- candidates、eligible_products、rule_result、route_estimate 与输入完全一致；\n- ranking_version 为 ranker-v5；\n- JSON 前后没有任何其他文字。",
+        "model": {
+          "completion_params": {},
+          "mode": "chat",
+          "name": "deepseek-flash",
+          "provider": "langgenius/deepseek/deepseek"
+        },
+        "prompt_template": [
+          {
+            "role": "system",
+            "text": "你是 GiftRight 的贺卡短文案生成器。\n\n你的任务：只写一句 card_message 贺卡文案，其他什么都不做。\n\n输入：通过规则检查和候选校验的 JSON（含 intent 场合/关系、candidates 候选列表）。\n\n文案要求：\n1. 只根据输入中的场合、关系和具体细节写作。\n2. 不虚构姓名、共同经历、职业、性格、承诺或未提供的事实。\n3. card_message 不超过80个中文字符。\n4. 用户没有提供具体细节时，使用稳妥、自然、不过度亲密的表达。\n5. 悼念、探病、正式答谢等场合不得使用不合适的庆祝语气。\n6. candidates不为空时，可以使用“这份礼物”“这件礼物”等表达。\n7. candidates为空时，不得使用“挑了”“选了”“已经准备好”等表达，改写一句表达心意的备用文案。\n8. DIY模式只能表达“适合做成”“可以制作”“这份手作方案”，不得写成“已经亲手做了”，除非输入明确说明已经完成。\n\n输出规则（唯一要求）：\n- 只输出 card_message 的纯文本内容本身。\n- 不输出 JSON，不输出任何字段名、引号、大括号、Markdown、代码块、解释或思考过程。\n- 你的全部输出就是那一句文案，不超过80个字符。",
+            "id": "b6ce785b-adac-4c51-baf5-72effee5bc55"
+          },
+          {
+            "id": "475742c8-7b06-48ca-bcc9-0d4baf148911",
+            "role": "user",
+            "text": "用户原始需求：{{#1792291899555.gift_request#}}\n\n已通过规则检查和候选校验的 JSON：{{#1792295487009.result#}}\n\n请在该 JSON 对象上只增加 card_message，并完整原样返回整个 JSON 对象。"
+          }
+        ],
+        "selected": false,
+        "structured_output_enabled": false,
+        "title": "Card Writer",
+        "type": "llm",
+        "vision": {
+          "enabled": false
+        }
+      },
+      "height": 755,
+      "id": "1792296553557",
+      "position": {
+        "x": 2850.800497426385,
+        "y": 349
+      },
+      "positionAbsolute": {
+        "x": 2850.800497426385,
+        "y": 349
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "outputs": [
+          {
+            "value_selector": [
+              "1792296554000",
+              "result"
+            ],
+            "value_type": "string",
+            "variable": "text"
+          }
+        ],
+        "selected": false,
+        "title": "输出",
+        "type": "end"
+      },
+      "height": 87,
+      "id": "1792296856116",
+      "position": {
+        "x": 3786.435182837732,
+        "y": 353.6969386187286
+      },
+      "positionAbsolute": {
+        "x": 3786.435182837732,
+        "y": 353.6969386187286
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "dataset_ids": [
+          "e87f8114-863c-4ca7-8fc2-a9baca0cfa65"
+        ],
+        "multiple_retrieval_config": {
+          "top_k": 8,
+          "score_threshold": null,
+          "reranking_model": {
+            "provider": "langgenius/tongyi/tongyi",
+            "model": "qwen3-rerank"
+          },
+          "reranking_mode": "weighted_score",
+          "weights": {
+            "weight_type": "customized",
+            "vector_setting": {
+              "vector_weight": 1,
+              "embedding_provider_name": "langgenius/siliconflow/siliconflow",
+              "embedding_model_name": "Qwen/Qwen3-Embedding-8B"
+            },
+            "keyword_setting": {
+              "keyword_weight": 0
+            }
+          },
+          "reranking_enable": false
+        },
+        "query_attachment_selector": [],
+        "query_variable_selector": [
+          "1792291899555",
+          "gift_request"
+        ],
+        "retrieval_mode": "multiple",
+        "selected": false,
+        "title": "知识检索 2",
+        "type": "knowledge-retrieval"
+      },
+      "height": 89,
+      "id": "1792316098509",
+      "position": {
+        "x": 1064,
+        "y": 62.375
+      },
+      "positionAbsolute": {
+        "x": 1064,
+        "y": 62.375
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "dataset_ids": [
+          "ef0c2968-367a-453d-a354-e2749348304c"
+        ],
+        "multiple_retrieval_config": {
+          "top_k": 8,
+          "score_threshold": null,
+          "reranking_model": {
+            "provider": "langgenius/tongyi/tongyi",
+            "model": "qwen3-rerank"
+          },
+          "reranking_mode": "weighted_score",
+          "weights": {
+            "weight_type": "customized",
+            "vector_setting": {
+              "vector_weight": 1,
+              "embedding_provider_name": "langgenius/siliconflow/siliconflow",
+              "embedding_model_name": "Qwen/Qwen3-Embedding-8B"
+            },
+            "keyword_setting": {
+              "keyword_weight": 0
+            }
+          },
+          "reranking_enable": false
+        },
+        "query_attachment_selector": [],
+        "query_variable_selector": [
+          "sq_extract_1",
+          "q_product"
+        ],
+        "retrieval_mode": "multiple",
+        "selected": false,
+        "title": "知识检索 1",
+        "type": "knowledge-retrieval"
+      },
+      "height": 89,
+      "id": "1792830184658",
+      "position": {
+        "x": 1064,
+        "y": 231.375
+      },
+      "positionAbsolute": {
+        "x": 1064,
+        "y": 231.375
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "dataset_ids": [
+          "f787b1b7-6fb0-4213-b962-66c5770d3255"
+        ],
+        "multiple_retrieval_config": {
+          "top_k": 8,
+          "score_threshold": null,
+          "reranking_model": {
+            "provider": "langgenius/tongyi/tongyi",
+            "model": "qwen3-rerank"
+          },
+          "reranking_mode": "weighted_score",
+          "weights": {
+            "weight_type": "customized",
+            "vector_setting": {
+              "vector_weight": 1,
+              "embedding_provider_name": "langgenius/siliconflow/siliconflow",
+              "embedding_model_name": "Qwen/Qwen3-Embedding-8B"
+            },
+            "keyword_setting": {
+              "keyword_weight": 0
+            }
+          },
+          "reranking_enable": false
+        },
+        "query_attachment_selector": [],
+        "query_variable_selector": [
+          "sq_extract_1",
+          "q_occasion"
+        ],
+        "retrieval_mode": "multiple",
+        "selected": false,
+        "title": "知识检索 3",
+        "type": "knowledge-retrieval"
+      },
+      "height": 89,
+      "id": "1792831342745",
+      "position": {
+        "x": 1064,
+        "y": 440.20459207190703
+      },
+      "positionAbsolute": {
+        "x": 1064,
+        "y": 440.20459207190703
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "dataset_ids": [
+          "6576c580-4309-4a15-b71f-edf2bc3e207c"
+        ],
+        "multiple_retrieval_config": {
+          "top_k": 8,
+          "score_threshold": null,
+          "reranking_model": {
+            "provider": "langgenius/tongyi/tongyi",
+            "model": "qwen3-rerank"
+          },
+          "reranking_mode": "weighted_score",
+          "weights": {
+            "weight_type": "customized",
+            "vector_setting": {
+              "vector_weight": 1,
+              "embedding_provider_name": "langgenius/siliconflow/siliconflow",
+              "embedding_model_name": "Qwen/Qwen3-Embedding-8B"
+            },
+            "keyword_setting": {
+              "keyword_weight": 0
+            }
+          },
+          "reranking_enable": false
+        },
+        "query_attachment_selector": [],
+        "query_variable_selector": [
+          "sq_extract_1",
+          "q_occasion"
+        ],
+        "retrieval_mode": "multiple",
+        "selected": false,
+        "title": "地域与禁忌检索",
+        "type": "knowledge-retrieval"
+      },
+      "height": 89,
+      "id": "1792833782604",
+      "position": {
+        "x": 1064,
+        "y": 677.3102020434725
+      },
+      "positionAbsolute": {
+        "x": 1064,
+        "y": 677.3102020434725
+      },
+      "selected": false,
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "code": "def main(card_message: str, validated: str) -> dict:\n    import json\n    import re\n\n    s = str(card_message or \"\").strip()\n    s = re.sub(r\"<think[^>]*>.*?</think\\s*>\", \"\", s, flags=re.S | re.I).strip()\n    s = re.sub(r\"<!--.*?-->\", \"\", s, flags=re.S).strip()\n    s = re.sub(r\"^```(?:json)?\\s*\", \"\", s).strip()\n    s = re.sub(r\"\\s*```$\", \"\", s).strip()\n    if s.startswith(\"{\") and s.endswith(\"}\"):\n        try:\n            inner = json.loads(s)\n            if isinstance(inner, dict) and isinstance(inner.get(\"card_message\"), str):\n                s = inner[\"card_message\"].strip()\n        except Exception:\n            pass\n    s = s.strip(\"\\\"'“”‘’` \").strip()\n    # Card Writer 契约：card_message 不超过 80 个中文字符。\n    if len(s) > 80:\n        s = s[:80]\n\n    try:\n        data = json.loads(validated)\n    except Exception:\n        data = {}\n    if not isinstance(data, dict):\n        data = {}\n    data[\"card_message\"] = s\n\n    return {\"result\": json.dumps(data, ensure_ascii=False)}",
+        "code_language": "python3",
+        "outputs": {
+          "result": {
+            "children": null,
+            "type": "string"
+          }
+        },
+        "selected": false,
+        "title": "Output Assembler",
+        "type": "code",
+        "variables": [
+          {
+            "value_selector": [
+              "1792296553557",
+              "text"
+            ],
+            "value_type": "string",
+            "variable": "card_message"
+          },
+          {
+            "value_selector": [
+              "1792295487009",
+              "result"
+            ],
+            "value_type": "string",
+            "variable": "validated"
+          }
+        ]
+      },
+      "height": 51,
+      "id": "1792296554000",
+      "position": {
+        "x": 3266.951515326043,
+        "y": 349
+      },
+      "positionAbsolute": {
+        "x": 3266.951515326043,
+        "y": 349
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "type": "custom",
+      "width": 241,
+      "zIndex": 0,
+      "selected": false
+    },
+    {
+      "id": "sq_extract_1",
+      "type": "custom",
+      "position": {
+        "x": 461.1076611354745,
+        "y": 397.4622455250854
+      },
+      "positionAbsolute": {
+        "x": 461.1076611354745,
+        "y": 397.4622455250854
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "type": "code",
+        "title": "检索词提取",
+        "desc": "",
+        "code": "def main(text: str) -> dict:\n    import json, re\n    t = text or ''\n    if '</think>' in t:\n        t = t.split('</think>', 1)[1]\n    m = re.search(r'\\{.*\\}', t, re.S)\n    q = {}\n    if m:\n        try:\n            q = json.loads(m.group(0)).get('search_query', {})\n        except Exception:\n            q = {}\n    p = str(q.get('product', '')).strip()\n    o = str(q.get('occasion_festival', '')).strip()\n    if not p:\n        p = '生日礼物 可爱 小东西'\n    if not o:\n        o = '生日 礼物'\n    return {'q_product': p, 'q_occasion': o}",
+        "code_language": "python3",
+        "output_type": "object",
+        "variables": [
+          {
+            "variable": "text",
+            "value_selector": [
+              "1792292308073",
+              "text"
+            ],
+            "value_type": "string"
+          }
+        ],
+        "outputs": {
+          "q_product": {
+            "type": "string"
+          },
+          "q_occasion": {
+            "type": "string"
+          }
+        },
+        "selected": true
+      },
+      "zIndex": 0,
+      "width": 241,
+      "height": 51,
+      "selected": false
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "start",
+        "targetType": "llm"
+      },
+      "id": "1792291899555-source-1792292308073-target",
+      "selected": false,
+      "source": "1792291899555",
+      "sourceHandle": "source",
+      "target": "1792292308073",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "llm",
+        "targetType": "code"
+      },
+      "id": "1792292308073-source-1792293113071-target",
+      "selected": false,
+      "source": "1792292308073",
+      "sourceHandle": "source",
+      "target": "1792293113071",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "llm",
+        "targetType": "knowledge-retrieval"
+      },
+      "id": "1792292308073-source-1792316098509-target",
+      "selected": false,
+      "source": "1792292308073",
+      "sourceHandle": "source",
+      "target": "1792316098509",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "code",
+        "targetType": "llm"
+      },
+      "id": "1792293113071-source-1792294044029-target",
+      "selected": false,
+      "source": "1792293113071",
+      "sourceHandle": "source",
+      "target": "1792294044029",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "knowledge-retrieval",
+        "targetType": "llm"
+      },
+      "id": "1792316098509-source-1792294044029-target",
+      "selected": false,
+      "source": "1792316098509",
+      "sourceHandle": "source",
+      "target": "1792294044029",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "knowledge-retrieval",
+        "targetType": "llm"
+      },
+      "id": "1792830184658-source-1792294044029-target",
+      "selected": false,
+      "source": "1792830184658",
+      "sourceHandle": "source",
+      "target": "1792294044029",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "knowledge-retrieval",
+        "targetType": "llm"
+      },
+      "id": "1792831342745-source-1792294044029-target",
+      "selected": false,
+      "source": "1792831342745",
+      "sourceHandle": "source",
+      "target": "1792294044029",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "knowledge-retrieval",
+        "targetType": "llm"
+      },
+      "id": "1792833782604-source-1792294044029-target",
+      "selected": false,
+      "source": "1792833782604",
+      "sourceHandle": "source",
+      "target": "1792294044029",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "llm",
+        "targetType": "code"
+      },
+      "id": "1792294044029-source-1792295487009-target",
+      "selected": false,
+      "source": "1792294044029",
+      "sourceHandle": "source",
+      "target": "1792295487009",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "code",
+        "targetType": "llm"
+      },
+      "id": "1792295487009-source-1792296553557-target",
+      "selected": false,
+      "source": "1792295487009",
+      "sourceHandle": "source",
+      "target": "1792296553557",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "knowledge-retrieval",
+        "targetType": "code"
+      },
+      "id": "1792830184658-source-1792293113071-target",
+      "source": "1792830184658",
+      "sourceHandle": "source",
+      "target": "1792293113071",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "knowledge-retrieval",
+        "targetType": "code"
+      },
+      "id": "1792316098509-source-1792293113071-target",
+      "source": "1792316098509",
+      "sourceHandle": "source",
+      "target": "1792293113071",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "llm",
+        "targetType": "code"
+      },
+      "id": "1792296553557-source-1792296554000-target",
+      "source": "1792296553557",
+      "sourceHandle": "source",
+      "target": "1792296554000",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "data": {
+        "isInIteration": false,
+        "isInLoop": false,
+        "sourceType": "code",
+        "targetType": "end"
+      },
+      "id": "1792296554000-source-1792296856116-target",
+      "source": "1792296554000",
+      "sourceHandle": "source",
+      "target": "1792296856116",
+      "targetHandle": "target",
+      "type": "custom",
+      "zIndex": 0
+    },
+    {
+      "id": "edge_sq_kr1",
+      "source": "1792292308073",
+      "target": "sq_extract_1",
+      "sourceHandle": "source",
+      "targetHandle": "target",
+      "type": "custom",
+      "data": {
+        "sourceType": "llm",
+        "targetType": "code",
+        "isInIteration": false,
+        "isInLoop": false
+      },
+      "zIndex": 0
+    },
+    {
+      "id": "edge_sq_kr1b",
+      "source": "sq_extract_1",
+      "target": "1792830184658",
+      "sourceHandle": "source",
+      "targetHandle": "target",
+      "type": "custom",
+      "data": {
+        "sourceType": "code",
+        "targetType": "knowledge-retrieval",
+        "isInIteration": false,
+        "isInLoop": false
+      },
+      "zIndex": 0
+    },
+    {
+      "id": "edge_sq_kr3",
+      "source": "sq_extract_1",
+      "target": "1792831342745",
+      "sourceHandle": "source",
+      "targetHandle": "target",
+      "type": "custom",
+      "data": {
+        "sourceType": "code",
+        "targetType": "knowledge-retrieval",
+        "isInIteration": false,
+        "isInLoop": false
+      },
+      "zIndex": 0
+    },
+    {
+      "id": "edge_sq_kr4",
+      "source": "sq_extract_1",
+      "target": "1792833782604",
+      "sourceHandle": "source",
+      "targetHandle": "target",
+      "type": "custom",
+      "data": {
+        "sourceType": "code",
+        "targetType": "knowledge-retrieval",
+        "isInIteration": false,
+        "isInLoop": false
+      },
+      "zIndex": 0
+    }
+  ],
+  "viewport": {
+    "x": -222.37843666365507,
+    "y": 323.9996759461941,
+    "zoom": 0.4258092690471122
+  }
+}

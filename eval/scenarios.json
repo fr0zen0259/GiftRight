@@ -1,0 +1,206 @@
+[
+  {
+    "id": "s01",
+    "label": "答谢导师，不饮酒",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "mentor",
+      "relation_label": "导师/老师",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 3,
+      "hard_preferences": ["non_alcoholic"],
+      "free_text": "不要太高调"
+    },
+    "must_not_recommend_tags": ["alcohol"],
+    "must_include_any": ["g-001", "g-002", "g-003", "g-004", "g-006", "g-012"]
+  },
+  {
+    "id": "s02",
+    "label": "朋友生日，喜欢健身",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 200,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "他最近在健身"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": ["g-006", "g-007", "g-018"]
+  },
+  {
+    "id": "s03",
+    "label": "同事离职，避免香味",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "送别/答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 50,
+      "budget_max": 200,
+      "days_left": 2,
+      "hard_preferences": ["avoid_fragrance"],
+      "free_text": "最好实用、低调"
+    },
+    "must_not_recommend_tags": ["fragrance"],
+    "must_include_any": ["g-003", "g-004", "g-006", "g-012", "g-018"]
+  },
+  {
+    "id": "s04",
+    "label": "朋友预算很低",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 0,
+      "budget_max": 100,
+      "days_left": 2,
+      "hard_preferences": [],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": ["alcohol"],
+    "must_include_any": ["g-003", "g-005", "g-012"]
+  },
+  {
+    "id": "s05",
+    "label": "清真饮食",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 80,
+      "budget_max": 250,
+      "days_left": 3,
+      "hard_preferences": ["halal"],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": ["non_halal"],
+    "must_include_any": ["g-001", "g-002", "g-003", "g-004", "g-006", "g-008", "g-012"]
+  },
+  {
+    "id": "s06",
+    "label": "素食长辈",
+    "intent": {
+      "occasion": "holiday",
+      "occasion_label": "节日",
+      "recipient_relation": "family",
+      "relation_label": "长辈/亲戚",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 5,
+      "hard_preferences": ["vegetarian"],
+      "free_text": "希望包装不要太高调"
+    },
+    "must_not_recommend_tags": ["meat"],
+    "must_include_any": ["g-002", "g-004", "g-006", "g-012"]
+  },
+  {
+    "id": "s07",
+    "label": "避免动物制品",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": 4,
+      "hard_preferences": ["no_animal_products"],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": ["animal_product"],
+    "must_include_any": ["g-001", "g-002", "g-003", "g-004", "g-006", "g-008", "g-012"]
+  },
+  {
+    "id": "s08",
+    "label": "送礼日期过近",
+    "intent": {
+      "occasion": "graduation",
+      "occasion_label": "毕业",
+      "recipient_relation": "classmate",
+      "relation_label": "同学",
+      "budget_min": 100,
+      "budget_max": 350,
+      "days_left": 1,
+      "hard_preferences": [],
+      "free_text": "需要尽快收到"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": ["g-003", "g-005", "g-014", "g-015"]
+  },
+  {
+    "id": "s09",
+    "label": "不确定的香味偏好",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 150,
+      "budget_max": 350,
+      "days_left": 4,
+      "hard_preferences": [],
+      "free_text": "她可能不喜欢香味"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": ["g-001", "g-003", "g-006", "g-012"]
+  },
+  {
+    "id": "s10",
+    "label": "便携礼物",
+    "intent": {
+      "occasion": "onboarding",
+      "occasion_label": "入职",
+      "recipient_relation": "colleague",
+      "relation_label": "同事",
+      "budget_min": 100,
+      "budget_max": 250,
+      "days_left": 3,
+      "hard_preferences": [],
+      "free_text": "最好能带出国"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": ["g-001", "g-002", "g-006", "g-018"]
+  },
+  {
+    "id": "s11",
+    "label": "预算不足以覆盖部分候选",
+    "intent": {
+      "occasion": "thank_you",
+      "occasion_label": "答谢",
+      "recipient_relation": "manager",
+      "relation_label": "上级",
+      "budget_min": 100,
+      "budget_max": 180,
+      "days_left": 3,
+      "hard_preferences": ["non_alcoholic"],
+      "free_text": ""
+    },
+    "must_not_recommend_tags": ["alcohol"],
+    "must_include_any": ["g-001", "g-002", "g-004", "g-006", "g-012", "g-018"]
+  },
+  {
+    "id": "s12",
+    "label": "没有日期的信息不完整场景",
+    "intent": {
+      "occasion": "birthday",
+      "occasion_label": "生日",
+      "recipient_relation": "friend",
+      "relation_label": "朋友",
+      "budget_min": 100,
+      "budget_max": 300,
+      "days_left": null,
+      "hard_preferences": [],
+      "free_text": "不要太贵"
+    },
+    "must_not_recommend_tags": [],
+    "must_include_any": ["g-001", "g-002", "g-003", "g-004", "g-006", "g-010", "g-011", "g-012", "g-018"]
+  }
+]

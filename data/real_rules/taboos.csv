@@ -1,0 +1,106 @@
+rule_id,scope,keyword,flag,action,severity,reason,source_url,source_type
+T001,部分中文送礼语境,钟/手表,clock,warn,soft,“送钟”在部分中文语境中与“送终”谐音，不能当作普遍禁忌。,https://culture.people.com.cn/n/2013/0131/c354808-20387884.html,public_cultural_guide
+T002,部分中文送礼语境,伞,umbrella,warn,soft,“伞”在部分语境中与“散”联想，需确认收礼人习惯。,https://culture.people.com.cn/n/2013/0131/c354808-20387884.html,public_cultural_guide
+T003,部分中文送礼语境,鞋,shoes,warn,soft,部分地区或关系中会把鞋理解为“走”，不应直接硬拦截。,https://culture.people.com.cn/n/2013/0131/c354808-20387884.html,public_cultural_guide
+T004,部分中文送礼语境,梨,pear,warn,soft,“梨”可能与“分离”产生联想，属于场景化提醒。,https://culture.people.com.cn/n/2013/0131/c354808-20387884.html,public_cultural_guide
+T005,庆典和关系场合,刀/剪刀,sharp,warn,soft,刀具或剪刀可能被理解为切断关系，婚礼等场合需先确认。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,public_cultural_guide
+T006,食品饮品,坚果/花生/杏仁等,allergen,warn,health_review,过敏原必须以具体配料和标签为准，标题不能证明安全。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T007,饮食约束,酒精,alcohol,block_if_explicit_no_alcohol,hard_if_user_confirmed,用户明确选择不饮酒时，含酒精商品不能进入候选。,https://www.shaanxi.gov.cn/zfxxgk/zcwjk/dfxfg/202402/W020240226372621722359.pdf,official_dietary_guidance_plus_system_policy
+T008,避免动物制品,皮革/羊毛/丝绸等,animal_product,block_if_explicit_avoid,hard_if_user_confirmed,只有商品事实明确出现相关材料时才拦截，未知材料不能被猜测。,https://dg.cnsoc.org/article/lsqy.html,dietary_guidance_plus_system_policy
+T009,食品过敏原,花生,peanut,warn_if_label_missing,health_review,花生属于需要重点关注的食品过敏原，商品标题不能替代完整配料和过敏原标签。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T010,食品过敏原,坚果,tree_nut,warn_if_label_missing,health_review,树坚果属于需要重点关注的食品过敏原，具体种类应以标签为准。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T011,食品过敏原,牛奶/乳制品,milk,warn_if_label_missing,health_review,乳类属于需要重点关注的食品过敏原，不能因为商品名称没有出现乳制品就判定安全。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T012,食品过敏原,鸡蛋,egg,warn_if_label_missing,health_review,鸡蛋属于需要重点关注的食品过敏原，需要检查配料和生产信息。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T013,食品过敏原,鱼类,fish,warn_if_label_missing,health_review,鱼类属于需要重点关注的食品过敏原，需确认具体鱼种和配料。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T014,食品过敏原,甲壳类海鲜,crustacean_shellfish,warn_if_label_missing,health_review,甲壳类海鲜属于需要重点关注的食品过敏原，需检查配料和交叉接触说明。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T015,食品过敏原,小麦,wheat,warn_if_label_missing,health_review,小麦属于需要重点关注的食品过敏原，面包、曲奇和糕点不能只按商品名判断。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T016,食品过敏原,大豆,soy,warn_if_label_missing,health_review,大豆属于需要重点关注的食品过敏原，需查看完整标签。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T017,食品过敏原,芝麻,sesame,warn_if_label_missing,health_review,芝麻属于需要重点关注的食品过敏原，需查看配料和过敏原声明。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
+T018,食品过敏原,含麸质谷物/小麦制品,gluten_or_wheat,warn_if_label_missing,health_review,面包、饼干、糕点和面食的安全性不能仅由商品名称判断，应查看配料表和致敏物质提示。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T019,饮食约束,猪肉/猪源明胶/猪源油脂,pork_or_pork_derived,block_if_explicit_avoid,hard_if_user_confirmed,用户明确提出不接受猪源成分时，需核对配料和生产信息；商品名称不构成排除证据。,https://www.shaanxi.gov.cn/zfxxgk/zcwjk/dfxfg/202402/W020240226372621722359.pdf,china_local_dietary_regulation_plus_system_policy
+T020,饮食约束,动物源明胶,animal_gelatin,warn_if_ingredient_unknown,health_review,糖果、软胶囊和部分甜点可能使用明胶；来源不明时只能标记 unknown，不能默认是植物胶。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance_plus_evidence_policy
+T021,饮食约束,纯素/vegan,vegan,block_if_explicit_and_unverified,hard_if_user_confirmed,vegetarian、纯素和 vegan 不是可互换标签；没有完整配料或可靠声明时应保留 unknown。,https://dg.cnsoc.org/article/lsqy.html,china_nutrition_guidance_plus_system_policy
+T022,饮食约束,蛋奶素,lacto_ovo_vegetarian,warn_if_label_missing,health_review,蛋奶素仍需确认是否含肉类、肉汤、鱼露或动物源添加物，不能只看“素食”二字。,https://dg.cnsoc.org/article/lsqy.html,china_nutrition_guidance_plus_evidence_policy
+T023,饮食约束,清真/halal,halal,block_if_explicit_and_unverified,hard_if_user_confirmed,用户明确要求清真时，应优先使用清真标识、认证或可核验成分信息；不能凭商品名推断。,https://www.shaanxi.gov.cn/zfxxgk/zcwjk/dfxfg/202402/W020240226372621722359.pdf,china_local_dietary_regulation_plus_evidence_policy
+T024,食品标签证据,过敏原交叉接触,cross_contact,warn_if_cross_contact_unknown,health_review,同线生产或“可能含有”提示会影响过敏风险判断；缺失时不能给出无风险结论。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T025,食品标签证据,配料表缺失,ingredient_list_missing,block_if_food_constraint_explicit,hard_if_user_confirmed,食品详情缺少配料表时，不能验证过敏、宗教饮食或素食约束，应输出 unknown。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T026,食品标签证据,保质期/生产日期缺失,date_label_missing,warn,health_review,食品礼物需要核对生产日期和保质期；缺失时不能判断是否适合作为近期礼物。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T027,食品饮品,酒精或含酒精风味,alcohol_ingredient,warn_if_ingredient_unknown,health_review,“低度”“风味”或烘焙酒香不等于无酒精；用户明确禁酒时应核对酒精和配料信息。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance_plus_system_policy
+T028,食品过敏原,乳糖/乳清/奶粉,milk_derivative,warn_if_label_missing,health_review,乳制品成分可能以乳糖、乳清粉、奶粉等形式出现，应查看完整配料而非只看标题。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T029,食品过敏原,甲壳类/鱼露/虾皮等隐性海鲜成分,hidden_seafood,warn_if_label_missing,health_review,调味料和复合配料可能带入海鲜成分，海鲜过敏者需要查看配料和致敏物质提示。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T030,饮食证据,认证标识过期或不可核验,certification_unverifiable,block_if_certification_required,hard_if_user_confirmed,用户要求特定认证时，无法核验认证主体、范围或有效期，不能将商品判定为符合。,https://www.shaanxi.gov.cn/zfxxgk/zcwjk/dfxfg/202402/W020240226372621722359.pdf,china_local_regulation_plus_evidence_policy
+T031,文化习俗,白色/黑色包装,color_culture,warn_if_context_sensitive,soft,部分慰问或庄重语境对颜色有联想，但颜色不是全国统一禁忌，应先确认家庭和场合偏好。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T032,文化习俗,单数/成双数量,quantity_culture,warn_if_context_sensitive,soft,部分节庆和婚庆场合重视成双或吉利数字，属于地方和家庭习惯，不能作为硬拦截。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T033,饮食约束,猪油/猪源油脂,pork_fat,block_if_explicit_avoid,hard_if_user_confirmed,用户明确避免猪源成分时，应核对配料表和复合配料，标题不能证明不含猪源成分。,https://www.shaanxi.gov.cn/zfxxgk/zcwjk/dfxfg/202402/W020240226372621722359.pdf,china_local_dietary_regulation_plus_system_policy
+T034,饮食约束,猪源明胶,pork_gelatin,block_if_explicit_and_unverified,hard_if_user_confirmed,明胶来源可能影响宗教或个人饮食约束，来源不明时保留 unknown。,https://www.shaanxi.gov.cn/zfxxgk/zcwjk/dfxfg/202402/W020240226372621722359.pdf,china_local_dietary_regulation_plus_evidence_policy
+T035,饮食约束,乳清粉,whey,warn_if_label_missing,health_review,乳清粉属于需要在完整配料中核对的乳制品成分，不能只看商品类别。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T036,饮食约束,酪蛋白/酪蛋白酸盐,casein,warn_if_label_missing,health_review,乳蛋白可能出现在复合配料中，乳制品过敏者需要查看具体标签。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T037,饮食约束,奶粉/乳粉,milk_powder,warn_if_label_missing,health_review,奶粉或乳粉不能因商品标题未出现牛奶二字而被忽略。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T038,饮食约束,蛋清/蛋黄粉,egg_powder,warn_if_label_missing,health_review,蛋粉类配料应按鸡蛋过敏约束核验，缺少配料表时保留 unknown。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T039,饮食约束,鱼露,fish_sauce,warn_if_label_missing,health_review,鱼露可能出现在复合调味料中，鱼类过敏者需要检查配料。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T040,饮食约束,虾皮/虾粉,shrimp_ingredient,warn_if_label_missing,health_review,虾皮或虾粉属于海鲜成分，不能只按糕点或调味品类别判断。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T041,饮食约束,蚝油/牡蛎提取物,oyster_ingredient,warn_if_label_missing,health_review,复合调味料可能含贝类成分，海鲜过敏者应查看标签。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T042,饮食约束,芝麻油/芝麻酱,sesame_ingredient,warn_if_label_missing,health_review,芝麻可能以油或酱的形式进入复合配料，芝麻过敏者不能只看品名。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T043,饮食约束,小麦淀粉/面粉,wheat_ingredient,warn_if_label_missing,health_review,小麦成分可能隐藏在糕点、酱料和复合粉中，应查看配料表。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T044,饮食约束,大豆卵磷脂,soy_lecithin,warn_if_label_missing,health_review,大豆来源的乳化剂需要结合完整配料判断，不能根据外包装颜色推断。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T045,饮食约束,花生油/花生酱,peanut_ingredient,warn_if_label_missing,health_review,花生可能以油、酱或碎粒形式出现，花生过敏者需要核对具体配料。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T046,饮食约束,坚果油/坚果粉,tree_nut_ingredient,warn_if_label_missing,health_review,坚果来源配料需要按具体坚果种类记录，不能用“坚果礼盒”替代标签证据。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T047,饮食约束,芥末/芥菜籽,mustard,warn_if_label_missing,health_review,用户明确提出相关过敏或忌口时，复合调味料需要查看完整配料。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T048,饮食约束,亚硫酸盐等防腐剂,sulfite,warn_if_label_missing,health_review,对特定添加剂敏感时，必须依据标签或商家详情判断，不能按品类猜测。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T049,饮食约束,蜂蜜,honey,warn_if_user_constraint,health_review,蜂蜜是否适合特定人群需要由用户确认，系统不能把天然或健康等宣传语当作适用证明。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance_plus_system_policy
+T050,饮食约束,蜂蜡/蜂王浆,bee_product,block_if_explicit_avoid,hard_if_user_confirmed,明确避免动物源产品时，蜂产品应作为需要确认的动物来源成分。,https://dg.cnsoc.org/article/lsqy.html,dietary_guidance_plus_system_policy
+T051,饮食约束,动物胶原蛋白,animal_collagen,block_if_explicit_and_unverified,hard_if_user_confirmed,胶原蛋白来源可能影响用户的动物源约束，来源不明时不能判定为植物来源。,https://dg.cnsoc.org/article/lsqy.html,dietary_guidance_plus_evidence_policy
+T052,食品声称,无糖/低糖声称,sugar_claim,warn_if_claim_unverified,health_review,无糖或低糖属于需要依据标签和规定核验的声称，不能只凭商品标题接受。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T053,食品声称,无麸质声称,gluten_free_claim,warn_if_claim_unverified,health_review,无麸质声称需要商品详情或标签证据，不能从“轻食”或“健康”字样推断。,https://www.nhc.gov.cn/sps/c100087/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_china_food_label_guidance
+T054,食品声称,有机声称,organic_claim,warn_if_claim_unverified,soft,有机属性需要可核验标签或认证信息，不能把产地故事当成认证。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T055,食品声称,纯天然声称,natural_claim,warn_if_claim_unverified,soft,天然不是安全、无过敏或适合特殊饮食的同义词，系统应拆分核验。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T056,食品声称,高钙/高蛋白声称,nutrition_claim,warn_if_claim_unverified,health_review,营养声称不能替代医疗建议，必须以标签信息为准。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T057,食品声称,保健功能声称,health_function_claim,block_if_medical_claim,health_review,保健功能或疾病相关宣传不能直接作为送礼适用性证明。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,health_safety_guardrail
+T058,食品声称,增强免疫/降糖等医疗暗示,medical_implication,block_if_medical_claim,health_review,医疗暗示不能用于替代医生意见，系统只允许提示证据不足。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,health_safety_guardrail
+T059,食品适用人群,婴幼儿可食用,infant_food_claim,warn_if_scope_unknown,health_review,普通食品不能仅凭礼盒名称判定适合婴幼儿，需核对适用人群和标签。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T060,食品适用人群,孕妇适用,pregnancy_claim,warn_if_scope_unknown,health_review,孕期适用性不能由系统推断，涉及特殊人群时应建议咨询专业人士。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,health_safety_guardrail
+T061,食品形态,生食/未充分加热,raw_food,warn_if_context_sensitive,health_review,生食或未充分加热的食品需要考虑收礼人和场合，不能默认适合探病或老人。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,health_safety_guardrail
+T062,食品保存,冷藏/冷冻链,cold_chain,warn_if_storage_unknown,health_review,需要冷藏或冷冻的商品必须核对运输和接收条件，配送未知时不能承诺安全到达。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T063,材质约束,真皮,leather,block_if_explicit_avoid,hard_if_user_confirmed,用户明确避免动物制品时，真皮商品可以硬拦截；材质未知时保持 unknown。,,system_policy_from_explicit_material_constraint
+T064,材质约束,皮草/毛皮,fur,block_if_explicit_avoid,hard_if_user_confirmed,皮草属于明确动物源材质，只有用户提出约束且商品事实明确时才拦截。,,system_policy_from_explicit_material_constraint
+T065,材质约束,羊毛,wool,warn_if_user_constraint,soft,羊毛是否可接受取决于用户定义，不能把素食自动等同于所有动物纤维禁用。,,system_policy_from_explicit_material_constraint
+T066,材质约束,真丝,silk,warn_if_user_constraint,soft,真丝属于需要按用户明确材质偏好核验的商品属性，未知时不猜测。,,system_policy_from_explicit_material_constraint
+T067,材质约束,羽绒/羽毛,down_feather,warn_if_material_unknown,soft,羽绒或羽毛材质需要以商品详情为准，不能根据“保暖”推断。,,evidence_quality_policy
+T068,材质约束,骨制/角制材料,bone_horn,warn_if_material_unknown,soft,动物骨角材质需要结合用户约束和商品事实，不能按工艺品名称硬判定。,,system_policy_from_explicit_material_constraint
+T069,材质约束,贝壳/珍珠材质,shell_pearl,warn_if_context_sensitive,soft,贝壳或珍珠是否合适取决于用户偏好和场合，不应作为普遍禁忌。,,system_policy
+T070,材质约束,动物毛发,animal_hair,block_if_explicit_avoid,hard_if_user_confirmed,动物毛发材质应在用户明确避免时处理，来源不明时输出 unknown。,,system_policy_from_explicit_material_constraint
+T071,材质约束,麂皮/绒面皮,suede,block_if_explicit_avoid,hard_if_user_confirmed,麂皮属于皮革材质的细分，商品事实明确且用户提出约束时才拦截。,,system_policy_from_explicit_material_constraint
+T072,材质约束,羊绒,cashmere,warn_if_user_constraint,soft,羊绒是否合适应由用户材质偏好决定，不能按价格或保暖功能推断。,,system_policy
+T073,材质约束,乳胶,latex,warn_if_material_unknown,health_review,乳胶敏感或过敏需要用户明确提出，商品材质缺失时保留 unknown。,,system_policy_from_explicit_health_constraint
+T074,材质约束,镍/金属过敏风险,nickel,warn_if_material_unknown,health_review,金属过敏不能根据饰品名称判断，需查看材质说明或商家详情。,,evidence_quality_policy
+T075,感官约束,浓香型香氛,strong_scent,warn_if_context_sensitive,soft,气味敏感、探病和公共空间场景需要先确认偏好，不能按性别或关系推断。,,system_policy_against_unfounded_inference
+T076,感官约束,精油/芳香成分,essential_oil,warn_if_context_sensitive,health_review,精油并不自动等于低风险，敏感人群和探病场景需要保留确认步骤。,,health_safety_guardrail
+T077,感官约束,烟草/烟味相关,smoke,warn_if_context_sensitive,soft,烟味和烟草相关礼物应先确认收礼人习惯，不能因关系亲近而默认适合。,,system_policy
+T078,物理风险,易碎陶瓷/玻璃,fragile_ceramic,warn_if_delivery_unknown,soft,易碎商品需要核对包装和配送，场合紧急时不应只按寓意排序。,,data_quality_policy
+T079,物理风险,刀具/尖锐工具,sharp_tool,warn_if_context_sensitive,soft,尖锐工具可能带来文化联想和运输风险，婚礼等场合应先确认。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T080,物理风险,液体泄漏风险,liquid_spill,warn_if_delivery_unknown,soft,液体商品需要考虑包装和运输，缺少配送信息时应提示风险。,,data_quality_policy
+T081,物理风险,电池/充电器兼容性,battery_compatibility,warn_if_spec_unknown,soft,数码礼物需要核对规格和兼容性，不能仅凭外观或价格推荐。,,evidence_quality_policy
+T082,定制约束,姓名/日期定制,custom_text,warn_if_customization_missing,soft,定制信息缺失或配送时间不足时，不能承诺按时交付。,,data_quality_policy
+T083,定制约束,尺寸/尺码,size_required,warn_if_preference_unknown,soft,服饰、鞋类和可穿戴商品需要确认尺寸，不能从关系或年龄推断。,,system_policy_against_unfounded_inference
+T084,定制约束,植物养护条件,plant_care,warn_if_preference_unknown,soft,植物礼物需要确认空间、光照和养护能力，不能只按寓意推荐。,,system_policy
+T085,宠物相关,宠物过敏/家庭禁忌,pet_allergy,warn_if_context_sensitive,soft,收礼人家庭有宠物时，香氛、植物或食品风险需要确认，不能默认安全。,,system_policy_from_health_constraint
+T086,文化习俗,镜子,mirror,warn_if_context_sensitive,soft,部分家庭对镜子礼物有特殊联想，属于软提醒，不能全国化。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T087,文化习俗,白花/祭奠联想,white_flower,warn_if_context_sensitive,soft,白花在部分慰问和纪念语境中有特定联想，送礼前应确认场合和家庭习惯。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T088,文化习俗,数字四,number_four,warn_if_context_sensitive,soft,数字寓意因地区、家庭和关系而异，只能作为软提醒。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T089,文化习俗,红色庆祝包装用于慰问,red_festive_condolence,warn_if_context_sensitive,soft,慰问场合的庆祝性包装可能造成不合适联想，应降低确定性并询问偏好。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T090,文化习俗,数字六/八等吉利数字,auspicious_number,warn_if_context_sensitive,soft,数字寓意因地区、家庭和关系而异，只能作为软提醒，不能替代用户确认。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T091,文化习俗,菊花/单一花材,flower_association,warn_if_context_sensitive,soft,花材的纪念和慰问联想具有场合与家庭差异，不能全国化硬拦截。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T092,文化习俗,黑白配色,black_white_packaging,warn_if_context_sensitive,soft,黑白配色在不同场合可能产生不同联想，系统只做软提醒。,https://tv.cctv.cn/special/zgctjr/chunjie/index.shtml,china_local_cultural_reference
+T093,经济压力,现金等价物/高面额礼卡,cash_like_gift,warn_if_context_sensitive,soft,现金等价物可能增加职场或组织关系压力，需结合场合与制度确认。,,system_policy_with_ethics_guardrail
+T094,医疗边界,药品/治疗用品,medicine_like_gift,block_if_medical_claim,health_review,药品或治疗用品不应被系统当作普通礼物推荐，具体使用需遵循专业建议。,,health_safety_guardrail
+T095,文化习俗,生日送钟表,clock_birthday,warn_if_context_sensitive,soft,生日场景对钟表的联想并非普遍禁忌，需按收礼人习惯软提醒。,https://culture.people.com.cn/n/2013/0131/c354808-20387884.html,china_cultural_reference
+T096,文化习俗,雨具礼物,umbrella_context,warn_if_context_sensitive,soft,雨具是否合适取决于关系、场合和收礼人习惯，不应按谐音硬拦截。,https://culture.people.com.cn/n/2013/0131/c354808-20387884.html,china_cultural_reference
+T097,尺寸约束,鞋类尺码未知,shoe_size_unknown,warn_if_preference_unknown,soft,鞋类需要确认尺码和退换条件，不能只凭关系或年龄推断。,,system_policy_against_unfounded_inference
+T098,隐私约束,定制照片/姓名信息,personalized_privacy,warn_if_customization_missing,soft,定制礼物涉及个人信息时，应先确认收礼人是否愿意公开或长期保存。,,privacy_guardrail
+T099,食品证据,试吃装/散装食品,unpackaged_food,warn_if_label_missing,health_review,散装或试吃装食品标签证据可能不完整，过敏与时效判断应保留 unknown。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T100,食品证据,礼盒组合内容不明,gift_box_contents_unknown,warn_if_label_missing,health_review,组合礼盒内容不完整时，不能按单一商品标签推断全部成分和保质期。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2025/art_4edcff1e8d894890a012aac1e974c1ff.html,official_china_market_regulation
+T101,首饰与贴身物品,貔貅/佛像/宗教挂坠,religious_charm,warn_if_context_sensitive,soft,宗教题材饰品（貔貅、佛像、十字架等）涉及信仰与开光习俗，是否合适因人而异，送礼前宜确认收礼人信仰与偏好。,https://www.gov.cn/xinwen/2019-05/15/content_5391636.htm,public_cultural_guide
+T102,首饰与贴身物品,玉/翡翠,jade_meaning,warn_if_context_sensitive,soft,玉饰有「人养玉、玉养人」等说法和「碎玉挡灾」的民间联想，属文化寓意范畴，作为生日或纪念礼物一般可接受，不需要因联想而排除。,https://culture.people.com.cn/n1/2016/0503/c1013-28358463.html,public_cultural_guide
+T103,首饰与贴身物品,项链/手链/戒指贴身饰品,jewelry_intimacy,warn_if_context_sensitive,soft,贴身饰品与「关系亲疏」有关：项链、戒指在部分语境中带表白或定情意味，送异性同事、不太熟的朋友时宜先想清楚，避免让对方感到压力；送亲友、情侣无碍。,https://www.gov.cn/fuwu/2021-02/10/content_5586127.htm,public_cultural_guide
+T104,首饰与贴身物品,银饰/足银,silver_tarnish,care_hint,soft,银饰佩戴后会氧化发暗，需要定期擦拭保养；作为礼物时可在卡片或备注里附一句保养提示，属实用提醒而非禁忌。,https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2020/art_6cfbd4a29a7d4d0f9ecb39df0d43bba8.shtml,official_china_market_regulation
+T105,首饰与贴身物品,化妆品/香水/口红,cosmetic_preference,warn_if_label_missing,soft,彩妆与香水的色号、香型偏好极强，且涉及肤质过敏可能，不确定对方偏好时优先选中性香型或可退换渠道。,https://www.nhc.gov.cn/sps/s7891/202509/bc824a504ec34c27883da73f14c20d44.shtml,official_food_safety_guidance
