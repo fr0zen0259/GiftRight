@@ -153,10 +153,17 @@ a { color: inherit; text-decoration: none; }
 .intro-card-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 12px 18px;
   background: #F4EFE6;
   border-bottom: 2px solid #0F172A;
+}
+
+.intro-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .pixel-stamp-seal {
@@ -305,28 +312,66 @@ a { color: inherit; text-decoration: none; }
 }
 
 .pixel-skip-btn {
-  position: absolute;
-  right: 24px;
-  bottom: 24px;
-  padding: 8px 14px;
+  position: static;
+  padding: 5px 12px;
   background: #FAF8F3;
-  border: 2px solid #0F172A;
+  border: 1.5px solid #0F172A;
   border-radius: 4px;
-  box-shadow: 2px 2px 0 #0F172A;
+  box-shadow: 1.5px 1.5px 0 #0F172A;
   color: #475569;
   font-size: 12px;
   font-weight: 800;
-  font-family: monospace;
+  font-family: inherit;
   cursor: pointer;
-  transition: all 0.08s steps(2);
-  z-index: 3;
+  transition: all 0.15s ease;
 }
 
 .pixel-skip-btn:hover {
   color: #0F172A;
   background: #FFFFFF;
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 #0F172A;
+  transform: translate(-0.5px, -0.5px);
+  box-shadow: 2px 2px 0 #0F172A;
+}
+
+.pixel-skip-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0;
+}
+
+/* 顶部右上角像素工坊在线胶囊 */
+.topbar-craft-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #FEF9C3;
+  border: 1.5px solid #0F172A;
+  border-radius: 4px;
+  box-shadow: 1.5px 1.5px 0 #0F172A;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #854D0E;
+  margin-right: 8px;
+}
+
+.topbar-craft-badge .craft-dot {
+  width: 7px;
+  height: 7px;
+  background: #10B981;
+  border-radius: 1px;
+  box-shadow: 0 0 4px #10B981;
+}
+
+.intro-pixel-img,
+.cover-photo-img.pixel-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  display: block;
 }
 
 .pixel-skip-btn:active {
@@ -3069,60 +3114,77 @@ select:focus,
 
 /* 6. 确定性规则拦截透明护栏 */
 .transparency-guard-card {
-  margin: 24px 0 32px !important;
-  background: #F0FDF4 !important;
-  border: 2px solid #A7F3D0 !important;
+  margin: 20px 0 28px !important;
+  background: #FAF8F5 !important;
+  border: 1.5px solid #E2D9CC !important;
   border-radius: 6px !important;
-  box-shadow: 3px 3px 0 #A7F3D0 !important;
-  padding: 18px 24px !important;
+  box-shadow: 2px 2px 0 #E2D9CC !important;
+  padding: 16px 20px !important;
+}
+
+.guard-badge-label {
+  display: inline-block;
+  background: #EFE8DE;
+  color: #574D42;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid #D5C8B8;
+  margin-right: 10px;
 }
 
 .guard-titles strong {
-  color: #166534 !important;
-  font-size: 15px !important;
-  font-weight: 900 !important;
+  color: #2C251E !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
 }
 
 .guard-titles small {
-  color: #475569 !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
+  color: #6E6254 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
 }
 
 .guard-toggle-btn {
   background: #FFFFFF;
-  border: 1.5px solid #86EFAC;
+  border: 1.5px solid #D5C8B8;
   border-radius: 4px;
-  box-shadow: 1.5px 1.5px 0 #86EFAC;
-  color: #166534;
-  font-size: 13px;
-  font-weight: 800;
-  padding: 5px 14px;
+  box-shadow: 1.5px 1.5px 0 #E2D9CC;
+  color: #574D42;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
   cursor: pointer;
   transition: all 0.12s ease;
 }
 
 .guard-toggle-btn:hover {
-  background: #DCFCE7;
+  background: #F4EFEA;
   transform: translate(-1px, -1px);
 }
 
 .guard-col {
   background: #FFFFFF;
-  border: 1.5px solid #BBF7D0;
+  border: 1.5px solid #E8E0D5;
   border-radius: 4px;
-  box-shadow: 2px 2px 0 #BBF7D0;
-  padding: 14px;
+  box-shadow: 1.5px 1.5px 0 #E8E0D5;
+  padding: 12px 14px;
 }
 
 .guard-col strong {
-  color: #0F172A !important;
-  font-weight: 800;
+  color: #2C251E !important;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: block;
 }
 
 .guard-col p {
-  color: #475569 !important;
-  font-weight: 600;
+  color: #6E6254 !important;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* 7. 礼物结果卡（像素标签 + 实体按压） */

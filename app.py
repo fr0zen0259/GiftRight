@@ -2135,7 +2135,10 @@ def maybe_call_dify_chat(question, context=None):
         "你是 GiftRight 礼物顾问。只能回答送礼、礼物选择、礼物制作、材料、"
         "保存、配送、预算、过敏、风险、场合、关系和礼物习俗相关问题。"
         "如果问题与送礼无关，只回复：我只回答和送礼物相关的问题。"
+        "回答必须克制清晰，单次回答只提 1-3 点最关键建议，禁止空洞寒暄与长篇大论。"
         "不得编造商品价格、日期、来源、禁忌或用户未提供的事实。"
+        "涉及医疗、保健品、过敏原或宗教禁忌时，必须明确声明：‘此项涉及健康或信仰红线，必须向当事人或权威成分表核实，AI不能代为确认’。"
+        "若用户问题缺少关键决策信息（如预算、关系或具体偏好），应先提出具体核实问题，不凭空假设。"
         "请优先使用已配置的 GiftRight 知识库；知识库有相关内容时应优先引用。"
         "知识库没有完全匹配内容时，仍然要基于通用送礼常识给出有帮助的回答，"
         "并明确标注“以下为一般建议，不代表知识库中的具体条目”。"
@@ -2413,7 +2416,10 @@ def _dify_chat_stream_events(question, context=None):
             "你是 GiftRight 礼物顾问。只能回答送礼、礼物选择、礼物制作、材料、"
             "保存、配送、预算、过敏、风险、场合、关系和礼物习俗相关问题。"
             "如果问题与送礼无关，只回复：我只回答和送礼物相关的问题。"
+            "回答必须克制清晰，单次回答只提 1-3 点最关键建议，禁止空洞寒暄与长篇大论。"
             "不得编造商品价格、日期、来源、禁忌或用户未提供的事实。"
+            "涉及医疗、保健品、过敏原或宗教禁忌时，必须明确声明：‘此项涉及健康或信仰红线，必须向当事人或权威成分表核实，AI不能代为确认’。"
+            "若用户问题缺少关键决策信息（如预算、关系或具体偏好），应先提出具体核实问题，不凭空假设。"
             "请优先使用已配置的 GiftRight 知识库；知识库有相关内容时应优先引用。"
             "知识库没有完全匹配内容时，仍然要基于通用送礼常识给出有帮助的回答，"
             "并明确标注“以下为一般建议，不代表知识库中的具体条目”。"
@@ -2976,6 +2982,65 @@ def enrich_dify_result(result, payload, llm_selected=False):
         def _lazy(text):
             return bool(re.search(r"^(标题为|类别为|标题：|类别：)", str(text or "").strip()))
 
+        def _sanitize_ai_copy(text):
+            if not text:
+                return ""
+            t = str(text).strip()
+            # 剥离复述字段头
+            t = re.sub(r"^(标题为|类别为|标题：|类别：)", "", t).strip()
+            # 子句级过滤价格/预算与AI车轱辘套话
+            parts = re.split(r"([，,。；;！!？?])", t)
+            kept = []
+            forbidden_clause_keywords = [
+                "预算", "价格", "价位", "百元档", "千元档", "到手价", "性价比", "便宜",
+                "不会出错", "闭眼入", "正合分寸", "送礼的分寸", "不越界", "不显刻意",
+                "更留得住", "陪伴感", "一次性消耗品", "加点心意又不想太隆重", "关系不错的朋友",
+                "朋友间不铺张", "轻松的氛围", "爱看或想开始看", "拿捏", "深度推演",
+            ]
+            opening_pattern = r"^(朋友|长辈|同事|对象|父母|领导|收礼人)?(过)?(生日|结婚|过节|平时)?(想|打算)?送(实用(的(东西|物件)?|物件)?|心意(礼物)?|吃的|点用得久的)?$"
+            i = 0
+            while i < len(parts):
+                chunk = parts[i].strip()
+                i += 2
+                if not chunk:
+                    continue
+                if re.match(opening_pattern, chunk):
+                    continue
+                if any(kw in chunk for kw in forbidden_clause_keywords):
+                    continue
+                kept.append(chunk)
+
+            res = "，".join(kept) if kept else t
+
+            replacements = [
+                (r"比一次性消耗品更留得住这份朋友情[。！!？?]*", "适合日常摆放留存。"),
+                (r"留得住这份朋友情[。！!？?]*", "适合日常摆放留存。"),
+                (r"也让人一眼看出你花了心思[。！!？?]*", "适合表达心意。"),
+                (r"让人一眼看出你花了心思[。！!？?]*", "适合表达心意。"),
+                (r"最不容易出错[，,]*", "日常较稳妥，"),
+                (r"绝不会错[，,]*", "日常较稳妥，"),
+                (r"闭眼入[，,]*", ""),
+                (r"最怕太正式[，,]*", "注重日常实用，"),
+                (r"不挑人也不显刻意[，,]*", "口味温和，"),
+                (r"想送点有心意又不占地方的东西[，,]*", "兼顾心意与实用，"),
+                (r"带着童年动画的俏皮感[，,]*", "设计轻便有趣，"),
+                (r"满满心意", "实用心意"),
+                (r"满满的仪式感", "仪式感"),
+                (r"仪式感拉满", "实用得体"),
+                (r"拿捏[，,]*", ""),
+                (r"深度推演[，,]*", ""),
+            ]
+            for pattern, repl in replacements:
+                res = re.sub(pattern, repl, res)
+            res = re.sub(r"^[，,、\s]+", "", res)
+            res = re.sub(r"[，,、\s]+$", "", res)
+            res = re.sub(r"^[，,、\s]*又\s*", "", res)
+            res = re.sub(r"[，,、]{2,}", "，", res)
+            res = re.sub(r"([。！!？?])+", r"\1", res)
+            if res and not re.search(r"[。！!？?]$", res):
+                res += "。"
+            return res.strip()
+
         llm_why = str(card.get("why_recommended") or "").strip()
         if not llm_why or _is_placeholder_text(llm_why) or _lazy(llm_why):
             llm_why = ""
@@ -2986,15 +3051,17 @@ def enrich_dify_result(result, payload, llm_selected=False):
         ]
         llm_why_from_model = False
         if llm_why:
-            card["why_this"] = _redact_exact_price_text(llm_why)
+            cleaned_why = _sanitize_ai_copy(_redact_exact_price_text(llm_why))
+            card["why_this"] = cleaned_why
             card["reason_evidence"] = [
-                _redact_exact_price_text(item) for item in (llm_evidence or [llm_why])
+                _sanitize_ai_copy(_redact_exact_price_text(item)) for item in (llm_evidence or [cleaned_why])
             ]
             llm_why_from_model = True
         elif llm_evidence and llm_selected:
-            card["why_this"] = _redact_exact_price_text(llm_evidence[0])
+            cleaned_ev = _sanitize_ai_copy(_redact_exact_price_text(llm_evidence[0]))
+            card["why_this"] = cleaned_ev
             card["reason_evidence"] = [
-                _redact_exact_price_text(item) for item in llm_evidence
+                _sanitize_ai_copy(_redact_exact_price_text(item)) for item in llm_evidence
             ]
             llm_why_from_model = True
         elif llm_selected:
@@ -3034,7 +3101,7 @@ def enrich_dify_result(result, payload, llm_selected=False):
             # 备选卡本来就不渲染这两块，空着不损失任何信息。
             card["meaning"] = _meaning_for_product(source) if llm_selected else ""
         else:
-            card["meaning"] = _redact_exact_price_text(llm_meaning)
+            card["meaning"] = _sanitize_ai_copy(_redact_exact_price_text(llm_meaning))
         # 只有模型既选中了卡、又至少贡献了寓意或理由之一，才算「模型文案」。
         # 两样都没有时它只是一张被排序器排过序的规则卡，前端不该给它挂
         # 「为什么选它 / 这份礼物想说什么」这两块，也不该放进「AI 精选」区。
@@ -3319,12 +3386,9 @@ def _build_page_notices(payload, cards, rule_warnings=None, route_estimate=None)
         # 口径不变，措辞按人平常说话的方式写。旧版三条（"参考信息，由你
         # 自己决定""商品快照""不代表没有任何讲究——"）是免责声明腔，
         # 2026-11-13 用户批"AI 味太重"后全部重写。
-        notices.append("价格是大概范围，具体多少以商品页为准。")
-        notices.append("库存和优惠会变，下单前再看一眼。")
-        # 2026-11-17：旧版是「卡片没提到的，不代表一定没问题——不放心就问问
-        # 收礼人身边的朋友」。前半句又在自证「我们可能漏了」，读起来像免责声明。
-        # 只留可操作的那半句。
-        notices.append("有些礼物有讲究，比如钟、伞、梨。拿不准就直接问一句对方。")
+        notices.append("价格仅供参考，具体以购买时为准。")
+        notices.append("库存、规格与优惠活动请在下单前确认。")
+        notices.append("送礼习惯因地区与家庭而异，拿不准时建议先了解对方的习惯。")
     return notices
 
 
@@ -4533,6 +4597,10 @@ class GiftRightHandler(BaseHTTPRequestHandler):
         if requested in {
             "app.js",
             "styles.css",
+            "hero_pixel_workshop.png",
+            "intro_pixel_gift.png",
+            "hero_craft_worktable.jpg",
+            "intro_craft_wrapping.jpg",
             "gift-wrapping-worktable.jpg",
             "pixel_intro_gift.svg",
             "pixel_hero_workshop.svg",

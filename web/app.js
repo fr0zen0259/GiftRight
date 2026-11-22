@@ -553,17 +553,14 @@ function renderCard(card) {
   // 只给第 1 名留这句，其余按模型给的 strategy 说话。
   const isTopPick = cardState === "ai" && Number(card.rank) === 1;
   const strategyLabel = {
-    safe: "送这个不会错",
-    heart: "心意到位",
-    special: "有点小心思",
-  }[card.strategy] || "也可以";
-  // 2026-11-17：原来这里写「资料不足，暂不推荐」，但同一张卡下面的按钮是
-  // 「选择这件」（见 actionLabel 处的说明：卡就是可选）。一个标签说别选、
-  // 一个按钮让你选，自相矛盾。只保留可核实的事实「资料不足」，
-  // 不替用户下「别选」的判断——那是用户自己的决定。
+    safe: "实用款",
+    heart: "心意款",
+    special: "特色款",
+  }[card.strategy] || "候选礼物";
+
   const label = cardState === "ai"
-    ? (isTopPick ? "我最推荐这件" : strategyLabel)
-    : (cardState === "basis" ? (card.strategy_label || "也可以") : "资料不全");
+    ? (isTopPick ? "重点推荐" : strategyLabel)
+    : (cardState === "basis" ? (card.strategy_label || "备选参考") : "资料较少");
   const priceText = card.gift_type === "diy"
     ? (card.cost || card.price_band || card.price || "材料费未标注")
     : (card.price_band || card.price || "价格未标注");
@@ -583,11 +580,28 @@ function renderCard(card) {
   }
   const watchJoined = watchParts.filter(Boolean).join("；");
   const watchText = watchJoined ? `${watchJoined}。` : "";
-  const reasonText = meaningText || whyText || String(card.description || "").trim();
+  const cleanAiCopy = (text) => {
+    if (!text) return "";
+    let t = String(text).trim().replace(/^(标题为|类别为|标题：|类别：)/, "").trim();
+    const forbidden = ["预算", "价格", "价位", "百元档", "千元档", "到手价", "不会出错", "闭眼入", "送礼的分寸", "一次性消耗品", "更留得住"];
+    const parts = t.split(/([，,。；;！!？?])/);
+    const kept = [];
+    const openingPattern = /^(朋友|长辈|同事|对象|父母|领导|收礼人)?(过)?(生日|结婚|过节|平时)?(想|打算)?送(实用(的(东西|物件)?|物件)?|心意(礼物)?|吃的|点用得久的)?$/;
+    for (let i = 0; i < parts.length; i += 2) {
+      const chunk = (parts[i] || "").trim();
+      if (!chunk || openingPattern.test(chunk)) continue;
+      if (forbidden.some((kw) => chunk.includes(kw))) continue;
+      kept.push(chunk);
+    }
+    let res = kept.length ? kept.join("，") : t;
+    res = res.replace(/^[，,、\s]+|[，,、\s]+$/g, "").replace(/^[，,、\s]*又\s*/, "").replace(/[，,、]{2,}/g, "，");
+    if (res && !/[。！!？?]$/.test(res)) res += "。";
+    return res;
+  };
+  const rawReason = whyText || meaningText || String(card.description || "").trim();
+  const reasonText = cleanAiCopy(rawReason);
   const reasonHtml = reasonText ? `<p class="card-reason">${escapeHtml(reasonText)}</p>` : "";
-  const secondaryHtml = (meaningText && whyText)
-    ? `<p class="card-why">${escapeHtml(whyText)}</p>`
-    : "";
+  const secondaryHtml = "";
   // 参考价与「留意」分成两块：原先塞在同一个 flex 行里，留意文字一长就被
   // 挤到第二行、把整块撑高，两张卡内容长短不同时高度差得很明显。现在参考价
   // 单独一行（分隔线紧跟内容），留意另起一块，有自己的左标线。
@@ -599,8 +613,8 @@ function renderCard(card) {
   // （handler 里统一写 state.selected），所以不能因为「资料不足」就把文案
   // 写成「查看资料」——那会让用户以为点开是看详情，实际是选了它。
   // 资料不足的卡仍然可选（用户可能就是想要这一件），只是文案要说实话。
-  const actionLabel = isDiy ? "看怎么做" : "就它了";
-  const diyNote = isDiy ? '<span class="diy-link-note">非材料购买链接</span>' : "";
+  const actionLabel = isDiy ? "选这份方案" : "选这份";
+  const diyNote = "";
   return `
     <article class="gift-card${aiFlag} ${escapeHtml(card.strategy)} ${selected ? "is-selected" : ""}" data-card-id="${escapeHtml(card.product_id)}" data-card-type="${type}">
       <span class="card-label">${escapeHtml(label)}</span>
@@ -613,8 +627,8 @@ function renderCard(card) {
         ${watchHtml}
       </div>
       <div class="card-footer">
-        <button type="button" class="select-card-button ${selected ? "selected" : ""}" data-select-card="${escapeHtml(card.product_id)}" data-select-type="${type}">${selected ? "已定" : actionLabel}</button>
-        <button type="button" class="letter-card-button" data-letter-card="${escapeHtml(card.product_id)}" data-card-title="${escapeHtml(card.display_title || card.title || "")}" title="查看附赠手写贺卡">💌 手写贺卡</button>
+        <button type="button" class="select-card-button ${selected ? "selected" : ""}" data-select-card="${escapeHtml(card.product_id)}" data-select-type="${type}">${selected ? "已选" : actionLabel}</button>
+        <button type="button" class="letter-card-button" data-letter-card="${escapeHtml(card.product_id)}" data-card-title="${escapeHtml(card.display_title || card.title || "")}" title="编辑随礼贺卡文字">写贺卡</button>
         ${diyNote}
       </div>
     </article>
@@ -628,24 +642,37 @@ function diyDetailsHtml(card, isDiy) {
   return `
     <details class="diy-details">
       <summary>材料与制作步骤</summary>
-      <div class="detail-block"><strong>材料</strong><p>${escapeHtml((card.materials || []).join("、") || "没写")}</p></div>
+      <div class="detail-block"><strong>材料</strong><p>${escapeHtml((card.materials || []).join("、") || "暂未提供材料清单，开始制作前请先确认")}</p></div>
       <div class="detail-block"><strong>步骤</strong><ol>${(card.steps || []).map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol></div>
-      <div class="detail-block"><strong>保存</strong><p>${escapeHtml(card.preservation || "按你实际用的材料")}</p></div>
+      <div class="detail-block"><strong>保存</strong><p>${escapeHtml(card.preservation || "暂无具体保存建议，请根据实际材料确认")}</p></div>
     </details>
   `;
 }
 
 function renderPageNotices(results) {
   const notices = results?.page_notices || [];
-  const html = notices.length
-    ? `<strong>买之前，我提醒你几句</strong><ul>${notices.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
-    : "";
-  // 两个视图（购买/自制）各自有容器，同一个提醒两处都要出现。
-  for (const id of ["#pageNotices", "#diyPageNotices"]) {
-    const target = $(id);
-    if (!target) continue;
-    target.classList.toggle("hidden", !notices.length);
-    target.innerHTML = html;
+  if (!notices.length) {
+    for (const id of ["#pageNotices", "#diyPageNotices"]) {
+      const target = $(id);
+      if (target) {
+        target.classList.add("hidden");
+        target.innerHTML = "";
+      }
+    }
+    return;
+  }
+  const purchasedHtml = `<strong>购买前确认</strong><ul>${notices.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+  const diyHtml = `<strong>制作前确认</strong><ul>${notices.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+
+  const pn = $("#pageNotices");
+  if (pn) {
+    pn.classList.remove("hidden");
+    pn.innerHTML = purchasedHtml;
+  }
+  const dpn = $("#diyPageNotices");
+  if (dpn) {
+    dpn.classList.remove("hidden");
+    dpn.innerHTML = diyHtml;
   }
 }
 
@@ -655,12 +682,12 @@ function renderEmptyState(type) {
   const label = type === "purchased" ? "礼物" : "手作方案";
   return `
     <div class="empty-panel">
-      <h3>这个条件下，我确实没挑到合适的${label}</h3>
-      <p>不是你要求高——条件卡这么死，能同时满足的本来就少。要不这样：</p>
+      <h3>暂时没有找到符合条件的${label}</h3>
+      <p>可以先检查填写的内容，看看是否需要调整：</p>
       <ul>
-        <li>预算往上放一点，好东西往往就差这一档。</li>
-        <li>「千万别送」里放开一两条，选择立刻多。</li>
-        <li>买的和做的都看看，有些心意自己做才够。</li>
+        <li>如果预算设置较窄，可以尝试适当放宽预算范围。</li>
+        <li>过敏、饮食限制等必须避开的条件可以保留，其他偏好可适度放宽。</li>
+        <li>${type === "purchased" ? "如果愿意亲手制作，也可以切换到“手作方案”查看。" : "也可以切换到“成品礼物”查看直接购买的方案。"}</li>
       </ul>
       <div class="empty-actions">
         <button type="button" class="button secondary" data-go="basicView">修改条件</button>
@@ -716,12 +743,12 @@ function renderCategoryPage(type) {
     <section class="tier-section tier-ai-section">
       <div class="tier-section-header">
         <div class="tier-header-main">
-          <span class="pixel-tier-tag pixel-tag-ai">✦ AI 顾问心意精选</span>
-          <strong class="tier-title">深度推演 · 最贴合推荐</strong>
+          <span class="pixel-tier-tag pixel-tag-ai">优先推荐</span>
+          <strong class="tier-title">结合条件推荐</strong>
         </div>
         <span class="tier-count">精选 ${aiCards.length} 件</span>
       </div>
-      <p class="tier-summary-text">按你指定的场合、对象性格与心意深度推演，附带专属挑选理由与关键避坑提示。</p>
+      <p class="tier-summary-text">结合你填写的场合、预算与偏好整理，附带适合理由与注意事项。</p>
       <div class="tier-cards-grid tier-ai-grid">
         ${aiCards.map(renderCard).join("")}
       </div>
@@ -732,12 +759,12 @@ function renderCategoryPage(type) {
     <section class="tier-section tier-local-section">
       <div class="tier-section-header">
         <div class="tier-header-main">
-          <span class="pixel-tier-tag pixel-tag-local">▪ 确定性规则库备选</span>
-          <strong class="tier-title">更多候选参考 · 确定性筛选</strong>
+          <span class="pixel-tier-tag pixel-tag-local">更多选择</span>
+          <strong class="tier-title">更多候选礼物</strong>
         </div>
         <span class="tier-count">候选第 ${otherFrom}–${otherTo} 件 / 共 ${otherTotal} 件</span>
       </div>
-      <p class="tier-summary-text">经过严格预算锁与 100+ 条地域礼俗禁忌排查后的稳妥候选库，支持翻页对比。</p>
+      <p class="tier-summary-text">符合你填写的预算与筛选条件的备选礼物，支持翻页查看。</p>
       <div class="tier-cards-grid tier-local-grid">
         ${otherCards.map(renderCard).join("")}
       </div>
@@ -835,8 +862,8 @@ function updateSelectionDock(card, type) {
   dock.classList.remove("hidden");
   dock.classList.add("dock-active");
 
-  const title = card.display_title || card.title || "已选好物";
-  const price = card.price_band || (card.price != null ? `¥${card.price}` : "价格面议");
+  const title = card.display_title || card.title || "未命名礼物";
+  const price = card.price_band || (card.price != null ? `¥${card.price}` : "");
   const titleEl = $("#dockTitle");
   const priceEl = $("#dockPrice");
   if (titleEl) titleEl.textContent = title;
@@ -845,34 +872,45 @@ function updateSelectionDock(card, type) {
   const copyBtn = $("#dockCopyMemoBtn");
   if (copyBtn) {
     copyBtn.onclick = () => {
-      const occasionText = state.intent?.occasion_label || state.intent?.occasion || state.occasion?.label || "日常心意";
+      const occasionText = state.intent?.occasion_label || state.intent?.occasion || state.occasion?.label || "日常";
       const relationText = state.intent?.relation_label || state.intent?.recipient_relation || state.relation?.label || "朋友";
-      const reasonText = card.reason || "符合预算与场合要求，日常实用且有纪念意义";
-      const riskText = card.risk_notes || "送出前建议核对喜好与包装是否完好";
+      const reasonText = card.reason || "符合设定的预算与场合要求";
+      const riskText = card.risk_notes || "送出前建议确认对方喜好与注意事项";
 
-      const memo = [
-        `🎁 GiftRight 选礼备忘录`,
-        `──────────────────────────────`,
-        `【敲定礼物】${title} (${price})`,
-        `【方案类型】${type === "purchased" ? "成品礼物" : "手工自制"}`,
-        `【送礼场合】${occasionText} · 送给「${relationText}」`,
-        `【挑选理由】${reasonText}`,
-        `【避坑提示】${riskText}`,
-        `──────────────────────────────`,
-        `—— 由 GiftRight 智能心意工坊挑选`
-      ].join("\n");
+      const isDiy = type !== "purchased";
+      const lines = [
+        "GiftRight 选礼备忘",
+        "",
+        `礼物：${title}`,
+        `类型：${isDiy ? "手作方案" : "成品礼物"}`
+      ];
+      if (price) {
+        lines.push(`${isDiy ? "材料费估算" : "参考价"}：${price}`);
+      }
+      lines.push(`场合：${occasionText}`);
+      lines.push(`送给：${relationText}`);
+      if (reasonText) {
+        lines.push(`适合的理由：${reasonText}`);
+      }
+      if (riskText) {
+        lines.push(`需要留意：${riskText}`);
+      }
+      lines.push("");
+      lines.push(isDiy ? "材料费仅供参考，开始制作前请确认材料与用量。" : "价格仅供参考，购买前请确认具体规格与价格。");
+
+      const memo = lines.join("\n");
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(memo).then(() => {
-          showAppToast("📋 选购备忘已复制到剪贴板！可发微信或保存备忘");
+          showAppToast("备忘已复制，可以粘贴保存。");
           if (window.triggerCustomPixelBurst) {
             window.triggerCustomPixelBurst(window.innerWidth / 2, window.innerHeight - 60);
           }
         }).catch(() => {
-          showAppToast("📋 选购备忘已生成并复制！");
+          showAppToast("备忘已复制，可以粘贴保存。");
         });
       } else {
-        showAppToast("📋 选购备忘已复制！");
+        showAppToast("备忘已复制，可以粘贴保存。");
       }
     };
   }
@@ -1034,7 +1072,7 @@ function renderResults(payload, preserveState) {
     // 用户正文只说「结果是什么、推荐是否可用」，不暴露内部组件名。
     setResultStatus(
       "error",
-      `<div><strong>这次先给你快速结果</strong><span>AI 那边没回应，下面这些是按你的条件筛的，照样能挑。想再试一次，重新提交就行。</span></div>`
+      `<div><strong>基础候选已生成</strong><span>扩展推荐暂时未完成，已有备选可以继续查看，也可以重新提交。</span></div>`
     );
   }
   $("#sidebarStatus")?.remove();
@@ -1681,7 +1719,7 @@ const PRESET_CONFIGS = {
     relation: { value: "friend", label: "朋友" },
     budgetMin: 100,
     budgetMax: 300,
-    freeText: "高颜值审美走心，适合拍照打卡，平时注重生活质感",
+    freeText: "平时注重生活质感，喜欢设计感与实用兼具的好物",
     avoid: [],
   },
   elder: {
@@ -1690,7 +1728,7 @@ const PRESET_CONFIGS = {
     relation: { value: "family", label: "长辈/亲戚" },
     budgetMin: 300,
     budgetMax: 800,
-    freeText: "体面大方，注重养生、健康与实用，避开生冷禁忌",
+    freeText: "体面得体，注重健康与日常实用，避开生冷禁忌",
     avoid: ["non_alcoholic"],
   },
   colleague: {
@@ -1699,7 +1737,7 @@ const PRESET_CONFIGS = {
     relation: { value: "colleague", label: "同事" },
     budgetMin: 80,
     budgetMax: 200,
-    freeText: "适度得体，有礼貌有边界感，办公或日常实用",
+    freeText: "分寸合适，适合答谢或庆祝的小礼物",
     avoid: [],
   },
 };
@@ -1747,7 +1785,7 @@ function applyPreset(key) {
   trailSync();
   wizardStep = 3;
   wizardSync();
-  showAppToast(`⚡ 已应用「${p.label}」预设，已为您跳至预算步骤`);
+  showAppToast(`已填入“${p.relation.label}”和“${p.occasion.label}”，接下来可以修改`);
 }
 
 $$(".preset-chip").forEach((btn) => {
@@ -1759,7 +1797,7 @@ const guardBody = $("#guardBody");
 if (guardToggleBtn && guardBody) {
   guardToggleBtn.addEventListener("click", () => {
     const isHidden = guardBody.classList.toggle("hidden");
-    guardToggleBtn.textContent = isHidden ? "查看拦截明细 ▾" : "收起明细 ▴";
+    guardToggleBtn.textContent = isHidden ? "查看说明 ▾" : "收起说明 ▴";
   });
 }
 
@@ -1796,46 +1834,116 @@ function buildGreetingOptions(candidate, rawTitle) {
     state.intent?.occasion_label ||
     state.intent?.occasion ||
     state.occasion?.label ||
-    "特别的日子";
+    "平时";
 
-  const title = (rawTitle || candidate?.display_title || candidate?.title || candidate?.name || "心仪好礼").trim();
+  const title = (rawTitle || candidate?.display_title || candidate?.title || candidate?.name || "小礼物").trim();
   const cleanTitle = title.replace(/（[^）]*）|\([^)]*\)/g, "").trim() || title;
 
-  const giftMeaning = (candidate?.meaning || candidate?.gift_meaning || "").trim();
-  const difyCardMsg = (state.result?.card_message || "").trim();
+  // 根据场合和关系自然匹配，告别假大空 AI 抒情套话
+  const occ = occasionLabel.toLowerCase();
+  const rel = relationLabel.toLowerCase();
 
-  // 1. 心意定制款（优先融合 Dify card_message / 礼物深度寓意 / 送礼偏好）
-  const customList = [];
-  if (difyCardMsg && difyCardMsg.length > 8) {
-    customList.push(difyCardMsg);
+  let customList = [];
+  let warmList = [];
+  let casualList = [];
+
+  if (occ.includes("生日")) {
+    customList = [
+      `生日快乐！希望这份小礼物你会喜欢。`,
+      `祝你生日快乐，新的一岁轻松自在，诸事顺遂。`,
+      `祝生日快乐！挑选了这份小小心意，愿你每天都有好心情。`
+    ];
+    warmList = [
+      `生日快乐。愿你有时间做喜欢的事，也有人一起分享开心。`,
+      `祝生日快乐，平平安安，顺心如意。愿生活常有暖意与欢喜。`,
+      `又长一岁，愿你依旧保持热爱，从容向前。生日快乐！`
+    ];
+    casualList = [
+      `生日快乐！给你挑了份小礼物，希望能用得上，吃好玩好！`,
+      `生日快乐！别客气，随便用，祝生活顺风顺水无烦恼。`,
+      `生日快乐呀！礼物收下，愿每天都开开心心！`
+    ];
+  } else if (occ.includes("答谢") || occ.includes("感谢") || occ.includes("谢谢")) {
+    customList = [
+      `谢谢你的帮助，一点心意，请收下。`,
+      `这次多亏你的关照与协助，非常感谢！`,
+      `一点心意以表感谢，希望这份礼物你会喜欢。`
+    ];
+    warmList = [
+      `这次多亏你的帮助。准备了一份小礼物，想认真说声谢谢。`,
+      `一直以来的关照与支持，都记在心上。愿一切顺遂，常有喜乐。`,
+      `感谢你的悉心指点与真诚协助，祝工作顺意，生活安康。`
+    ];
+    casualList = [
+      `这次谢谢你啦！一点小心意，希望你喜欢。`,
+      `多亏有你帮忙！小礼物奉上，下次继续合作愉快！`,
+      `一点心意别客气，祝每天都顺手舒心！`
+    ];
+  } else if (occ.includes("毕业")) {
+    customList = [
+      `毕业快乐，祝你接下来的路一切顺利。`,
+      `毕业快乐！祝前程似锦，未来可期。`,
+      `奔赴下一程，愿你前途坦荡，平安顺意。`
+    ];
+    warmList = [
+      `毕业快乐。愿你走向期待的生活，也慢慢找到自己的节奏。`,
+      `走出校园，愿你在广阔天地里尽情舒展，始终保持纯粹与热爱。`,
+      `离别有时，情谊长青。祝毕业顺意，每一步都走得踏实从容。`
+    ];
+    casualList = [
+      `毕业快乐！下一站也要继续做喜欢的事，前途冲冲冲！`,
+      `顺利毕业啦！收下小礼物，祝以后工作生活都顺风顺水！`,
+      `毕业快乐！常联系，常开心！`
+    ];
+  } else if (occ.includes("入职") || occ.includes("工作")) {
+    customList = [
+      `祝你新工作顺利，一切顺手。`,
+      `入职新阶段，祝工作顺心，步步稳健。`,
+      `一份小礼物，祝新环境新气象，事事舒心。`
+    ];
+    warmList = [
+      `祝你在新的工作里渐渐找到自己的节奏，遇见合得来的伙伴。`,
+      `新起点新征程，愿你踏实笃行，收获满满的成就感。`,
+      `换了新环境，照顾好自己，祝工作愉快，平安顺遂。`
+    ];
+    casualList = [
+      `新工作加油！希望每天都能多一点顺手的事。`,
+      `入职大吉！同事友善，不常加班，顺顺利利！`,
+      `新工位新开始，小礼物祝开工大顺！`
+    ];
+  } else if (occ.includes("长辈") || rel.includes("长辈") || rel.includes("亲戚") || occ.includes("拜访")) {
+    customList = [
+      `带了一点小礼物，祝您身体安康，福寿绵长。`,
+      `来看看您，送上一份心意，愿您平安顺遂。`,
+      `一点薄礼，敬谢关怀，祝您生活舒心愉快。`
+    ];
+    warmList = [
+      `来看看您，也带来一点心意。愿您生活舒心，身体安康。`,
+      `一直承蒙您的关照与教导，愿岁月静好，您和家人都平平安安。`,
+      `常思念您的温和与宽厚，祝您多保重身体，天天有好心情。`
+    ];
+    casualList = [
+      `特地带了一点小礼物，希望您喜欢，祝您健康长寿！`,
+      `一点平时用得着的心意，愿您笑口常开，晚年安康！`,
+      `来看看您，祝您身体硬朗，事事舒坦！`
+    ];
+  } else {
+    customList = [
+      `一点心意，希望你喜欢。`,
+      `送上一份小礼物，愿生活时常多一份顺心。`,
+      `见物如面，愿这份心意能为你的日常添一点喜悦。`
+    ];
+    warmList = [
+      `准备了一份小礼物，希望能给你的日常添一点喜欢。`,
+      `愿日子平静从容，所求皆所愿，所行皆坦途。`,
+      `在平淡日子里，愿这份小小心意伴你度过更多舒坦时光。`
+    ];
+    casualList = [
+      `看到这个觉得很衬你，就顺手挑了，希望你喜欢！`,
+      `一点小心意，别客气，祝每天开开心心！`,
+      `收下小礼物，愿生活顺畅，吃好喝好！`
+    ];
   }
-  if (giftMeaning && giftMeaning.length > 10) {
-    let cardFromMeaning = giftMeaning;
-    if (!cardFromMeaning.includes("祝") && !cardFromMeaning.includes("愿")) {
-      cardFromMeaning = `愿这份「${cleanTitle}」，${giftMeaning}。祝${occasionLabel}快乐，事事顺心！`;
-    }
-    customList.push(cardFromMeaning);
-  }
-  customList.push(
-    `挑选了这份「${cleanTitle}」送给你，愿它替我带来一份妥帖与心意。祝${occasionLabel}如意，万事顺遂！`
-  );
-  customList.push(
-    `见字如面！这份「${cleanTitle}」想陪你度过更多舒心惬意的时光。愿新的一岁（或阶段）平安顺意，常有欢喜！`
-  );
-
-  // 2. 温情真挚款（深厚情谊、长久陪伴与温暖底气）
-  const warmList = [
-    `岁月漫长，愿这份「${cleanTitle}」替我陪伴你的寻常日子。祝${occasionLabel}快乐，平安喜乐，诸事顺遂！`,
-    `感谢一路以来的相伴与关照。挑了这份「${cleanTitle}」送你，愿每一个平凡日常都充满温暖与底气。`,
-    `千言万语，尽在礼中。愿这份「${cleanTitle}」能带给你一份切实的笃定与好心情，祝${occasionLabel}如意！`,
-  ];
-
-  // 3. 轻松日常款（年轻同辈/好友/清爽不煽情）
-  const casualList = [
-    `挑了半天觉得这个「${cleanTitle}」最衬你，实用又不啰嗦。${occasionLabel}快乐，吃好喝好，继续开心！`,
-    `见物如面！这份「${cleanTitle}」请查收，别客气随便用，祝生活顺风顺水无烦恼！`,
-    `一眼相中了这款「${cleanTitle}」，感觉非你莫属。祝${occasionLabel}尽兴，生活常有小确幸！`,
-  ];
 
   return {
     candidate,
@@ -1854,12 +1962,12 @@ function buildGreetingOptions(candidate, rawTitle) {
 function renderLetterCardContent() {
   const badge = $("#letterItemBadge");
   if (badge) {
-    badge.textContent = `✦ 「${letterCardState.cleanTitle}」`;
+    badge.textContent = `「${letterCardState.cleanTitle}」`;
   }
 
   const recTitle = $("#letterRecipientTitle");
   if (recTitle && !recTitle.dataset.userEdited) {
-    recTitle.textContent = `致亲爱的${letterCardState.relationLabel}：`;
+    recTitle.textContent = `致${letterCardState.relationLabel}：`;
   }
 
   $$("#letterStyleTabs .letter-style-tab").forEach((tab) => {
@@ -1868,7 +1976,7 @@ function renderLetterCardContent() {
 
   const list = letterCardState.options[letterCardState.currentStyle] || [];
   const idx = (letterCardState.styleIndices[letterCardState.currentStyle] || 0) % (list.length || 1);
-  const msgText = list[idx] || `愿这份「${letterCardState.cleanTitle}」，伴你度过每一个温暖美好的日常。祝${letterCardState.occasionLabel}快乐！`;
+  const msgText = list[idx] || "一点心意，希望你喜欢。";
 
   const msgEl = $("#letterMessageText");
   if (msgEl) {
@@ -1881,9 +1989,9 @@ function openLetterDialogForGift(itemOrTitle) {
   let title = "";
   if (typeof itemOrTitle === "object" && itemOrTitle !== null) {
     candidate = itemOrTitle;
-    title = candidate.display_title || candidate.title || candidate.name || "心仪好礼";
+    title = candidate.display_title || candidate.title || candidate.name || "未命名礼物";
   } else {
-    title = itemOrTitle || "心仪好礼";
+    title = itemOrTitle || "未命名礼物";
     candidate = (state.result?.candidates || []).find(
       (c) => (c.display_title || c.title || c.name) === title || c.product_id === title
     );
@@ -1925,7 +2033,7 @@ document.addEventListener("click", (e) => {
   const curStyle = letterCardState.currentStyle;
   letterCardState.styleIndices[curStyle] = (letterCardState.styleIndices[curStyle] || 0) + 1;
   renderLetterCardContent();
-  showAppToast("🎲 已切换该风格下的不同心意文案！");
+  showAppToast("已换一版文字。");
 });
 
 // 「💬 顾问润色」按钮
@@ -1938,7 +2046,7 @@ document.addEventListener("click", (e) => {
   setView("chatView");
   const input = $("#chatInput");
   if (input) {
-    input.value = `我想送「${letterCardState.cleanTitle}」给我的${letterCardState.relationLabel}（${letterCardState.occasionLabel}），请帮我定制 2 句更有温度、不过分煽情的手写随礼贺卡祝福语。`;
+    input.value = `请把这份送给${letterCardState.relationLabel}（${letterCardState.occasionLabel}）的随礼贺卡改得自然一些，控制在两句以内。`;
     input.focus();
     $("#chatForm")?.dispatchEvent(new Event("submit", { cancelable: true }));
   }
@@ -1949,14 +2057,19 @@ if (copyLetterBtn) {
   copyLetterBtn.addEventListener("click", async () => {
     const rec = ($("#letterRecipientTitle")?.textContent || "").trim();
     const body = ($("#letterMessageText")?.textContent || "").trim();
-    const sig = ($("#letterSenderSign")?.textContent || "心意随行").trim();
+    const rawSig = ($("#letterSenderSign")?.textContent || "").trim();
+    const sig = (rawSig && rawSig !== "（你的名字）") ? rawSig : "";
 
-    const fullCard = `${rec}\n\n${body}\n\n—— ${sig}`;
+    const parts = [];
+    if (rec) parts.push(rec);
+    if (body) parts.push(body);
+    if (sig) parts.push(`—— ${sig}`);
+    const fullCard = parts.join("\n\n");
     try {
       await navigator.clipboard.writeText(fullCard);
-      showAppToast("📋 贺卡全文（称呼+正文+署名）已复制！");
+      showAppToast("贺卡文字已复制。");
     } catch {
-      showAppToast("复制成功！");
+      showAppToast("没能自动复制，请选中文字后手动复制。");
     }
   });
 }
@@ -1966,7 +2079,7 @@ document.addEventListener("click", (e) => {
   if (!btn) return;
   const card = btn.closest(".gift-card");
   const cardId = card?.dataset?.cardId;
-  const title = btn.dataset.cardTitle || card?.dataset?.title || "心仪好礼";
+  const title = btn.dataset.cardTitle || card?.dataset?.title || "未命名礼物";
   const candidate = (state.result?.candidates || []).find(
     (c) => c.product_id === cardId || (c.display_title || c.title || c.name) === title
   );

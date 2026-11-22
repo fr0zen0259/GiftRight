@@ -455,7 +455,7 @@ def _reason_paragraph(item, intent, strategy, warnings):
         if materials and _has(item, "customizable"):
             parts.append(f"可通过{ '、'.join(materials[:3]) }调整外观或口味，做出个人化版本。")
     if not matched_interests:
-        parts.append("目前输入中没有可与这件礼物的具体特点明确对应的信息。")
+        parts.append("符合既定预算与场合要求。")
     return " ".join(parts)
 
 
@@ -800,7 +800,7 @@ def recommend(raw_intent):
     result["taboo_notes"] = build_taboo_notes(intent, cards)
     if not cards:
         result["mode"] = "no_safe_candidate"
-        result["fallback_message"] = "当前条件下没有可用候选。建议放宽预算、时效或礼物类型，但不要取消明确的健康、宗教或过敏约束。"
+        result["fallback_message"] = "当前条件下没有可用候选。建议微调预算区间或礼物类型，但请勿放宽明确的健康、宗教或过敏底线约束。"
     return result
 
 

@@ -241,7 +241,7 @@
   },
   {
     "id": "g-017",
-    "name": "高端巧克力礼盒",
+    "name": "精选巧克力礼盒",
     "category": "食品饮品",
     "price": 328,
     "delivery_days": 2,
@@ -249,8 +249,8 @@
     "occasions": ["birthday", "thank_you", "holiday", "celebration"],
     "relations": ["mentor", "manager", "colleague", "friend", "partner"],
     "risk_level": 2,
-    "description": "适合正式场合的巧克力礼盒，包装较有仪式感。",
-    "risk_notes": "价格高于部分关系的参考区间。",
+    "description": "适合正式拜访或答谢场合的巧克力礼盒，采用硬质独立包装。",
+    "risk_notes": "单价相对偏高，且需核对收礼人控糖需求与乳制品/坚果过敏原。",
     "source": "demo_catalog_v1",
     "status": "active"
   },
